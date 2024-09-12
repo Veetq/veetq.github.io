@@ -107,6 +107,7 @@
             pointer-events: none; /* Estää sateen klikkauksen */
             z-index: 5; /* Sateen kerros */
             overflow: hidden;
+            visibility: hidden; /* Piilottaa sateen aluksi */
         }
         .drop {
             position: absolute;
@@ -163,7 +164,7 @@
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
-            rainContainer.style.display = 'block'; // Näyttää sateen
+            rainContainer.style.visibility = 'visible'; // Näyttää sateen
             startRain(); // Käynnistää sateen
             startBouncing(); // Käynnistää pomppimisen
         });
