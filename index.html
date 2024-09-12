@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
+            background-color: #b0b0b0; /* Harmaa tausta */
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
         }
         #text {
@@ -54,6 +54,7 @@
             outline: none;
             margin: 10px 0;
             cursor: pointer;
+            position: relative; /* Korjaa säätimen sijaintia */
         }
         #volumeControls input[type="range"]::-webkit-slider-runnable-track {
             height: 8px;
@@ -69,6 +70,7 @@
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
+            position: relative; /* Varmistaa, että sliderin säätöosa on oikein viivalla */
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
             background: #ff8a50; /* Väri vaihtuessa */
