@@ -184,7 +184,6 @@
         // Funktio säätimen pallon keskittämiseksi viivalle
         function updateThumbPosition() {
             const value = volumeControl.value;
-            const thumb = volumeControl.querySelector('::-webkit-slider-thumb');
             const percentage = (value - volumeControl.min) / (volumeControl.max - volumeControl.min) * 100;
             const thumbWidth = 25; // Pallon leveys
             const trackWidth = volumeControl.clientWidth;
