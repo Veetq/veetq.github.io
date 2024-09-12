@@ -111,18 +111,18 @@
         }
         .snowflake {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #fff;
-            opacity: 0.8;
+            width: 8px;
+            height: 8px;
+            background: rgba(15, 49, 89, 0.5); /* Sininen, himmeä sävy */
             border-radius: 50%;
             pointer-events: none;
             animation: snow 10s linear infinite;
+            opacity: 0.7; /* Himmeä lumihiutale */
         }
         @keyframes snow {
             0% {
                 transform: translateY(-100vh);
-                opacity: 0.8;
+                opacity: 0.7;
             }
             100% {
                 transform: translateY(100vh);
@@ -180,7 +180,7 @@
                 flake.classList.add('snowflake');
                 flake.style.left = `${Math.random() * 100}vw`;
                 flake.style.top = `${Math.random() * 100}vh`;
-                flake.style.width = `${Math.random() * 10 + 5}px`;
+                flake.style.width = `${Math.random() * 8 + 4}px`; // Pienempi koko
                 flake.style.height = flake.style.width;
                 flake.style.animationDuration = `${Math.random() * 10 + 10}s`;
                 snowContainer.appendChild(flake);
@@ -218,13 +218,13 @@
             audioPlayer.volume = event.target.value;
         });
 
-        // Funktio sateen seuraamiseksi hiirtä
+        // Funktio lumisateen seuraamiseksi hiirtä
         document.addEventListener('mousemove', (event) => {
             const drops = document.querySelectorAll('.snowflake');
             drops.forEach(drop => {
-                const xOffset = (event.clientX - window.innerWidth / 2) * 0.05;
-                const yOffset = (event.clientY - window.innerHeight / 2) * 0.05;
-                drop.style.transform = `rotate(${xOffset}deg) translateY(${event.clientY}px)`;
+                const xOffset = (event.clientX - window.innerWidth / 2) * 0.1;
+                const yOffset = (event.clientY - window.innerHeight / 2) * 0.1;
+                drop.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
             });
         });
     </script>
