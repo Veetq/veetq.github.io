@@ -23,6 +23,7 @@
             color: #333;
             text-align: center;
             z-index: 10; /* Teksti on päällimmäinen */
+            display: none; /* Piilottaa tekstin aluksi */
         }
         #playButton {
             max-width: 100%;
@@ -79,15 +80,15 @@
             top: 120px; /* Sijoita tekstialue alemmaksi, jotta se ei peitä tekstiä */
             width: 80%;
             height: 300px; /* Voit säätää korkeuden tarpeen mukaan */
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #ccc;
-            border-radius: 10px;
+            background: transparent; /* Ei taustaa */
+            border: none; /* Ei reunoja */
             padding: 20px;
             font-size: 24px; /* Suuri fonttikoko */
             font-family: 'Arial', sans-serif;
             color: #333;
-            overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
+            display: none; /* Piilottaa tekstialueen aluksi */
             z-index: 10; /* Teksti on päällimmäinen */
+            overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
         }
         audio {
             display: none; /* Piilottaa audio-elementin */
@@ -108,8 +109,8 @@
     <div id="volumeControls">
         <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
     </div>
-    <div id="largeTextArea" contenteditable="true">
-        Kirjoita tänne paljon tekstiä. Tämä alue on tarkoitettu suurelle määrälle tekstiä, joten voit lisätä kaikki tarvitsemasi tiedot ja ajatukset tänne.
+    <div id="largeTextArea">
+        we love pöhnä <3
     </div>
 
     <script>
@@ -119,6 +120,7 @@
         const audioPlayer = document.getElementById('audioPlayer');
         const bouncingVideo = document.getElementById('bouncingVideo');
         const volumeControl = document.getElementById('volume');
+        const largeTextArea = document.getElementById('largeTextArea');
         
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
@@ -126,6 +128,7 @@
             playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
+            largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
             startBouncing(); // Käynnistää pomppimisen
         });
 
