@@ -48,13 +48,12 @@
         #volumeControls input[type="range"] {
             -webkit-appearance: none;
             width: 100px;
-            height: 20px;
-            background: transparent; /* Ei taustaa */
+            height: 8px; /* Pienempi korkeus */
+            background: #ddd;
             border-radius: 10px;
             outline: none;
             margin: 10px 0;
             cursor: pointer;
-            position: relative;
         }
         #volumeControls input[type="range"]::-webkit-slider-runnable-track {
             height: 8px;
@@ -72,24 +71,6 @@
             transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
-            background: #ff8a50; /* Väri vaihtuessa */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Lisää hohtoa */
-        }
-        #volumeControls input[type="range"]::-moz-range-track {
-            height: 8px;
-            background: #ddd;
-            border-radius: 10px;
-        }
-        #volumeControls input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ff5722;
-            cursor: pointer;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
-        }
-        #volumeControls input[type="range"]::-moz-range-thumb:hover {
             background: #ff8a50; /* Väri vaihtuessa */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Lisää hohtoa */
         }
@@ -129,7 +110,7 @@
         <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
     </div>
     <div id="largeTextArea">
-        Kirjoita tänne paljon tekstiä. Tämä alue on tarkoitettu suurelle määrälle tekstiä, joten voit lisätä kaikki tarvitsemasi tiedot ja ajatukset tänne.
+        we love pöhnä <3
     </div>
 
     <script>
@@ -156,8 +137,8 @@
             const video = bouncingVideo;
             let x = Math.random() * (window.innerWidth - video.clientWidth);
             let y = Math.random() * (window.innerHeight - video.clientHeight);
-            let dx = 1; // Muutos x-suunnassa (hidastettu)
-            let dy = 1; // Muutos y-suunnassa (hidastettu)
+            let dx = 0.5; // Muutos x-suunnassa (hidastettu)
+            let dy = 0.5; // Muutos y-suunnassa (hidastettu)
             const width = window.innerWidth;
             const height = window.innerHeight;
 
