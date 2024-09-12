@@ -54,6 +54,7 @@
             outline: none;
             margin: 10px 0;
             cursor: pointer;
+            position: relative;
         }
         #volumeControls input[type="range"]::-webkit-slider-runnable-track {
             height: 10px;
@@ -69,8 +70,23 @@
             cursor: pointer;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
             transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
+            position: relative; /* Varmistaa, että sliderin säätöosa on oikein viivalla */
+            z-index: 1;
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
+            background: #ff8a50; /* Väri vaihtuessa */
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.7); /* Lisää hohtoa */
+        }
+        #volumeControls input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #ff5722;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
+        }
+        #volumeControls input[type="range"]::-moz-range-thumb:hover {
             background: #ff8a50; /* Väri vaihtuessa */
             box-shadow: 0 0 12px rgba(0, 0, 0, 0.7); /* Lisää hohtoa */
         }
