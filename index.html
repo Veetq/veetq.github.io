@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Greetings from Veeti</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon"> <!-- Favicon -->
     <style>
         body {
             margin: 0;
@@ -54,6 +55,7 @@
             margin: 10px 0;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -94,6 +96,7 @@
             display: none; /* Piilottaa tekstialueen aluksi */
             z-index: 10; /* Teksti on päällimmäinen */
             overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
+            text-align: center;
         }
         audio {
             display: none; /* Piilottaa audio-elementin */
@@ -101,7 +104,7 @@
     </style>
 </head>
 <body>
-    <div id="text">PAINA PÖHNÄÄ</div>
+    <div id="text">we love pöhnä <3</div>
     <img id="playButton" src="kuva.gif" alt="GIF-kuva">
     <video id="bouncingVideo" autoplay loop muted>
         <source src="pomppiva.mp4" type="video/mp4">
@@ -142,8 +145,8 @@
             const video = bouncingVideo;
             let x = Math.random() * (window.innerWidth - video.clientWidth);
             let y = Math.random() * (window.innerHeight - video.clientHeight);
-            let dx = 3; // Muutos x-suunnassa
-            let dy = 3; // Muutos y-suunnassa
+            let dx = 1; // Muutos x-suunnassa (hidastettu)
+            let dy = 1; // Muutos y-suunnassa (hidastettu)
             const width = window.innerWidth;
             const height = window.innerHeight;
 
