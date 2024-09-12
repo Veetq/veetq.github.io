@@ -16,7 +16,6 @@
             height: 100vh;
             background-color: #1f2120; /* Taustaväri */
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
-            position: relative; /* Tarvitaan sateen sijoittamiseen */
         }
         #text {
             font-size: 72px; /* Suuri fonttikoko */
@@ -48,6 +47,7 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Working style */
+            z-index: 20; /* Säilyttää volumeControls päällimmäisenä */
         }
         #volumeControls input[type="range"] {
             -webkit-appearance: none;
@@ -98,28 +98,28 @@
         audio {
             display: none; /* Piilottaa audio-elementin */
         }
-
-        /* Sateen tyyli */
+        /* Sateen tyylit */
         .rain {
             position: absolute;
-            top: 0;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1;
+            z-index: 5; /* Takana, mutta edellä taustaväriä */
+            display: none; /* Piilottaa sateen oletusarvoisesti */
         }
-        .rain .drop {
+        .drop {
             position: absolute;
-            width: 2px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.7);
-            animation: fall 0.5s linear infinite;
+            bottom: 100%;
+            width: 15px;
+            height: 120px;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.7); /* Vaalean sateen pisarat */
+            animation: drop 0.5s linear infinite;
         }
-        @keyframes fall {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
+        @keyframes drop {
+            0% { transform: translateY(0vh); }
+            100% { transform: translateY(90vh); }
         }
     </style>
 </head>
@@ -140,9 +140,7 @@
     <div id="largeTextArea">
         we love pöhnä <3
     </div>
-
-    <!-- Sateen HTML -->
-    <div class="rain" id="rain"></div>
+    <div id="rain" class="rain"></div> <!-- Sateen säilö -->
 
     <script>
         // Hae elementit
@@ -153,7 +151,7 @@
         const volumeControl = document.getElementById('volume');
         const largeTextArea = document.getElementById('largeTextArea');
         const rain = document.getElementById('rain');
-
+        
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
             text.style.display = 'none'; // Poistaa tekstin näkyvistä
@@ -161,7 +159,9 @@
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
+            rain.style.display = 'block'; // Näyttää sateen
             startBouncing(); // Käynnistää pomppimisen
+            startRain(); // Käynnistää sateen
         });
 
         // Funktio pomppivan videon liikuttamiseksi
@@ -190,25 +190,25 @@
             animate();
         }
 
+        // Funktio sateen luomiseksi
+        function startRain() {
+            const rainContainer = document.getElementById('rain');
+            rainContainer.innerHTML = ''; // Tyhjentää aiemmat pisarat
+
+            const numDrops = 100; // Pisaroiden määrä
+            for (let i = 0; i < numDrops; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'drop';
+                drop.style.left = `${Math.random() * 100}vw`; // Sateen aloituskohta vaakasuunnassa
+                drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`; // Sateen nopeus
+                rainContainer.appendChild(drop);
+            }
+        }
+
         // Lisää tapahtumankäsittelijä äänenvoimakkuuden säätimelle
         volumeControl.addEventListener('input', (event) => {
             audioPlayer.volume = event.target.value;
         });
-
-        // Funktio sateen luomiseen
-        function createRain() {
-            const rainDrops = 100; // Määrä sadepisaroita
-            for (let i = 0; i < rainDrops; i++) {
-                const drop = document.createElement('div');
-                drop.className = 'drop';
-                drop.style.left = `${Math.random() * 100}vw`; // Satunnainen vasemman reunan sijainti
-                drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`; // Satunnainen nopeus
-                rain.appendChild(drop);
-            }
-        }
-
-        // Luo sadepisarat sivun latauksen yhteydessä
-        window.onload = createRain;
     </script>
 </body>
 </html>
