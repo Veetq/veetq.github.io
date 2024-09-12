@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #000; /* Musta tausta */
+            background-color: #1f2120; /* Uusi taustaväri */
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
         }
         #text {
@@ -47,34 +47,32 @@
         }
         #volumeControls input[type="range"] {
             -webkit-appearance: none;
-            width: 100px;
-            height: 8px; /* Pienempi korkeus */
-            background: #333; /* Tummempi tausta */
-            border-radius: 10px;
+            width: 120px; /* Leveämpi säätöalue */
+            height: 10px; /* Korkeampi alue */
+            background: #444; /* Tumma tausta */
+            border-radius: 5px;
             outline: none;
             margin: 10px 0;
             cursor: pointer;
-            position: relative; /* Korjaa säätimen sijaintia */
         }
         #volumeControls input[type="range"]::-webkit-slider-runnable-track {
-            height: 8px;
-            background: #333; /* Tummempi tausta */
-            border-radius: 10px;
+            height: 10px;
+            background: #444; /* Tumma tausta */
+            border-radius: 5px;
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
             background: #ff5722;
             cursor: pointer;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
             transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
-            position: relative; /* Varmistaa, että sliderin säätöosa on oikein viivalla */
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
             background: #ff8a50; /* Väri vaihtuessa */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Lisää hohtoa */
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.7); /* Lisää hohtoa */
         }
         #largeTextArea {
             position: absolute;
