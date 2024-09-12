@@ -14,7 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1f2120; /* Uusi taustaväri */
+            background-color: #1f2120; /* Taustaväri */
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
         }
         #text {
@@ -60,6 +60,7 @@
             height: 10px;
             background: #444; /* Tumma tausta */
             border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Hohkava tausta */
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -70,8 +71,8 @@
             cursor: pointer;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
             transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
-            position: relative; /* Varmistaa, että sliderin säätöosa on oikein viivalla */
-            z-index: 1;
+            position: absolute; /* Keskittää pallon viivaan */
+            top: -8px; /* Korjaa pallon sijaintia viivalla */
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
             background: #ff8a50; /* Väri vaihtuessa */
@@ -85,6 +86,7 @@
             cursor: pointer;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
             transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
+            position: relative; /* Keskittää pallon viivaan */
         }
         #volumeControls input[type="range"]::-moz-range-thumb:hover {
             background: #ff8a50; /* Väri vaihtuessa */
