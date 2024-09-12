@@ -47,27 +47,37 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Working style */
-   #volumeControls input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.7); /* Musta pallo */
-    cursor: pointer;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-#volumeControls input[type="range"]::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.7); /* Musta pallo */
-    cursor: pointer;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
+        }
+        #volumeControls input[type="range"] {
+            -webkit-appearance: none;
+            width: 120px; /* Leveämpi säätöalue */
+            height: 10px; /* Korkeampi alue */
+            background: #444; /* Tumma tausta */
+            border-radius: 5px;
+            outline: none;
+            margin: 10px 0;
+            cursor: pointer;
+            position: relative;
+        }
+        #volumeControls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7); /* Musta pallo */
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        #volumeControls input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7); /* Musta pallo */
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
         #largeTextArea {
             position: absolute;
             top: 120px; /* Sijoita tekstialue alemmaksi, jotta se ei peitä tekstiä */
