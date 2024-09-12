@@ -29,9 +29,18 @@
         }
         #bouncingVideo {
             position: absolute;
-            width: 100px; /* Voit säätää kokoa tarpeen mukaan */
+            width: 400px; /* Säädä videon kokoa tarpeen mukaan */
             height: auto;
             display: none; /* Piilottaa pomppivan videon aluksi */
+        }
+        #volumeControls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
         audio {
             display: none; /* Piilottaa audio-elementin */
@@ -49,6 +58,10 @@
         <source src="musa.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+    <div id="volumeControls">
+        <label for="volume">Äänenvoimakkuus:</label>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+    </div>
 
     <script>
         // Hae elementit
@@ -56,6 +69,7 @@
         const text = document.getElementById('text');
         const audioPlayer = document.getElementById('audioPlayer');
         const bouncingVideo = document.getElementById('bouncingVideo');
+        const volumeControl = document.getElementById('volume');
         
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
@@ -71,8 +85,8 @@
             const video = bouncingVideo;
             let x = Math.random() * (window.innerWidth - video.clientWidth);
             let y = Math.random() * (window.innerHeight - video.clientHeight);
-            const dx = 2; // Muutos x-suunnassa
-            const dy = 2; // Muutos y-suunnassa
+            const dx = 3; // Muutos x-suunnassa
+            const dy = 3; // Muutos y-suunnassa
             const width = window.innerWidth;
             const height = window.innerHeight;
 
@@ -91,6 +105,11 @@
 
             animate();
         }
+
+        // Lisää tapahtumankäsittelijä äänenvoimakkuuden säätimelle
+        volumeControl.addEventListener('input', (event) => {
+            audioPlayer.volume = event.target.value;
+        });
     </script>
 </body>
 </html>
