@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>greetings from veeti</title>
+    <title>Greetings from Veeti</title>
     <style>
         body {
             margin: 0;
@@ -32,7 +32,7 @@
         }
         #bouncingVideo {
             position: absolute;
-            width: 500px; /* Säädä videon kokoa tarpeen mukaan */
+            width: 300px; /* Pienennetty videon koko */
             height: auto;
             display: none; /* Piilottaa pomppivan videon aluksi */
             opacity: 0.6; /* Läpinäkyvyys */
@@ -42,21 +42,18 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             z-index: 10; /* Varmistaa, että säätimet ovat päällimmäisiä */
         }
         #volumeControls input[type="range"] {
             -webkit-appearance: none;
             width: 100px;
             height: 20px;
-            background: rgba(0, 0, 0, 0.2);
+            background: transparent; /* Ei taustaa */
             border-radius: 10px;
             outline: none;
             margin: 10px 0;
             cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -66,6 +63,10 @@
             background: #ff5722;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease; /* Sujuva väri muutos */
+        }
+        #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
+            background: #ff8a50; /* Väri vaihtuessa */
         }
         #volumeControls input[type="range"]::-moz-range-thumb {
             width: 20px;
@@ -74,6 +75,10 @@
             background: #ff5722;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease; /* Sujuva väri muutos */
+        }
+        #volumeControls input[type="range"]::-moz-range-thumb:hover {
+            background: #ff8a50; /* Väri vaihtuessa */
         }
         #largeTextArea {
             position: absolute;
@@ -110,7 +115,7 @@
         <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
     </div>
     <div id="largeTextArea">
-        we love pöhnä <3
+        Kirjoita tänne paljon tekstiä. Tämä alue on tarkoitettu suurelle määrälle tekstiä, joten voit lisätä kaikki tarvitsemasi tiedot ja ajatukset tänne.
     </div>
 
     <script>
@@ -137,8 +142,8 @@
             const video = bouncingVideo;
             let x = Math.random() * (window.innerWidth - video.clientWidth);
             let y = Math.random() * (window.innerHeight - video.clientHeight);
-            const dx = 3; // Muutos x-suunnassa
-            const dy = 3; // Muutos y-suunnassa
+            let dx = 3; // Muutos x-suunnassa
+            let dy = 3; // Muutos y-suunnassa
             const width = window.innerWidth;
             const height = window.innerHeight;
 
