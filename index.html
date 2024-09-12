@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@LURKKI@</title>
+    <title>Verkkosivuni</title>
     <style>
         body {
             margin: 0;
@@ -14,10 +14,12 @@
             align-items: center;
             height: 100vh;
             background-color: #f4f4f4;
+            text-align: center;
         }
         img {
             max-width: 100%;
             height: auto;
+            cursor: pointer; /* Näyttää osoittimen, kun kuvaa voi klikata */
         }
         audio {
             display: none; /* Piilottaa audio-elementin */
@@ -25,10 +27,24 @@
     </style>
 </head>
 <body>
-    <img src="kuva.gif" alt="GIF-kuva">
-    <audio autoplay loop>
+    <img id="playButton" src="kuva.gif" alt="GIF-kuva">
+    <audio id="audioPlayer">
         <source src="musa.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+
+    <script>
+        // Hae elementit
+        const playButton = document.getElementById('playButton');
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        // Lisää tapahtumankäsittelijä kuvan klikkaukselle
+        playButton.addEventListener('click', () => {
+            // Tarkista, onko musiikki jo toistamassa
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+            }
+        });
+    </script>
 </body>
 </html>
