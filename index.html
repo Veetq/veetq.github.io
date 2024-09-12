@@ -54,8 +54,12 @@
             outline: none;
             margin: 10px 0;
             cursor: pointer;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
             position: relative;
+        }
+        #volumeControls input[type="range"]::-webkit-slider-runnable-track {
+            height: 8px;
+            background: #ddd;
+            border-radius: 10px;
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -65,10 +69,16 @@
             background: #ff5722;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            transition: background 0.3s ease; /* Sujuva väri muutos */
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
             background: #ff8a50; /* Väri vaihtuessa */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Lisää hohtoa */
+        }
+        #volumeControls input[type="range"]::-moz-range-track {
+            height: 8px;
+            background: #ddd;
+            border-radius: 10px;
         }
         #volumeControls input[type="range"]::-moz-range-thumb {
             width: 20px;
@@ -77,10 +87,11 @@
             background: #ff5722;
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            transition: background 0.3s ease; /* Sujuva väri muutos */
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
         }
         #volumeControls input[type="range"]::-moz-range-thumb:hover {
             background: #ff8a50; /* Väri vaihtuessa */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Lisää hohtoa */
         }
         #largeTextArea {
             position: absolute;
