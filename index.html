@@ -177,6 +177,7 @@
                 const drop = document.createElement('div');
                 drop.classList.add('drop');
                 drop.style.left = `${Math.random() * 100}vw`; // Sateen x-sijainti
+                drop.style.top = `${-Math.random() * 100}px`; // Sateen y-sijainti aluksi piilossa
                 drop.style.animationDelay = `${Math.random() * 2}s`; // Alkaa eri aikoihin
                 rainContainer.appendChild(drop);
             }
