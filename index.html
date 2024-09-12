@@ -117,17 +117,7 @@
             opacity: 0.8;
             border-radius: 50%;
             pointer-events: none;
-            animation: snow 10s linear infinite;
-        }
-        @keyframes snow {
-            0% {
-                transform: translateY(-100vh);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(100vh);
-                opacity: 0.5;
-            }
+            transition: transform 0.1s; /* Smooth movement */
         }
     </style>
 </head>
@@ -182,7 +172,6 @@
                 flake.style.top = `${Math.random() * 100}vh`;
                 flake.style.width = `${Math.random() * 10 + 5}px`;
                 flake.style.height = flake.style.width;
-                flake.style.animationDuration = `${Math.random() * 10 + 10}s`;
                 snowContainer.appendChild(flake);
             }
         }
@@ -225,15 +214,9 @@
                 const rect = drop.getBoundingClientRect();
                 const xOffset = event.clientX - (rect.left + rect.width / 2);
                 const yOffset = event.clientY - (rect.top + rect.height / 2);
-                const distance = Math.sqrt(xOffset ** 2 + yOffset ** 2);
-                const maxDistance = 150; // Enimmäiset etäisyys
 
-                if (distance < maxDistance) {
-                    const scale = 1 + (1 - distance / maxDistance) * 0.5; // Skaalaus etäisyyden mukaan
-                    drop.style.transform = `translate(${xOffset * 0.05}px, ${yOffset * 0.05}px) scale(${scale})`;
-                } else {
-                    drop.style.transform = `translate(0, 0) scale(1)`;
-                }
+                // Apply translation to follow the cursor
+                drop.style.transform = `translate(${xOffset * 0.05}px, ${yOffset * 0.05}px)`;
             });
         });
     </script>
