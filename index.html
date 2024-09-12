@@ -98,33 +98,31 @@
         audio {
             display: none; /* Piilottaa audio-elementin */
         }
-
-        /* Sateen tyylit */
         .rain {
-            position: absolute;
+            position: fixed;
+            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1; /* Sateen kerros on alhaalla */
             pointer-events: none; /* Estää sateen klikkauksen */
-            display: none; /* Sateen näkyvyys */
+            z-index: 5; /* Sateen kerros */
+            overflow: hidden;
         }
-
         .drop {
             position: absolute;
-            width: 5px; /* Ohuempi sadepisara */
-            height: 120px; /* Pisaran pituus */
-            background: rgba(255, 255, 255, 0.6); /* Vaalea sadepisara */
-            border-radius: 2px;
-            animation: drop 1s linear infinite;
+            width: 2px; /* Ohuempi sadepisara */
+            height: 120px; /* Pidempi sadepisara */
+            background: rgba(255, 255, 255, 0.1); /* Himmeä valkoinen */
+            border-radius: 50%;
+            animation: drop 2s linear infinite; /* Hitaampi sade */
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* 3D-efekti */
         }
-
         @keyframes drop {
             0% {
-                transform: translateY(-120px); /* Alkaa yläreunasta */
+                transform: translateY(-100vh);
             }
             100% {
-                transform: translateY(100vh); /* Päättyy näytön alareunaan */
+                transform: translateY(100vh);
             }
         }
     </style>
@@ -146,7 +144,7 @@
     <div id="largeTextArea">
         we love pöhnä <3
     </div>
-    <div class="rain" id="rainContainer"></div> <!-- Lisää sade säiliö -->
+    <div id="rainContainer" class="rain"></div> <!-- Sade-elementti -->
 
     <script>
         // Hae elementit
@@ -166,9 +164,22 @@
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
             rainContainer.style.display = 'block'; // Näyttää sateen
-            startBouncing(); // Käynnistää pomppimisen
             startRain(); // Käynnistää sateen
+            startBouncing(); // Käynnistää pomppimisen
         });
+
+        // Funktio sateen luomiseen
+        function startRain() {
+            rainContainer.innerHTML = ''; // Tyhjentää aiemmat sateet
+            const numDrops = 100; // Sateen määrä
+            for (let i = 0; i < numDrops; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('drop');
+                drop.style.left = `${Math.random() * 100}vw`; // Sateen x-sijainti
+                drop.style.animationDelay = `${Math.random() * 2}s`; // Alkaa eri aikoihin
+                rainContainer.appendChild(drop);
+            }
+        }
 
         // Funktio pomppivan videon liikuttamiseksi
         function startBouncing() {
@@ -194,21 +205,6 @@
             }
 
             animate();
-        }
-
-        // Funktio sateen luomiseksi
-        function startRain() {
-            const numberOfDrops = 200; // Pisaroiden määrä
-            const rain = rainContainer;
-            rain.innerHTML = ''; // Tyhjennä säiliö ennen uutta sateen luomista
-
-            for (let i = 0; i < numberOfDrops; i++) {
-                const drop = document.createElement('div');
-                drop.className = 'drop';
-                drop.style.left = `${Math.random() * 100}vw`; // Satunnainen sijainti
-                drop.style.animationDuration = `${Math.random() * 1 + 1}s`; // Satunnainen kesto
-                rain.appendChild(drop);
-            }
         }
 
         // Lisää tapahtumankäsittelijä äänenvoimakkuuden säätimelle
