@@ -98,33 +98,35 @@
         audio {
             display: none; /* Piilottaa audio-elementin */
         }
-        .rain {
+        /* Snowfall effect styles */
+        .snow {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Estää sateen klikkauksen */
-            z-index: 5; /* Sateen kerros */
-            overflow: hidden;
-            visibility: hidden; /* Piilottaa sateen aluksi */
+            pointer-events: none;
+            z-index: 5;
+            visibility: hidden; /* Piilottaa lumisateen aluksi */
         }
-        .drop {
+        .snowflake {
             position: absolute;
-            width: 2px; /* Ohuempi sadepisara */
-            height: 100px; /* Pidempi sadepisara */
-            background: rgba(0, 0, 255, 0.2); /* Sinertävä sade */
-            border-radius: 30%;
-            animation: drop 2s linear infinite; /* Hitaampi sade */
-            box-shadow: 0 0 5px rgba(0, 0, 255, 0.3); /* 3D-efekti */
-            transform: rotate(10deg); /* Sateen kulma */
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            opacity: 0.8;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: snow 10s linear infinite;
         }
-        @keyframes drop {
+        @keyframes snow {
             0% {
-                transform: translateY(-100vh) rotate(10deg);
+                transform: translateY(-100vh);
+                opacity: 0.8;
             }
             100% {
-                transform: translateY(100vh) rotate(10deg);
+                transform: translateY(100vh);
+                opacity: 0.5;
             }
         }
     </style>
@@ -146,7 +148,7 @@
     <div id="largeTextArea">
         we love pöhnä <3
     </div>
-    <div id="rainContainer" class="rain"></div> <!-- Sade-elementti -->
+    <div id="snowContainer" class="snow"></div> <!-- Lumisateen elementti -->
 
     <script>
         // Hae elementit
@@ -156,7 +158,7 @@
         const bouncingVideo = document.getElementById('bouncingVideo');
         const volumeControl = document.getElementById('volume');
         const largeTextArea = document.getElementById('largeTextArea');
-        const rainContainer = document.getElementById('rainContainer');
+        const snowContainer = document.getElementById('snowContainer');
 
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
@@ -165,22 +167,23 @@
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
-            rainContainer.style.visibility = 'visible'; // Näyttää sateen
-            startRain(); // Käynnistää sateen
+            snowContainer.style.visibility = 'visible'; // Näyttää lumisateen
+            startSnow(); // Käynnistää lumisateen
             startBouncing(); // Käynnistää pomppimisen
         });
 
-        // Funktio sateen luomiseen
-        function startRain() {
-            rainContainer.innerHTML = ''; // Tyhjentää aiemmat sateet
-            const numDrops = 100; // Sateen määrä
-            for (let i = 0; i < numDrops; i++) {
-                const drop = document.createElement('div');
-                drop.classList.add('drop');
-                drop.style.left = `${Math.random() * 100}vw`; // Sateen x-sijainti
-                drop.style.top = `${-Math.random() * 100}px`; // Sateen y-sijainti aluksi piilossa
-                drop.style.animationDelay = `${Math.random() * 2}s`; // Alkaa eri aikoihin
-                rainContainer.appendChild(drop);
+        // Funktio lumisateen luomiseen
+        function startSnow() {
+            const snowflakes = 100; // Lumihiutaleiden määrä
+            for (let i = 0; i < snowflakes; i++) {
+                const flake = document.createElement('div');
+                flake.classList.add('snowflake');
+                flake.style.left = `${Math.random() * 100}vw`;
+                flake.style.top = `${Math.random() * 100}vh`;
+                flake.style.width = `${Math.random() * 10 + 5}px`;
+                flake.style.height = flake.style.width;
+                flake.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                snowContainer.appendChild(flake);
             }
         }
 
@@ -217,7 +220,7 @@
 
         // Funktio sateen seuraamiseksi hiirtä
         document.addEventListener('mousemove', (event) => {
-            const drops = document.querySelectorAll('.drop');
+            const drops = document.querySelectorAll('.snowflake');
             drops.forEach(drop => {
                 const xOffset = (event.clientX - window.innerWidth / 2) * 0.05;
                 const yOffset = (event.clientY - window.innerHeight / 2) * 0.05;
