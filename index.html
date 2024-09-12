@@ -43,10 +43,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Working style */
+            z-index: 10; /* Varmistaa, että säätimet ovat päällimmäisiä */
         }
         #volumeControls input[type="range"] {
             -webkit-appearance: none;
@@ -59,24 +56,41 @@
             cursor: pointer;
             position: relative;
         }
+        #volumeControls input[type="range"]::-webkit-slider-runnable-track {
+            height: 10px;
+            background: #444; /* Tumma tausta */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Hohkava tausta */
+        }
         #volumeControls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 25px;
             height: 25px;
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.7); /* Musta pallo */
+            background: rgba(255, 255, 255, 0.7); /* Läpinäkyvä pallo */
             cursor: pointer;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-            transition: background 0.3s ease, box-shadow 0.3s ease;
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
+            position: absolute; /* Keskittää pallon viivalla */
+            top: -8px; /* Korjaa pallon sijaintia viivalla */
+            left: calc((var(--volume) * 100%) - 12px); /* Liikuttaa palloa oikein */
+        }
+        #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
+            background: rgba(255, 255, 255, 1); /* Väri vaihtuessa */
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.7); /* Lisää hohtoa */
         }
         #volumeControls input[type="range"]::-moz-range-thumb {
             width: 25px;
             height: 25px;
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.7); /* Musta pallo */
+            background: rgba(255, 255, 255, 0.7); /* Läpinäkyvä pallo */
             cursor: pointer;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-            transition: background 0.3s ease, box-shadow 0.3s ease;
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
+        }
+        #volumeControls input[type="range"]::-moz-range-thumb:hover {
+            background: rgba(255, 255, 255, 1); /* Väri vaihtuessa */
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.7); /* Lisää hohtoa */
         }
         #largeTextArea {
             position: absolute;
@@ -153,8 +167,8 @@
                 x += dx;
                 y += dy;
 
-                video.style.left = `${x}px`;
-                video.style.top = `${y}px`;
+                video.style.left = ${x}px;
+                video.style.top = ${y}px;
 
                 requestAnimationFrame(animate);
             }
@@ -165,8 +179,17 @@
         // Lisää tapahtumankäsittelijä äänenvoimakkuuden säätimelle
         volumeControl.addEventListener('input', (event) => {
             audioPlayer.volume = event.target.value;
+            updateThumbPosition();
         });
 
+        // Funktio säätimen pallon keskittämiseksi viivalle
+        function updateThumbPosition() {
+            const value = volumeControl.value;
+            volumeControl.style.setProperty('--volume', value);
+        }
+
+        // Alustaa äänenvoimakkuuden säätimen
+        updateThumbPosition();
     </script>
 </body>
 </html>
