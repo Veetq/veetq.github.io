@@ -181,6 +181,13 @@
                 drop.style.animationDelay = `${Math.random() * 2}s`; // Alkaa eri aikoihin
                 rainContainer.appendChild(drop);
             }
+            // Varmistaa, että sateen pisarat alkavat liikkua heti
+            requestAnimationFrame(() => {
+                const drops = rainContainer.querySelectorAll('.drop');
+                drops.forEach(drop => {
+                    drop.style.top = '0px'; // Aseta aloitusasento
+                });
+            });
         }
 
         // Funktio pomppivan videon liikuttamiseksi
