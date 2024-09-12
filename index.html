@@ -47,7 +47,7 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Working style */
-            z-index: 10; /* Volume controls on top */
+            z-index: 10; /* Varmistaa, että säätimet ovat päällimmäisiä */
         }
         #volumeControls input[type="range"] {
             -webkit-appearance: none;
@@ -98,30 +98,33 @@
         audio {
             display: none; /* Piilottaa audio-elementin */
         }
+
+        /* Sateen tyylit */
         .rain {
             position: absolute;
-            top: 0;
             left: 0;
-            width: 50%;
+            width: 100%;
             height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1; /* Rain behind everything else */
-            display: none; /* Hidden by default */
+            z-index: 1; /* Sateen kerros on alhaalla */
+            pointer-events: none; /* Estää sateen klikkauksen */
+            display: none; /* Sateen näkyvyys */
         }
+
         .drop {
             position: absolute;
-            width: 5px;
-            height: 90px;
-            background: rgba(255, 255, 255, 0.6);
-            animation: drop 0.6s linear infinite;
+            width: 5px; /* Ohuempi sadepisara */
+            height: 120px; /* Pisaran pituus */
+            background: rgba(255, 255, 255, 0.6); /* Vaalea sadepisara */
+            border-radius: 2px;
+            animation: drop 1s linear infinite;
         }
+
         @keyframes drop {
             0% {
-                transform: translateY(-100vh);
+                transform: translateY(-120px); /* Alkaa yläreunasta */
             }
             100% {
-                transform: translateY(100vh);
+                transform: translateY(100vh); /* Päättyy näytön alareunaan */
             }
         }
     </style>
@@ -143,7 +146,7 @@
     <div id="largeTextArea">
         we love pöhnä <3
     </div>
-    <div class="rain" id="rain"></div>
+    <div class="rain" id="rainContainer"></div> <!-- Lisää sade säiliö -->
 
     <script>
         // Hae elementit
@@ -153,7 +156,7 @@
         const bouncingVideo = document.getElementById('bouncingVideo');
         const volumeControl = document.getElementById('volume');
         const largeTextArea = document.getElementById('largeTextArea');
-        const rain = document.getElementById('rain');
+        const rainContainer = document.getElementById('rainContainer');
         
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
@@ -162,7 +165,7 @@
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
-            rain.style.display = 'block'; // Näyttää sateen
+            rainContainer.style.display = 'block'; // Näyttää sateen
             startBouncing(); // Käynnistää pomppimisen
             startRain(); // Käynnistää sateen
         });
@@ -195,12 +198,15 @@
 
         // Funktio sateen luomiseksi
         function startRain() {
-            const numberOfDrops = 1000;
+            const numberOfDrops = 200; // Pisaroiden määrä
+            const rain = rainContainer;
+            rain.innerHTML = ''; // Tyhjennä säiliö ennen uutta sateen luomista
+
             for (let i = 0; i < numberOfDrops; i++) {
-                let drop = document.createElement('div');
-                drop.classList.add('drop');
-                drop.style.left = `${Math.random() * 100}vw`;
-                drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+                const drop = document.createElement('div');
+                drop.className = 'drop';
+                drop.style.left = `${Math.random() * 100}vw`; // Satunnainen sijainti
+                drop.style.animationDuration = `${Math.random() * 1 + 1}s`; // Satunnainen kesto
                 rain.appendChild(drop);
             }
         }
@@ -209,7 +215,7 @@
         volumeControl.addEventListener('input', (event) => {
             audioPlayer.volume = event.target.value;
         });
+
     </script>
 </body>
 </html>
-
