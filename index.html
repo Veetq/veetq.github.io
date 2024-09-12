@@ -125,20 +125,46 @@
         <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
     </div>
     <div id="largeTextArea">
-        The Meaning of the Word "Pöhnä" is Deeper Than You Would Expect
-
-        In the tapestry of Finnish language and culture, the word "pöhnä" stands as a testament to the intricate interplay between linguistic evolution and societal values. At first glance, "pöhnä" might seem like a colloquial term, but its origins and usage reveal a richer, more nuanced story. Historically, "pöhnä" emerged in Finnish vernacular as a term describing a particular type of atmospheric haze or fog. It was used to denote the kind of mist that envelops the landscape during the early morning hours, when the world seems to be caught between night and day. This fog, often seen in the quiet rural expanses of Finland, has long been associated with a sense of mystery and introspection. Over time, "pöhnä" evolved beyond its meteorological roots to capture a broader range of meanings. In Finnish culture, it began to symbolize a state of mental fog or confusion—a metaphor for moments when clarity seems elusive. The term reflects a deep cultural understanding of the human condition, acknowledging that just as the physical world can be shrouded in mist, so too can the mind experience periods of uncertainty and lack of direction. The transformation of "pöhnä" from a literal description of fog to a metaphor for psychological states highlights the Finnish appreciation for the interconnectedness of nature and the human experience. It serves as a reminder of how language can evolve to encompass complex emotional and cognitive states, bridging the gap between the external environment and internal realities. In contemporary usage, "pöhnä" continues to resonate with Finns as both a descriptive term and a symbol of personal reflection. It underscores the profound relationship between language and culture, illustrating how a single word can encapsulate the essence of a shared experience and reflect the depth of a society's emotional landscape. Thus, the word "pöhnä" invites us to look beyond its surface and appreciate the rich historical and cultural contexts that shape its meaning. It is a reminder that even the simplest words can carry profound significance, offering insight into the values and experiences of those who use them.
+        we love pöhnä <3
     </div>
 
     <script>
-        // Hae elementit
         const playButton = document.getElementById('playButton');
         const text = document.getElementById('text');
         const audioPlayer = document.getElementById('audioPlayer');
         const bouncingVideo = document.getElementById('bouncingVideo');
         const volumeControl = document.getElementById('volume');
         const largeTextArea = document.getElementById('largeTextArea');
-        
+
+        // Funktio pomppivan videon hallintaan
+        function animateVideo() {
+            const video = bouncingVideo;
+            const speed = 2; // Pienempi nopeus
+            let x = Math.random() * (window.innerWidth - video.clientWidth);
+            let y = Math.random() * (window.innerHeight - video.clientHeight);
+            let dx = (Math.random() - 0.5) * speed;
+            let dy = (Math.random() - 0.5) * speed;
+
+            function update() {
+                x += dx;
+                y += dy;
+
+                if (x < 0 || x + video.clientWidth > window.innerWidth) {
+                    dx *= -1;
+                }
+                if (y < 0 || y + video.clientHeight > window.innerHeight) {
+                    dy *= -1;
+                }
+
+                video.style.left = `${x}px`;
+                video.style.top = `${y}px`;
+
+                requestAnimationFrame(update);
+            }
+
+            update();
+        }
+
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
             text.style.display = 'none'; // Poistaa tekstin näkyvistä
@@ -146,8 +172,9 @@
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuremman tekstilaatikon
+            animateVideo(); // Käynnistää videon animaation
         });
-        
+
         // Äänenvoimakkuuden säätö
         volumeControl.addEventListener('input', () => {
             audioPlayer.volume = volumeControl.value; // Säätää äänenvoimakkuuden
