@@ -73,7 +73,6 @@
             transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
             position: absolute;
             top: -7px; /* Korjaa pallon sijaintia viivalla */
-            left: calc((var(--volume) * 100%) - 12px); /* Liikuttaa palloa oikein */
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
             background: rgba(255, 255, 255, 1); /* Väri vaihtuessa */
@@ -155,8 +154,8 @@
             const video = bouncingVideo;
             let x = Math.random() * (window.innerWidth - video.clientWidth);
             let y = Math.random() * (window.innerHeight - video.clientHeight);
-            let dx = 0.5; // Muutos x-suunnassa (hidastettu)
-            let dy = 0.5; // Muutos y-suunnassa (hidastettu)
+            let dx = 1; // Muutos x-suunnassa (hidastettu)
+            let dy = 1; // Muutos y-suunnassa (hidastettu)
             const width = window.innerWidth;
             const height = window.innerHeight;
 
