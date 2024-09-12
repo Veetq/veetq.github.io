@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LURKKI IN ACTION BE AWARE</title>
+    <title>Verkkosivuni</title>
     <style>
         body {
             margin: 0;
@@ -27,13 +27,11 @@
             height: auto;
             cursor: pointer; /* Näyttää osoittimen, kun kuvaa voi klikata */
         }
-        #bouncingImage {
+        #bouncingVideo {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100px; /* Voit säätää kokoa tarpeen mukaan */
             height: auto;
-            display: none; /* Piilottaa pomppivan kuvan aluksi */
+            display: none; /* Piilottaa pomppivan videon aluksi */
         }
         audio {
             display: none; /* Piilottaa audio-elementin */
@@ -43,7 +41,10 @@
 <body>
     <div id="text">PAINA PÖHNÄÄ</div>
     <img id="playButton" src="kuva.gif" alt="GIF-kuva">
-    <img id="bouncingImage" src="pomppiva.png" alt="Pomppiva kuva">
+    <video id="bouncingVideo" autoplay loop muted>
+        <source src="pomppiva.mp4" type="video/mp4">
+        Your browser does not support the video element.
+    </video>
     <audio id="audioPlayer">
         <source src="musa.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -54,34 +55,36 @@
         const playButton = document.getElementById('playButton');
         const text = document.getElementById('text');
         const audioPlayer = document.getElementById('audioPlayer');
-        const bouncingImage = document.getElementById('bouncingImage');
+        const bouncingVideo = document.getElementById('bouncingVideo');
         
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
             text.style.display = 'none'; // Poistaa tekstin näkyvistä
+            playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
             audioPlayer.play(); // Käynnistää musiikin
-            bouncingImage.style.display = 'block'; // Näyttää pomppivan kuvan
+            bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             startBouncing(); // Käynnistää pomppimisen
         });
 
-        // Funktio pomppivan kuvan liikuttamiseksi
+        // Funktio pomppivan videon liikuttamiseksi
         function startBouncing() {
-            let x = 0, y = 0;
+            const video = bouncingVideo;
+            let x = Math.random() * (window.innerWidth - video.clientWidth);
+            let y = Math.random() * (window.innerHeight - video.clientHeight);
             const dx = 2; // Muutos x-suunnassa
             const dy = 2; // Muutos y-suunnassa
             const width = window.innerWidth;
             const height = window.innerHeight;
-            const img = bouncingImage;
 
             function animate() {
-                if (x + img.clientWidth > width || x < 0) dx *= -1;
-                if (y + img.clientHeight > height || y < 0) dy *= -1;
+                if (x + video.clientWidth > width || x < 0) dx *= -1;
+                if (y + video.clientHeight > height || y < 0) dy *= -1;
 
                 x += dx;
                 y += dy;
 
-                img.style.left = `${x}px`;
-                img.style.top = `${y}px`;
+                video.style.left = `${x}px`;
+                video.style.top = `${y}px`;
 
                 requestAnimationFrame(animate);
             }
