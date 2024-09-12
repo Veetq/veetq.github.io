@@ -117,6 +117,7 @@
             border-radius: 50%;
             animation: drop 2s linear infinite; /* Hitaampi sade */
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* 3D-efekti */
+            opacity: 0; /* Aluksi piilossa */
         }
         @keyframes drop {
             0% {
@@ -177,17 +178,17 @@
                 const drop = document.createElement('div');
                 drop.classList.add('drop');
                 drop.style.left = `${Math.random() * 100}vw`; // Sateen x-sijainti
-                drop.style.top = `${Math.random() * 100}vh`; // Sateen y-sijainti aluksi (satunnaisesti piilossa)
+                drop.style.top = `-${Math.random() * 100}vh`; // Alussa piilossa y-sijainti
                 drop.style.animationDelay = `${Math.random() * 2}s`; // Alkaa eri aikoihin
                 rainContainer.appendChild(drop);
             }
-            // Varmistaa, että sateen pisarat alkavat liikkua heti
-            requestAnimationFrame(() => {
+            // Varmistaa, että sateen pisarat alkavat tippua heti
+            setTimeout(() => {
                 const drops = rainContainer.querySelectorAll('.drop');
                 drops.forEach(drop => {
-                    drop.style.top = '0'; // Aseta y-sijainti 0:aan, jolloin pisarat alkavat liikkua heti
+                    drop.style.opacity = '1'; // Näyttää sadepisarat
                 });
-            });
+            }, 100); // Pieni viive ennen sateen näyttämistä
         }
 
         // Funktio pomppivan videon liikuttamiseksi
