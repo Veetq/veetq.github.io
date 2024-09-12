@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pöhnä</title>
+    <title>@LURKKI@</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -18,9 +19,16 @@
             max-width: 100%;
             height: auto;
         }
+        audio {
+            display: none; /* Piilottaa audio-elementin */
+        }
     </style>
 </head>
 <body>
-    <img src="kuva.png" alt="Kuva">
+    <img src="kuva.gif" alt="GIF-kuva">
+    <audio autoplay loop>
+        <source src="musa.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 </body>
 </html>
