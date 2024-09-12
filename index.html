@@ -113,11 +113,11 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background: #fff;
-            opacity: 0.8;
+            background: #0f3159; /* Tummansininen väri */
             border-radius: 50%;
+            opacity: 0.5;
             pointer-events: none;
-            transition: transform 0.1s; /* Smooth movement */
+            transition: transform 0.1s ease-out; /* Sujuva siirtyminen */
         }
     </style>
 </head>
@@ -172,6 +172,7 @@
                 flake.style.top = `${Math.random() * 100}vh`;
                 flake.style.width = `${Math.random() * 10 + 5}px`;
                 flake.style.height = flake.style.width;
+                flake.style.animationDuration = `${Math.random() * 10 + 10}s`;
                 snowContainer.appendChild(flake);
             }
         }
@@ -207,18 +208,17 @@
             audioPlayer.volume = event.target.value;
         });
 
-        // Funktio sateen seuraamiseksi hiirtä
-        document.addEventListener('mousemove', (event) => {
-            const drops = document.querySelectorAll('.snowflake');
-            drops.forEach(drop => {
-                const rect = drop.getBoundingClientRect();
-                const xOffset = event.clientX - (rect.left + rect.width / 2);
-                const yOffset = event.clientY - (rect.top + rect.height / 2);
-
-                // Apply translation to follow the cursor
-                drop.style.transform = `translate(${xOffset * 0.05}px, ${yOffset * 0.05}px)`;
+        // Funktio lumihiutaleiden seuraamiseksi hiiren mukana
+        function updateSnowflakes(event) {
+            const flakes = document.querySelectorAll('.snowflake');
+            flakes.forEach(flake => {
+                const xOffset = (event.clientX - window.innerWidth / 2) * 0.1;
+                const yOffset = (event.clientY - window.innerHeight / 2) * 0.1;
+                flake.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
             });
-        });
+        }
+
+        document.addEventListener('mousemove', updateSnowflakes);
     </script>
 </body>
 </html>
