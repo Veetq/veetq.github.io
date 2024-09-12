@@ -70,8 +70,10 @@
             background: rgba(255, 255, 255, 0.7); /* Läpinäkyvä pallo */
             cursor: pointer;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-            position: absolute;
-            top: -7px; /* Korjaa pallon sijaintia viivalla */
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
+            position: absolute; /* Keskittää pallon viivalla */
+            top: -8px; /* Korjaa pallon sijaintia viivalla */
+            left: calc((var(--volume) * 100%) - 12px); /* Liikuttaa palloa oikein */
         }
         #volumeControls input[type="range"]::-webkit-slider-thumb:hover {
             background: rgba(255, 255, 255, 1); /* Väri vaihtuessa */
@@ -84,6 +86,7 @@
             background: rgba(255, 255, 255, 0.7); /* Läpinäkyvä pallo */
             cursor: pointer;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+            transition: background 0.3s ease, box-shadow 0.3s ease; /* Sujuva väri ja varjo muutos */
         }
         #volumeControls input[type="range"]::-moz-range-thumb:hover {
             background: rgba(255, 255, 255, 1); /* Väri vaihtuessa */
@@ -129,56 +132,64 @@
     </div>
 
     <script>
+        // Hae elementit
         const playButton = document.getElementById('playButton');
         const text = document.getElementById('text');
         const audioPlayer = document.getElementById('audioPlayer');
         const bouncingVideo = document.getElementById('bouncingVideo');
         const volumeControl = document.getElementById('volume');
         const largeTextArea = document.getElementById('largeTextArea');
-
-        // Funktio pomppivan videon hallintaan
-        function animateVideo() {
-            const video = bouncingVideo;
-            const speed = 2; // Pienempi nopeus
-            let x = Math.random() * (window.innerWidth - video.clientWidth);
-            let y = Math.random() * (window.innerHeight - video.clientHeight);
-            let dx = (Math.random() - 0.5) * speed;
-            let dy = (Math.random() - 0.5) * speed;
-
-            function update() {
-                x += dx;
-                y += dy;
-
-                if (x < 0 || x + video.clientWidth > window.innerWidth) {
-                    dx *= -1;
-                }
-                if (y < 0 || y + video.clientHeight > window.innerHeight) {
-                    dy *= -1;
-                }
-
-                video.style.left = `${x}px`;
-                video.style.top = `${y}px`;
-
-                requestAnimationFrame(update);
-            }
-
-            update();
-        }
-
+        
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
             text.style.display = 'none'; // Poistaa tekstin näkyvistä
             playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
-            largeTextArea.style.display = 'block'; // Näyttää suuremman tekstilaatikon
-            animateVideo(); // Käynnistää videon animaation
+            largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
+            startBouncing(); // Käynnistää pomppimisen
         });
 
-        // Äänenvoimakkuuden säätö
-        volumeControl.addEventListener('input', () => {
-            audioPlayer.volume = volumeControl.value; // Säätää äänenvoimakkuuden
+        // Funktio pomppivan videon liikuttamiseksi
+        function startBouncing() {
+            const video = bouncingVideo;
+            let x = Math.random() * (window.innerWidth - video.clientWidth);
+            let y = Math.random() * (window.innerHeight - video.clientHeight);
+            let dx = 0.5; // Muutos x-suunnassa (hidastettu)
+            let dy = 0.5; // Muutos y-suunnassa (hidastettu)
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            function animate() {
+                if (x + video.clientWidth > width || x < 0) dx *= -1;
+                if (y + video.clientHeight > height || y < 0) dy *= -1;
+
+                x += dx;
+                y += dy;
+
+                video.style.left = `${x}px`;
+                video.style.top = `${y}px`;
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        // Lisää tapahtumankäsittelijä äänenvoimakkuuden säätimelle
+        volumeControl.addEventListener('input', (event) => {
+            audioPlayer.volume = event.target.value;
+            updateThumbPosition();
         });
+
+        // Funktio säätimen pallon keskittämiseksi viivalle
+        function updateThumbPosition() {
+            const value = volumeControl.value;
+            volumeControl.style.setProperty('--volume', value);
+        }
+
+        // Alustaa äänenvoimakkuuden säätimen
+        updateThumbPosition();
     </script>
 </body>
 </html>
