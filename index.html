@@ -145,4 +145,13 @@
             playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
-            largeTextArea
+            largeTextArea.style.display = 'block'; // Näyttää suuremman tekstilaatikon
+        });
+        
+        // Äänenvoimakkuuden säätö
+        volumeControl.addEventListener('input', () => {
+            audioPlayer.volume = volumeControl.value; // Säätää äänenvoimakkuuden
+        });
+    </script>
+</body>
+</html>
