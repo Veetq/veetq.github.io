@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verkkosivuni</title>
+    <title>greetings from veeti</title>
     <style>
         body {
             margin: 0;
@@ -17,10 +17,12 @@
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
         }
         #text {
-            font-size: 48px; /* Suuri fonttikoko */
+            font-size: 72px; /* Suuri fonttikoko */
             margin-bottom: 20px;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             color: #333;
+            text-align: center;
+            z-index: 10; /* Teksti on päällimmäinen */
         }
         #playButton {
             max-width: 100%;
@@ -29,9 +31,11 @@
         }
         #bouncingVideo {
             position: absolute;
-            width: 400px; /* Säädä videon kokoa tarpeen mukaan */
+            width: 500px; /* Säädä videon kokoa tarpeen mukaan */
             height: auto;
             display: none; /* Piilottaa pomppivan videon aluksi */
+            opacity: 0.6; /* Läpinäkyvyys */
+            pointer-events: none; /* Estää videon klikkauksen */
         }
         #volumeControls {
             position: absolute;
@@ -41,6 +45,49 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 10; /* Varmistaa, että säätimet ovat päällimmäisiä */
+        }
+        #volumeControls input[type="range"] {
+            -webkit-appearance: none;
+            width: 100px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            outline: none;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        #volumeControls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff5722;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        #volumeControls input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff5722;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        #largeTextArea {
+            position: absolute;
+            top: 120px; /* Sijoita tekstialue alemmaksi, jotta se ei peitä tekstiä */
+            width: 80%;
+            height: 300px; /* Voit säätää korkeuden tarpeen mukaan */
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 24px; /* Suuri fonttikoko */
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
+            z-index: 10; /* Teksti on päällimmäinen */
         }
         audio {
             display: none; /* Piilottaa audio-elementin */
@@ -59,8 +106,10 @@
         Your browser does not support the audio element.
     </audio>
     <div id="volumeControls">
-        <label for="volume">Äänenvoimakkuus:</label>
         <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+    </div>
+    <div id="largeTextArea" contenteditable="true">
+        Kirjoita tänne paljon tekstiä. Tämä alue on tarkoitettu suurelle määrälle tekstiä, joten voit lisätä kaikki tarvitsemasi tiedot ja ajatukset tänne.
     </div>
 
     <script>
