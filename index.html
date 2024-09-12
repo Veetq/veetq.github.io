@@ -110,11 +110,11 @@
         }
         .drop {
             position: absolute;
-            width: 3px; /* Ohuempi sadepisara */
-            height: 100px; /* Pidempi sadepisara */
-            background: rgba(255, 255, 255, 0.2); /* Himmeä valkoinen */
+            width: 2px; /* Ohuempi sadepisara */
+            height: 120px; /* Pidempi sadepisara */
+            background: rgba(255, 255, 255, 0.1); /* Himmeä valkoinen */
             border-radius: 50%;
-            animation: drop 1s linear infinite;
+            animation: drop 2s linear infinite; /* Hitaampi sade */
             box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* 3D-efekti */
         }
         @keyframes drop {
@@ -211,6 +211,7 @@
         volumeControl.addEventListener('input', (event) => {
             audioPlayer.volume = event.target.value;
         });
+
     </script>
 </body>
 </html>
