@@ -113,11 +113,21 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background: #0f3159; /* Tummansininen väri */
+            background: #fff;
+            opacity: 0.8;
             border-radius: 50%;
-            opacity: 0.5;
             pointer-events: none;
-            transition: transform 0.1s ease-out; /* Sujuva siirtyminen */
+            animation: snow 10s linear infinite;
+        }
+        @keyframes snow {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0.5;
+            }
         }
     </style>
 </head>
@@ -172,53 +182,84 @@
                 flake.style.top = `${Math.random() * 100}vh`;
                 flake.style.width = `${Math.random() * 10 + 5}px`;
                 flake.style.height = flake.style.width;
-                flake.style.animation = `snow ${Math.random() * 10 + 10}s linear infinite`;
+                flake.style.animationDuration = `${Math.random() * 10 + 10}s`;
                 snowContainer.appendChild(flake);
             }
         }
 
-        // Funktio pomppivan videon liikuttamiseksi
-        function startBouncing() {
-            const video = bouncingVideo;
-            let x = Math.random() * (window.innerWidth - video.clientWidth);
-            let y = Math.random() * (window.innerHeight - video.clientHeight);
-            let dx = 0.5; // Muutos x-suunnassa (hidastettu)
-            let dy = 0.5; // Muutos y-suunnassa (hidastettu)
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-
-            function animate() {
-                if (x + video.clientWidth > width || x < 0) dx *= -1;
-                if (y + video.clientHeight > height || y < 0) dy *= -1;
-
-                x += dx;
-                y += dy;
-
-                video.style.left = `${x}px`;
-                video.style.top = `${y}px`;
-
-                requestAnimationFrame(animate);
-            }
-
-            animate();
-        }
-
-        // Lisää tapahtumankäsittelijä äänenvoimakkuuden säätimelle
-        volumeControl.addEventListener('input', (event) => {
-            audioPlayer.volume = event.target.value;
-        });
-
-        // Funktio lumihiutaleiden seuraamiseksi hiiren mukana
-        function updateSnowflakes(event) {
+        // Funktio lumihiutaleiden päivittämiseksi ja liikkumiseksi kohti hiirtä
+        function animateSnowflakes() {
             const flakes = document.querySelectorAll('.snowflake');
             flakes.forEach(flake => {
-                const xOffset = (event.clientX - window.innerWidth / 2) * 0.1;
-                const yOffset = (event.clientY - window.innerHeight / 2) * 0.1;
-                flake.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                const mouseX = window.mouseX || 0;
+                const mouseY = window.mouseY || 0;
+                const xOffset = mouseX + (Math.random() * 20 - 10);
+                const yOffset = mouseY + (Math.random() * 20 - 10);
+
+                flake.style.left = `${xOffset}px`;
+                flake.style.top = `${yOffset}px`;
+
+                // Jos lumihiutale putoaa alas, se palautetaan ylös
+                if (yOffset > window.innerHeight) {
+                    flake.style.top = `-${flake.style.height}`;
+                }
             });
         }
 
-        document.addEventListener('mousemove', updateSnowflakes);
+        // Animaation jatkuva kutsuminen
+        setInterval(animateSnowflakes, 50); // Päivitetään joka 50ms, jotta saadaan sulava animaatio
+
+        // Funktio hiiren seuraamiseksi
+        document.addEventListener('mousemove', (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            // Päivitetään jokaisen lumihiutaleen sijainti suhteessa hiireen
+            const flakes = document.querySelectorAll('.snowflake');
+            flakes.forEach(flake => {
+                const flakeX = parseFloat(flake.style.left);
+                const flakeY = parseFloat(flake.style.top);
+                const dx = mouseX - flakeX;
+                const dy = mouseY - flakeY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                // Liikuta hiutaleita kohti hiirtä, jos ne ovat lähellä
+                if (distance < 150) { // Vain jos etäisyys hiirestä on alle 150px
+                    flake.style.left = `${flakeX + dx * 0.05}px`;
+                    flake.style.top = `${flakeY + dy * 0.05}px`;
+                }
+            });
+        });
+
+        // Volyymin hallinta
+        volumeControl.addEventListener('input', () => {
+            audioPlayer.volume = volumeControl.value;
+        });
+
+        // Pomppiva video
+        function startBouncing() {
+            const video = document.getElementById('bouncingVideo');
+            let dx = 2; // Liikkeen nopeus x-akselilla
+            let dy = 1; // Liikkeen nopeus y-akselilla
+            let x = 100; // Alkuperäinen x-sijainti
+            let y = 100; // Alkuperäinen y-sijainti
+
+            setInterval(() => {
+                x += dx;
+                y += dy;
+
+                if (x + video.clientWidth > window.innerWidth || x < 0) {
+                    dx = -dx; // Vaihda suuntaa x-akselilla
+                }
+
+                if (y + video.clientHeight > window.innerHeight || y < 0) {
+                    dy = -dy; // Vaihda suuntaa y-akselilla
+                }
+
+                video.style.left = `${x}px`;
+                video.style.top = `${y}px`;
+            }, 20); // Päivitetään 20 millisekunnin välein
+        }
     </script>
 </body>
 </html>
