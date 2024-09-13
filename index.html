@@ -8,41 +8,30 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #1f2120; /* Taustaväri */
-            overflow: hidden; /* Estää vierityspalkkien näkymisen */
-        }
-
-        #text {
-            font-size: 72px; /* Suuri fonttikoko */
-            margin-bottom: 20px;
+            padding: 20px;
             font-family: 'Arial', sans-serif;
-            color: #fff; /* Valkoinen teksti */
-            text-align: center;
-            z-index: 10; /* Teksti on päällimmäinen */
-            display: block; /* Näyttää tekstin oletusarvoisesti */
+            color: #fff;
+            background-color: #1f2120; /* Taustaväri */
+            overflow-y: scroll; /* Varmistaa, että sivu on scrollattava */
         }
-
+        #text {
+            font-size: 28px; /* Pienempi fonttikoko, jotta teksti mahtuu paremmin */
+            margin-bottom: 20px;
+            line-height: 1.6; /* Parempi riviväli luettavuuden parantamiseksi */
+        }
         #playButton {
             max-width: 100%;
             height: auto;
-            cursor: pointer; /* Näyttää osoittimen, kun kuvaa voi klikata */
+            cursor: pointer;
         }
-
         #bouncingVideo {
             position: absolute;
-            width: 300px; /* Pienennetty videon koko */
+            width: 300px;
             height: auto;
-            display: none; /* Piilottaa pomppivan videon aluksi */
-            opacity: 0.6; /* Läpinäkyvyys */
-            pointer-events: none; /* Estää videon klikkauksen */
+            display: none;
+            opacity: 0.6;
+            pointer-events: none;
         }
-
         #volumeControls {
             position: absolute;
             top: 10px;
@@ -50,88 +39,43 @@
             background: rgba(33, 33, 33, 0.8);
             padding: 10px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Working style */
-            z-index: 10; /* Varmistaa, että säätimet ovat päällimmäisiä */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
-
         #volumeControls input[type="range"] {
             -webkit-appearance: none;
-            width: 120px; /* Leveämpi säätöalue */
-            height: 10px; /* Korkeampi alue */
-            background: #444; /* Tumma tausta */
+            width: 120px;
+            height: 10px;
+            background: #444;
             border-radius: 5px;
             outline: none;
             margin: 10px 0;
             cursor: pointer;
-            position: relative;
         }
-
         #volumeControls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 25px;
             height: 25px;
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.7); /* Musta pallo */
+            background: rgba(0, 0, 0, 0.7);
             cursor: pointer;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
-
-        #largeTextArea {
-            position: absolute;
-            top: 120px; /* Sijoita tekstialue alemmaksi, jotta se ei peitä tekstiä */
-            width: 80%;
-            height: 300px; /* Voit säätää korkeuden tarpeen mukaan */
-            background: transparent; /* Ei taustaa */
-            border: none; /* Ei reunoja */
-            padding: 20px;
-            font-size: 24px; /* Suuri fonttikoko */
-            font-family: 'Arial', sans-serif;
-            color: #fff; /* Valkoinen teksti */
-            display: none; /* Piilottaa tekstialueen aluksi */
-            z-index: 10; /* Teksti on päällimmäinen */
-            overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
-            text-align: center;
+        #volumeControls input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            cursor: pointer;
         }
-
         audio {
-            display: none; /* Piilottaa audio-elementin */
-        }
-
-        /* Rain effect styles */
-        .rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .drop {
-            position: absolute;
-            width: 2px;
-            height: 30px;
-            background: rgba(255, 255, 255, 0.2); /* 20% opacity */
-            bottom: 100%;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div id="text">PAINA PÖHNÄÄ</div>
-    <img id="playButton" src="kuva.gif" alt="GIF-kuva">
-    <video id="bouncingVideo" autoplay loop muted>
-        <source src="pomppiva.mp4" type="video/mp4">
-        Your browser does not support the video element.
-    </video>
+    <div id="text">
+        Suomen kielen ja kulttuurin kudoksessa sana "pöhnä" toimii todistajana kielellisen kehityksen ja yhteiskunnallisten arvojen hienovaraiselle vuorovaikutukselle. Ensisilmäyksellä "pöhnä" saattaa vaikuttaa arkikieliseltä termiltä, mutta sen alkuperä ja käyttö paljastavat rikkaamman, monimutkaisemman tarinan. Historian saatossa "pöhnä" syntyi suomen kielen puhekielessä kuvaamaan erityistä tyyppistä ilmastohöyryä tai sumua. Sanaa käytettiin viittaamaan siihen sumuun, joka peittää maiseman varhaisaamun tunteina, kun maailma tuntuu olevan yön ja päivän välissä. Tämä sumu, jota usein näkyy Suomen rauhallisilla maaseutualueilla, on pitkään liittynyt mystiikan ja itsearvioinnin tunteisiin. Ajan myötä "pöhnä" kehittyi meteorologisista juuristaan laajentamaan merkityksiään. Suomen kulttuurissa siitä tuli symboli henkisestä sumusta tai hämmennyksestä—metafora hetkille, jolloin selkeys vaikuttaa olevan saavuttamattomissa. Termi heijastaa syvää kulttuurista ymmärrystä ihmisen tilasta, tunnustaen, että aivan kuten fyysinen maailma voi olla peittyneenä sumuun, myös mieli voi kokea epävarmuuden ja suuntauksen puutteen hetkiä. "Pöhnän" muuntuminen konkreettisesta sumun kuvasta henkisten tilojen metaforaksi korostaa suomalaisten arvostusta luonnon ja ihmiskokemuksen yhteydestä. Se toimii muistutuksena siitä, kuinka kieli voi kehittyä kattamaan monimutkaisia emotionaalisia ja kognitiivisia tiloja, ylittäen ulkoisen ympäristön ja sisäisten todellisuuksien välistä kuilua. Nykyisin "pöhnä" resonoi edelleen suomalaisilla sekä kuvaavana terminä että henkilökohtaisen reflektiotilan symbolina. Se korostaa kielen ja kulttuurin syvällistä suhdetta, havainnollistaen, kuinka yksi sana voi vangita yhteisen kokemuksen ydin ja heijastaa yhteiskunnan emotionaalista maisemaa. Näin ollen sana "pöhnä" kutsuu meitä katsomaan sen pinnan alle ja arvostamaan sen merkitystä muovaavia historiallisia ja kulttuurisia konteksteja. Se muistuttaa, että jopa yksinkertaisimmilla sanoilla voi olla syvällistä merkitystä, tarjoten näkemyksiä niiden arvojen ja kokemusten ymmärtämiseen, jotka käyttävät niitä.
+    </div>
+
     <audio id="audioPlayer">
         <source src="musa.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
@@ -139,72 +83,24 @@
     <div id="volumeControls">
         <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
     </div>
-    <div id="largeTextArea">
-       Suomen kielen ja kulttuurin kudoksessa sana "pöhnä" toimii todistajana kielellisen kehityksen ja yhteiskunnallisten arvojen hienovaraiselle vuorovaikutukselle. Ensisilmäyksellä "pöhnä" saattaa vaikuttaa arkikieliseltä termiltä, mutta sen alkuperä ja käyttö paljastavat rikkaamman, monimutkaisemman tarinan. Historian saatossa "pöhnä" syntyi suomen kielen puhekielessä kuvaamaan erityistä tyyppistä ilmastohöyryä tai sumua. Sanaa käytettiin viittaamaan siihen sumuun, joka peittää maiseman varhaisaamun tunteina, kun maailma tuntuu olevan yön ja päivän välissä. Tämä sumu, jota usein näkyy Suomen rauhallisilla maaseutualueilla, on pitkään liittynyt mystiikan ja itsearvioinnin tunteisiin. Ajan myötä "pöhnä" kehittyi meteorologisista juuristaan laajentamaan merkityksiään. Suomen kulttuurissa siitä tuli symboli henkisestä sumusta tai hämmennyksestä—metafora hetkille, jolloin selkeys vaikuttaa olevan saavuttamattomissa. Termi heijastaa syvää kulttuurista ymmärrystä ihmisen tilasta, tunnustaen, että aivan kuten fyysinen maailma voi olla peittyneenä sumuun, myös mieli voi kokea epävarmuuden ja suuntauksen puutteen hetkiä. "Pöhnän" muuntuminen konkreettisesta sumun kuvasta henkisten tilojen metaforaksi korostaa suomalaisten arvostusta luonnon ja ihmiskokemuksen yhteydestä. Se toimii muistutuksena siitä, kuinka kieli voi kehittyä kattamaan monimutkaisia emotionaalisia ja kognitiivisia tiloja, ylittäen ulkoisen ympäristön ja sisäisten todellisuuksien välistä kuilua. Nykyisin "pöhnä" resonoi edelleen suomalaisilla sekä kuvaavana terminä että henkilökohtaisen reflektiotilan symbolina. Se korostaa kielen ja kulttuurin syvällistä suhdetta, havainnollistaen, kuinka yksi sana voi vangita yhteisen kokemuksen ydin ja heijastaa yhteiskunnan emotionaalista maisemaa. Näin ollen sana "pöhnä" kutsuu meitä katsomaan sen pinnan alle ja arvostamaan sen merkitystä muovaavia historiallisia ja kulttuurisia konteksteja. Se muistuttaa, että jopa yksinkertaisimmilla sanoilla voi olla syvällistä merkitystä, tarjoten näkemyksiä niiden arvojen ja kokemusten ymmärtämiseen, jotka käyttävät niitä.
-    </div>
-    <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
+    
+    <video id="bouncingVideo" autoplay loop muted>
+        <source src="pomppiva.mp4" type="video/mp4">
+        Your browser does not support the video element.
+    </video>
 
     <script>
-        // Hae elementit
         const playButton = document.getElementById('playButton');
-        const text = document.getElementById('text');
         const audioPlayer = document.getElementById('audioPlayer');
         const bouncingVideo = document.getElementById('bouncingVideo');
         const volumeControl = document.getElementById('volume');
-        const largeTextArea = document.getElementById('largeTextArea');
-        const rainContainer = document.getElementById('rainContainer');
-
-        // Lisää tapahtumankäsittelijä kuvan klikkaukselle
+        
+        // Play the audio and video on button click
         playButton.addEventListener('click', () => {
-            text.style.display = 'none'; // Poistaa tekstin näkyvistä
-            playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
-            audioPlayer.play(); // Käynnistää musiikin
-            bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
-            largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
-            startRain(); // Käynnistää vesisateen
-            startBouncing(); // Käynnistää pomppimisen
+            audioPlayer.play();
+            bouncingVideo.style.display = 'block';
         });
 
-        // Funktio vesisateen luomiseen
-        function startRain() {
-            const raindrops = 100; // Sateen määrä
-            for (let i = 0; i < raindrops; i++) {
-                const drop = document.createElement('div');
-                drop.classList.add('drop');
-                drop.style.left = `${Math.random() * 100}vw`;
-                drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
-                drop.style.animationDelay = `${Math.random() * 2}s`;
-                rainContainer.appendChild(drop);
-            }
-        }
-
-        // Funktio pomppivan videon liikuttamiseksi
-        function startBouncing() {
-            const video = bouncingVideo;
-            let x = Math.random() * (window.innerWidth - video.clientWidth);
-            let y = Math.random() * (window.innerHeight - video.clientHeight);
-            let dx = 0.5; // Muutos x-suunnassa (hidastettu)
-            let dy = 0.5; // Muutos y-suunnassa (hidastettu)
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-
-            function animate() {
-                if (x + video.clientWidth > width || x < 0) dx *= -1;
-                if (y + video.clientHeight > height || y < 0) dy *= -1;
-
-                x += dx;
-                y += dy;
-
-                video.style.left = `${x}px`;
-                video.style.top = `${y}px`;
-
-                requestAnimationFrame(animate);
-            }
-
-            animate();
-        }
-
-        // Lisää tapahtumankäsittelijä äänenvoimakkuuden säätimelle
         volumeControl.addEventListener('input', (event) => {
             audioPlayer.volume = event.target.value;
         });
