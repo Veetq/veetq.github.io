@@ -17,6 +17,7 @@
             background-color: #1f2120; /* Taustaväri */
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
         }
+
         #text {
             font-size: 72px; /* Suuri fonttikoko */
             margin-bottom: 20px;
@@ -26,11 +27,13 @@
             z-index: 10; /* Teksti on päällimmäinen */
             display: block; /* Näyttää tekstin oletusarvoisesti */
         }
+
         #playButton {
             max-width: 100%;
             height: auto;
             cursor: pointer; /* Näyttää osoittimen, kun kuvaa voi klikata */
         }
+
         #bouncingVideo {
             position: absolute;
             width: 300px; /* Pienennetty videon koko */
@@ -39,6 +42,7 @@
             opacity: 0.6; /* Läpinäkyvyys */
             pointer-events: none; /* Estää videon klikkauksen */
         }
+
         #volumeControls {
             position: absolute;
             top: 10px;
@@ -49,6 +53,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Working style */
             z-index: 10; /* Varmistaa, että säätimet ovat päällimmäisiä */
         }
+
         #volumeControls input[type="range"] {
             -webkit-appearance: none;
             width: 120px; /* Leveämpi säätöalue */
@@ -60,6 +65,7 @@
             cursor: pointer;
             position: relative;
         }
+
         #volumeControls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 25px;
@@ -70,15 +76,7 @@
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
             transition: background 0.3s ease, box-shadow 0.3s ease;
         }
-        #volumeControls input[type="range"]::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.7); /* Musta pallo */
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-        }
+
         #largeTextArea {
             position: absolute;
             top: 120px; /* Sijoita tekstialue alemmaksi, jotta se ei peitä tekstiä */
@@ -95,11 +93,13 @@
             overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
             text-align: center;
         }
+
         audio {
             display: none; /* Piilottaa audio-elementin */
         }
-        /* Snowfall effect styles */
-        .snow {
+
+        /* Rain effect styles */
+        .rain {
             position: fixed;
             top: 0;
             left: 0;
@@ -107,26 +107,20 @@
             height: 100%;
             pointer-events: none;
             z-index: 5;
-            visibility: hidden; /* Piilottaa lumisateen aluksi */
         }
-        .snowflake {
+
+        .drop {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #fff;
-            opacity: 0.8;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: snow 10s linear infinite;
+            width: 2px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.5);
+            bottom: 100%;
+            animation: fall linear infinite;
         }
-        @keyframes snow {
-            0% {
-                transform: translateY(-100vh);
-                opacity: 0.8;
-            }
-            100% {
+
+        @keyframes fall {
+            to {
                 transform: translateY(100vh);
-                opacity: 0.5;
             }
         }
     </style>
@@ -148,7 +142,7 @@
     <div id="largeTextArea">
         we love pöhnä <3
     </div>
-    <div id="snowContainer" class="snow"></div> <!-- Lumisateen elementti -->
+    <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
 
     <script>
         // Hae elementit
@@ -158,7 +152,7 @@
         const bouncingVideo = document.getElementById('bouncingVideo');
         const volumeControl = document.getElementById('volume');
         const largeTextArea = document.getElementById('largeTextArea');
-        const snowContainer = document.getElementById('snowContainer');
+        const rainContainer = document.getElementById('rainContainer');
 
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
@@ -167,99 +161,53 @@
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
-            snowContainer.style.visibility = 'visible'; // Näyttää lumisateen
-            startSnow(); // Käynnistää lumisateen
+            startRain(); // Käynnistää vesisateen
             startBouncing(); // Käynnistää pomppimisen
         });
 
-        // Funktio lumisateen luomiseen
-        function startSnow() {
-            const snowflakes = 100; // Lumihiutaleiden määrä
-            for (let i = 0; i < snowflakes; i++) {
-                const flake = document.createElement('div');
-                flake.classList.add('snowflake');
-                flake.style.left = `${Math.random() * 100}vw`;
-                flake.style.top = `${Math.random() * 100}vh`;
-                flake.style.width = `${Math.random() * 10 + 5}px`;
-                flake.style.height = flake.style.width;
-                flake.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                snowContainer.appendChild(flake);
+        // Funktio vesisateen luomiseen
+        function startRain() {
+            const raindrops = 100; // Sateen määrä
+            for (let i = 0; i < raindrops; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('drop');
+                drop.style.left = `${Math.random() * 100}vw`;
+                drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+                drop.style.animationDelay = `${Math.random() * 2}s`;
+                rainContainer.appendChild(drop);
             }
         }
 
-        // Funktio lumihiutaleiden päivittämiseksi ja liikkumiseksi kohti hiirtä
-        function animateSnowflakes() {
-            const flakes = document.querySelectorAll('.snowflake');
-            flakes.forEach(flake => {
-                const mouseX = window.mouseX || 0;
-                const mouseY = window.mouseY || 0;
-                const xOffset = mouseX + (Math.random() * 20 - 10);
-                const yOffset = mouseY + (Math.random() * 20 - 10);
-
-                flake.style.left = `${xOffset}px`;
-                flake.style.top = `${yOffset}px`;
-
-                // Jos lumihiutale putoaa alas, se palautetaan ylös
-                if (yOffset > window.innerHeight) {
-                    flake.style.top = `-${flake.style.height}`;
-                }
-            });
-        }
-
-        // Animaation jatkuva kutsuminen
-        setInterval(animateSnowflakes, 50); // Päivitetään joka 50ms, jotta saadaan sulava animaatio
-
-        // Funktio hiiren seuraamiseksi
-        document.addEventListener('mousemove', (event) => {
-            const mouseX = event.clientX;
-            const mouseY = event.clientY;
-
-            // Päivitetään jokaisen lumihiutaleen sijainti suhteessa hiireen
-            const flakes = document.querySelectorAll('.snowflake');
-            flakes.forEach(flake => {
-                const flakeX = parseFloat(flake.style.left);
-                const flakeY = parseFloat(flake.style.top);
-                const dx = mouseX - flakeX;
-                const dy = mouseY - flakeY;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                // Liikuta hiutaleita kohti hiirtä, jos ne ovat lähellä
-                if (distance < 150) { // Vain jos etäisyys hiirestä on alle 150px
-                    flake.style.left = `${flakeX + dx * 0.05}px`;
-                    flake.style.top = `${flakeY + dy * 0.05}px`;
-                }
-            });
-        });
-
-        // Volyymin hallinta
-        volumeControl.addEventListener('input', () => {
-            audioPlayer.volume = volumeControl.value;
-        });
-
-        // Pomppiva video
+        // Funktio pomppivan videon liikuttamiseksi
         function startBouncing() {
-            const video = document.getElementById('bouncingVideo');
-            let dx = 2; // Liikkeen nopeus x-akselilla
-            let dy = 1; // Liikkeen nopeus y-akselilla
-            let x = 100; // Alkuperäinen x-sijainti
-            let y = 100; // Alkuperäinen y-sijainti
+            const video = bouncingVideo;
+            let x = Math.random() * (window.innerWidth - video.clientWidth);
+            let y = Math.random() * (window.innerHeight - video.clientHeight);
+            let dx = 0.5; // Muutos x-suunnassa (hidastettu)
+            let dy = 0.5; // Muutos y-suunnassa (hidastettu)
+            const width = window.innerWidth;
+            const height = window.innerHeight;
 
-            setInterval(() => {
+            function animate() {
+                if (x + video.clientWidth > width || x < 0) dx *= -1;
+                if (y + video.clientHeight > height || y < 0) dy *= -1;
+
                 x += dx;
                 y += dy;
 
-                if (x + video.clientWidth > window.innerWidth || x < 0) {
-                    dx = -dx; // Vaihda suuntaa x-akselilla
-                }
-
-                if (y + video.clientHeight > window.innerHeight || y < 0) {
-                    dy = -dy; // Vaihda suuntaa y-akselilla
-                }
-
                 video.style.left = `${x}px`;
                 video.style.top = `${y}px`;
-            }, 20); // Päivitetään 20 millisekunnin välein
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
         }
+
+        // Lisää tapahtumankäsittelijä äänenvoimakkuuden säätimelle
+        volumeControl.addEventListener('input', (event) => {
+            audioPlayer.volume = event.target.value;
+        });
     </script>
 </body>
 </html>
