@@ -97,11 +97,12 @@
         const gameArea = document.getElementById('gameArea');
 
         let score = 0;
-        let gameSpeed = 2000; // Alkaa hitaasti (2 sekuntia per liike)
-        let speedIncrement = 100; // Nopeutuu asteittain
+        let gameSpeed = 1000; // Alkaa nopeammin (1 sekunti per liike)
+        let speedIncrement = 50; // Nopeutuu asteittain
         let interval;
         let gameOver = false;
         let noClickTimer;
+        let canClick = true;
 
         // Pöhnän ja evilpöhna liikuttaminen
         function moveImage(image) {
@@ -138,9 +139,14 @@
 
         // Klikkaaminen pohna kuvaan
         pohna.addEventListener('click', () => {
-            if (!gameOver) {
+            if (!gameOver && canClick) {
                 score++;
                 scoreBoard.textContent = `Pisteet: ${score}`;
+                canClick = false; // Estä klikkaaminen
+                setTimeout(() => {
+                    moveImage(pohna);
+                    canClick = true; // Salli uusi klikkaus
+                }, 200); // Viive uuden sijainnin siirtämiseksi
                 clearTimeout(noClickTimer); // Nollaa ajastin
                 noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
             }
@@ -148,7 +154,7 @@
 
         // Klikkaaminen evilpohna kuvaan
         evilpohna.addEventListener('click', () => {
-            if (!gameOver) {
+            if (!gameOver && canClick) {
                 endGame(); // Peli päättyy
             }
         });
@@ -167,7 +173,7 @@
         // Pelin uudelleenaloitus
         function restartGame() {
             score = 0;
-            gameSpeed = 2000; // Palauta alkuperäinen nopeus
+            gameSpeed = 1000; // Palauta alkuperäinen nopeus
             gameOver = false;
             scoreBoard.textContent = `Pisteet: 0`;
             pohna.style.display = 'block';
