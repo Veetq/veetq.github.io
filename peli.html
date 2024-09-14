@@ -79,7 +79,7 @@
         const gameArea = document.getElementById('gameArea');
 
         let score = 0;
-        let gameSpeed = 1000; // Aloita nopeasti (0.5 sekuntia per liike)
+        let gameSpeed = 100; // Aloita nopeasti (0.5 sekuntia per liike)
         let speedIncrement = 100; // Nopeutuu asteittain
         let interval;
         let gameOver = false;
@@ -149,7 +149,7 @@
         // Pelin uudelleenaloitus
         function restartGame() {
             score = 0;
-            gameSpeed = 1000; // Palauta alkuperäinen nopeus
+            gameSpeed = 100; // Palauta alkuperäinen nopeus
             gameOver = false;
             scoreBoard.textContent = `Pisteet: 0`;
             pohna.style.display = 'block';
