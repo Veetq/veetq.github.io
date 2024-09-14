@@ -116,13 +116,14 @@
         }
 
         /* Keskittää napit */
-        .centered-button {
+        .centered-buttons {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            text-align: center;
         }
-
+        
     </style>
 </head>
 <body>
@@ -144,10 +145,12 @@
        Wellcome to the pöhnä center info place from finland.
     </div>
     
-    <!-- Lisää nappi, joka siirtää pelisivulle -->
-    <button id="gameButton" class="centered-button" onclick="location.href='peli.html';">Pöhnä Pelit</button>
-    <button id="hallOfFameButton" class="centered-button" onclick="location.href='hall_of_fame.html';">Hall Of Fame</button>
-    
+    <!-- Lisää nappit keskitettyyn elementtiin -->
+    <div class="centered-buttons">
+        <button id="gameButton" onclick="location.href='peli.html';">Pöhnä Pelit</button>
+        <button id="hallOfFameButton" onclick="location.href='hall_of_fame.html';">Hall Of Fame</button>
+    </div>
+
     <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
 
     <script>
