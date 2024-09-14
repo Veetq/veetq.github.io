@@ -19,7 +19,7 @@
         }
 
         #text {
-            font-size: 72px; /* Suuri fonttikoko */
+            font-size: 36px; /* Pienennetty fonttikoko */
             margin-bottom: 20px;
             font-family: 'Arial', sans-serif;
             color: #fff; /* Valkoinen teksti */
@@ -81,7 +81,6 @@
             position: absolute;
             top: 120px; /* Sijoita tekstialue alemmaksi, jotta se ei peitä tekstiä */
             width: 80%;
-            height: 300px; /* Voit säätää korkeuden tarpeen mukaan */
             background: transparent; /* Ei taustaa */
             border: none; /* Ei reunoja */
             padding: 20px;
@@ -92,14 +91,6 @@
             z-index: 10; /* Teksti on päällimmäinen */
             overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
             text-align: center;
-        }
-
-        #secondaryText {
-            font-size: 24px; /* Tekstin koko */
-            color: #fff; /* Valkoinen teksti */
-            text-align: center;
-            margin-top: 20px;
-            z-index: 10;
         }
 
         audio {
@@ -131,6 +122,24 @@
                 transform: translateY(100vh);
             }
         }
+
+        /* Nappityyli */
+        #gameButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 24px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        #gameButton:hover {
+            background-color: #666;
+        }
+
     </style>
 </head>
 <body>
@@ -147,10 +156,13 @@
     <div id="volumeControls">
         <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
     </div>
+    
     <div id="largeTextArea">
-        Suomen kielen ja kulttuurin kudoksessa sana "pöhnä" toimii todistajana kielellisen kehityksen ja yhteiskunnallisten arvojen hienovaraiselle vuorovaikutukselle. Ensisilmäyksellä "pöhnä" saattaa vaikuttaa arkikieliseltä termiltä, mutta sen alkuperä ja käyttö paljastavat rikkaamman, monimutkaisemman tarinan. Historian saatossa "pöhnä" syntyi suomen kielen puhekielessä kuvaamaan erityistä tyyppistä ilmastohöyryä tai sumua. Sanaa käytettiin viittaamaan siihen sumuun, joka peittää maiseman varhaisaamun tunteina, kun maailma tuntuu olevan yön ja päivän välissä. Tämä sumu, jota usein näkyy Suomen rauhallisilla maaseutualueilla, on pitkään liittynyt mystiikan ja itsearvioinnin tunteisiin. Ajan myötä "pöhnä" kehittyi meteorologisista juuristaan laajentamaan merkityksiään. Suomen kulttuurissa siitä tuli symboli henkisestä sumusta tai hämmennyksestä—metafora hetkille, jolloin selkeys vaikuttaa olevan saavuttamattomissa. Termi heijastaa syvää kulttuurista ymmärrystä ihmisen tilasta, tunnustaen, että aivan kuten fyysinen maailma voi olla peittyneenä sumuun, myös mieli voi kokea epävarmuuden ja suuntauksen puutteen hetkiä. "Pöhnän" muuntuminen konkreettisesta sumun kuvasta henkisten tilojen metaforaksi korostaa suomalaisten arvostusta luonnon ja ihmiskokemuksen yhteydestä. Se toimii muistutuksena siitä, kuinka kieli voi kehittyä kattamaan monimutkaisia emotionaalisia ja kognitiivisia tiloja, ylittäen ulkoisen ympäristön ja sisäisten todellisuuksien välistä kuilua. Nykyisin "pöhnä" resonoi edelleen suomalaisilla sekä kuvaavana terminä että henkilökohtaisen reflektiotilan symbolina. Se korostaa kielen ja kulttuurin syvällistä suhdetta, havainnollistaen, kuinka yksi sana voi vangita yhteisen kokemuksen ydin ja heijastaa yhteiskunnan emotionaalista maisemaa. Näin ollen sana "pöhnä" kutsuu meitä katsomaan sen pinnan alle ja arvostamaan sen merkitystä muovaavia historiallisia ja kulttuurisia konteksteja. Se muistuttaa, että jopa yksinkertaisimmilla sanoilla voi olla syvällistä merkitystä, tarjoten näkemyksiä niiden arvojen ja kokemusten ymmärtämiseen, jotka käyttävät niitä.
+        Suomen kielen ja kulttuurin kudoksessa sana "pöhnä" toimii todistajana kielellisen kehityksen ja yhteiskunnallisten arvojen hienovaraiselle vuorovaikutukselle. Ensisilmäyksellä "pöhnä" saattaa vaikuttaa arkikieliseltä termiltä, mutta sen alkuperä ja käyttö paljastavat rikkaamman, monimutkaisemman tarinan. Historian saatossa "pöhnä" syntyi suomen kielen puhekielessä kuvaamaan erityistä tyyppistä ilmastohöyryä tai sumua. Sanaa käytettiin viittaamaan siihen sumuun, joka peittää maiseman varhaisaamun tunteina, kun maailma tuntuu olevan yön ja päivän välissä. Tämä sumu, jota usein näkyy Suomen rauhallisilla maaseutualueilla, on pitkään liittynyt mystiikan ja itsearvioinnin tunteisiin. Ajan myötä "pöhnä" kehittyi meteorologisista juuristaan laajentamaan merkityksiään...
     </div>
-    <div id="secondaryText">we love pöhnä <3</div> <!-- Lisää uusi tekstilaatikko -->
+
+    <!-- Lisää nappi, joka siirtää pelisivulle -->
+    <button id="gameButton" onclick="location.href='peli.html';">Aloita Pöhnä Peli</button>
 
     <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
 
@@ -162,7 +174,6 @@
         const bouncingVideo = document.getElementById('bouncingVideo');
         const volumeControl = document.getElementById('volume');
         const largeTextArea = document.getElementById('largeTextArea');
-        const secondaryText = document.getElementById('secondaryText'); // Lisää uusi tekstilaatikko
         const rainContainer = document.getElementById('rainContainer');
 
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
@@ -172,7 +183,6 @@
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
-            secondaryText.style.display = 'none'; // Piilottaa toisen tekstilaatikon
             startRain(); // Käynnistää vesisateen
             startBouncing(); // Käynnistää pomppimisen
         });
@@ -192,33 +202,37 @@
 
         // Funktio pomppivan videon liikuttamiseksi
         function startBouncing() {
+            let xPos = 0;
+            let yPos = 0;
+            let xSpeed = 1;
+            let ySpeed = 1;
             const video = bouncingVideo;
-            let x = Math.random() * (window.innerWidth - video.clientWidth);
-            let y = Math.random() * (window.innerHeight - video.clientHeight);
-            let dx = 0.5; // Muutos x-suunnassa (hidastettu)
-            let dy = 0.5; // Muutos y-suunnassa (hidastettu)
-            const width = window.innerWidth;
-            const height = window.innerHeight;
 
-            function animate() {
-                if (x + video.clientWidth > width || x < 0) dx *= -1;
-                if (y + video.clientHeight > height || y < 0) dy *= -1;
+            function updatePosition() {
+                const maxX = window.innerWidth - video.clientWidth;
+                const maxY = window.innerHeight - video.clientHeight;
 
-                x += dx;
-                y += dy;
+                xPos += xSpeed;
+                yPos += ySpeed;
 
-                video.style.left = `${x}px`;
-                video.style.top = `${y}px`;
+                if (xPos <= 0 || xPos >= maxX) {
+                    xSpeed *= -1;
+                }
+                if (yPos <= 0 || yPos >= maxY) {
+                    ySpeed *= -1;
+                }
 
-                requestAnimationFrame(animate);
+                video.style.left = `${xPos}px`;
+                video.style.top = `${yPos}px`;
+                requestAnimationFrame(updatePosition);
             }
 
-            animate();
+            requestAnimationFrame(updatePosition);
         }
 
-        // Lisää tapahtumankäsittelijä äänenvoimakkuuden säätimelle
-        volumeControl.addEventListener('input', (event) => {
-            audioPlayer.volume = event.target.value;
+        // Volume control
+        volumeControl.addEventListener('input', function() {
+            audioPlayer.volume = volumeControl.value;
         });
     </script>
 </body>
