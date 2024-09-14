@@ -16,6 +16,7 @@
             height: 100vh;
             background-color: #1f2120; /* Taustaväri */
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
+            text-align: center;
         }
 
         #text {
@@ -23,9 +24,7 @@
             margin-bottom: 20px;
             font-family: 'Arial', sans-serif;
             color: #fff; /* Valkoinen teksti */
-            text-align: center;
             z-index: 10; /* Teksti on päällimmäinen */
-            display: block; /* Näyttää tekstin oletusarvoisesti */
         }
 
         #playButton {
@@ -90,7 +89,6 @@
             display: none; /* Piilottaa tekstialueen aluksi */
             z-index: 10; /* Teksti on päällimmäinen */
             overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
-            text-align: center;
         }
 
         audio {
@@ -100,7 +98,7 @@
         /* Nappityyli */
         #gameButton {
             margin-top: 20px;
-            padding: 10px 20px;
+            padding: 15px 30px;
             font-size: 24px;
             background-color: #444;
             color: white;
@@ -108,12 +106,14 @@
             border-radius: 5px;
             cursor: pointer;
             z-index: 10;
-            display: none; /* Piilotetaan nappi aluksi */
+            display: block; /* Näyttää napin */
+            margin: 20px auto; /* Keskittää napin vaakasuunnassa */
         }
 
         #gameButton:hover {
             background-color: #666;
         }
+
     </style>
 </head>
 <body>
@@ -132,84 +132,80 @@
     </div>
     
     <div id="largeTextArea">
-       Welcome to the Pöhnä Center info place from Finland.
-
-       <!-- Lisää nappi, joka siirtää pelisivulle -->
-       <button id="gameButton" onclick="location.href='peli.html';">Pöhnä Pelit</button>
-
-       <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
-
-       <script>
-           // Hae elementit
-           const playButton = document.getElementById('playButton');
-           const text = document.getElementById('text');
-           const audioPlayer = document.getElementById('audioPlayer');
-           const bouncingVideo = document.getElementById('bouncingVideo');
-           const volumeControl = document.getElementById('volume');
-           const largeTextArea = document.getElementById('largeTextArea');
-           const rainContainer = document.getElementById('rainContainer');
-           const gameButton = document.getElementById('gameButton'); // Nappielementti
-
-           // Lisää tapahtumankäsittelijä kuvan klikkaukselle
-           playButton.addEventListener('click', () => {
-               text.style.display = 'none'; // Poistaa tekstin näkyvistä
-               playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
-               audioPlayer.play(); // Käynnistää musiikin
-               bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
-               largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
-               gameButton.style.display = 'block'; // Näyttää "Pöhnä Pelit" -napin
-               startRain(); // Käynnistää vesisateen
-               startBouncing(); // Käynnistää pomppimisen
-           });
-
-           // Funktio vesisateen luomiseen
-           function startRain() {
-               const raindrops = 100; // Sateen määrä
-               for (let i = 0; i < raindrops; i++) {
-                   const drop = document.createElement('div');
-                   drop.classList.add('drop');
-                   drop.style.left = `${Math.random() * 100}vw`;
-                   drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
-                   drop.style.animationDelay = `${Math.random() * 2}s`;
-                   rainContainer.appendChild(drop);
-               }
-           }
-
-           // Funktio pomppivan videon liikuttamiseksi
-           function startBouncing() {
-               let xPos = 0;
-               let yPos = 0;
-               let xSpeed = 1;
-               let ySpeed = 1;
-               const video = bouncingVideo;
-
-               function updatePosition() {
-                   const maxX = window.innerWidth - video.clientWidth;
-                   const maxY = window.innerHeight - video.clientHeight;
-
-                   xPos += xSpeed;
-                   yPos += ySpeed;
-
-                   if (xPos <= 0 || xPos >= maxX) {
-                       xSpeed *= -1;
-                   }
-                   if (yPos <= 0 || yPos >= maxY) {
-                       ySpeed *= -1;
-                   }
-
-                   video.style.left = `${xPos}px`;
-                   video.style.top = `${yPos}px`;
-                   requestAnimationFrame(updatePosition);
-               }
-
-               requestAnimationFrame(updatePosition);
-           }
-
-           // Volume control
-           volumeControl.addEventListener('input', function() {
-               audioPlayer.volume = volumeControl.value;
-           });
-       </script>
+        Welcome to the Pöhnä center info place from Finland.
+        <!-- Lisää nappi, joka siirtää pelisivulle -->
+        <button id="gameButton" onclick="location.href='pelit.html';">Pöhnä Pelit</button>
     </div>
+
+    <script>
+        // Hae elementit
+        const playButton = document.getElementById('playButton');
+        const text = document.getElementById('text');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const bouncingVideo = document.getElementById('bouncingVideo');
+        const volumeControl = document.getElementById('volume');
+        const largeTextArea = document.getElementById('largeTextArea');
+        const gameButton = document.getElementById('gameButton'); // Nappielementti
+
+        // Lisää tapahtumankäsittelijä kuvan klikkaukselle
+        playButton.addEventListener('click', () => {
+            text.style.display = 'none'; // Poistaa tekstin näkyvistä
+            playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
+            audioPlayer.play(); // Käynnistää musiikin
+            bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
+            largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
+            gameButton.style.display = 'block'; // Näyttää "Pöhnä Pelit" -napin
+            startRain(); // Käynnistää vesisateen
+            startBouncing(); // Käynnistää pomppimisen
+        });
+
+        // Funktio vesisateen luomiseen
+        function startRain() {
+            const raindrops = 100; // Sateen määrä
+            for (let i = 0; i < raindrops; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('drop');
+                drop.style.left = `${Math.random() * 100}vw`;
+                drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+                drop.style.animationDelay = `${Math.random() * 2}s`;
+                rainContainer.appendChild(drop);
+            }
+        }
+
+        // Funktio pomppivan videon liikuttamiseksi
+        function startBouncing() {
+            let xPos = 0;
+            let yPos = 0;
+            let xSpeed = 1;
+            let ySpeed = 1;
+            const video = bouncingVideo;
+
+            function updatePosition() {
+                const maxX = window.innerWidth - video.clientWidth;
+                const maxY = window.innerHeight - video.clientHeight;
+
+                xPos += xSpeed;
+                yPos += ySpeed;
+
+                if (xPos <= 0 || xPos >= maxX) {
+                    xSpeed *= -1;
+                }
+                if (yPos <= 0 || yPos >= maxY) {
+                    ySpeed *= -1;
+                }
+
+                video.style.left = `${xPos}px`;
+                video.style.top = `${yPos}px`;
+                requestAnimationFrame(updatePosition);
+            }
+
+            requestAnimationFrame(updatePosition);
+        }
+
+        // Volume control
+        volumeControl.addEventListener('input', function() {
+            audioPlayer.volume = volumeControl.value;
+        });
+    </script>
 </body>
 </html>
