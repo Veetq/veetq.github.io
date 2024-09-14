@@ -109,6 +109,8 @@
             cursor: pointer;
             z-index: 10;
             display: none; /* Piilotetaan nappi aluksi */
+            position: absolute; /* Absoluuttinen sijainti */
+            bottom: 20px; /* Sijoitetaan alareunaan */
         }
 
         #gameButton:hover {
@@ -118,7 +120,7 @@
     </style>
 </head>
 <body>
-    <div id="text">PAINA PÖHNÄÄ</div>
+    <div id="text">Wellcome to the pöhnä center info place from finland.</div>
     <img id="playButton" src="kuva.gif" alt="GIF-kuva">
     <video id="bouncingVideo" autoplay loop muted>
         <source src="pomppiva.mp4" type="video/mp4">
