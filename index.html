@@ -108,19 +108,21 @@
             border-radius: 5px;
             cursor: pointer;
             z-index: 10;
-            display: none; /* Piilotetaan nappi aluksi */
+            display: none; /* Piilotetaan nappit aluksi */
         }
 
         #gameButton:hover, #hallOfFameButton:hover {
             background-color: #666;
         }
 
-        /* Sijoita nappit keskelle */
-        #buttonContainer {
+        /* Keskittää napit */
+        .centered-button {
             position: absolute;
-            bottom: 20px;
-            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
+
     </style>
 </head>
 <body>
@@ -139,14 +141,13 @@
     </div>
     
     <div id="largeTextArea">
-       Welcome to the pöhnä center info place from Finland.
-
-        <!-- Lisää nappit -->
-        <div id="buttonContainer">
-            <button id="gameButton" onclick="location.href='peli.html';">Pöhnä Pelit</button>
-            <button id="hallOfFameButton">Hall of Fame</button>
-        </div>
-
+       Wellcome to the pöhnä center info place from finland.
+    </div>
+    
+    <!-- Lisää nappi, joka siirtää pelisivulle -->
+    <button id="gameButton" class="centered-button" onclick="location.href='peli.html';">Pöhnä Pelit</button>
+    <button id="hallOfFameButton" class="centered-button" onclick="location.href='hall_of_fame.html';">Hall Of Fame</button>
+    
     <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
 
     <script>
@@ -159,7 +160,7 @@
         const largeTextArea = document.getElementById('largeTextArea');
         const rainContainer = document.getElementById('rainContainer');
         const gameButton = document.getElementById('gameButton'); // Nappielementti
-        const hallOfFameButton = document.getElementById('hallOfFameButton'); // Nappielementti
+        const hallOfFameButton = document.getElementById('hallOfFameButton'); // Hall of Fame -nappi
 
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
@@ -169,7 +170,7 @@
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
             gameButton.style.display = 'block'; // Näyttää "Pöhnä Pelit" -napin
-            hallOfFameButton.style.display = 'block'; // Näyttää "Hall of Fame" -napin
+            hallOfFameButton.style.display = 'block'; // Näyttää "Hall Of Fame" -napin
             startRain(); // Käynnistää vesisateen
             startBouncing(); // Käynnistää pomppimisen
         });
@@ -224,4 +225,3 @@
     </script>
 </body>
 </html>
-
