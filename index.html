@@ -114,7 +114,6 @@
         #gameButton:hover {
             background-color: #666;
         }
-
     </style>
 </head>
 <body>
@@ -133,83 +132,84 @@
     </div>
     
     <div id="largeTextArea">
-       Wellcome to the pöhnä center info place from finland.
+       Welcome to the Pöhnä Center info place from Finland.
 
-    <!-- Lisää nappi, joka siirtää pelisivulle -->
-    <button id="gameButton" onclick="location.href='peli.html';">Aloita Pöhnä Peli</button>
+       <!-- Lisää nappi, joka siirtää pelisivulle -->
+       <button id="gameButton" onclick="location.href='peli.html';">Pöhnä Pelit</button>
 
-    <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
+       <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
 
-    <script>
-        // Hae elementit
-        const playButton = document.getElementById('playButton');
-        const text = document.getElementById('text');
-        const audioPlayer = document.getElementById('audioPlayer');
-        const bouncingVideo = document.getElementById('bouncingVideo');
-        const volumeControl = document.getElementById('volume');
-        const largeTextArea = document.getElementById('largeTextArea');
-        const rainContainer = document.getElementById('rainContainer');
-        const gameButton = document.getElementById('gameButton'); // Nappielementti
+       <script>
+           // Hae elementit
+           const playButton = document.getElementById('playButton');
+           const text = document.getElementById('text');
+           const audioPlayer = document.getElementById('audioPlayer');
+           const bouncingVideo = document.getElementById('bouncingVideo');
+           const volumeControl = document.getElementById('volume');
+           const largeTextArea = document.getElementById('largeTextArea');
+           const rainContainer = document.getElementById('rainContainer');
+           const gameButton = document.getElementById('gameButton'); // Nappielementti
 
-        // Lisää tapahtumankäsittelijä kuvan klikkaukselle
-        playButton.addEventListener('click', () => {
-            text.style.display = 'none'; // Poistaa tekstin näkyvistä
-            playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
-            audioPlayer.play(); // Käynnistää musiikin
-            bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
-            largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
-            gameButton.style.display = 'block'; // Näyttää "Aloita Pöhnä Peli" -napin
-            startRain(); // Käynnistää vesisateen
-            startBouncing(); // Käynnistää pomppimisen
-        });
+           // Lisää tapahtumankäsittelijä kuvan klikkaukselle
+           playButton.addEventListener('click', () => {
+               text.style.display = 'none'; // Poistaa tekstin näkyvistä
+               playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
+               audioPlayer.play(); // Käynnistää musiikin
+               bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
+               largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
+               gameButton.style.display = 'block'; // Näyttää "Pöhnä Pelit" -napin
+               startRain(); // Käynnistää vesisateen
+               startBouncing(); // Käynnistää pomppimisen
+           });
 
-        // Funktio vesisateen luomiseen
-        function startRain() {
-            const raindrops = 100; // Sateen määrä
-            for (let i = 0; i < raindrops; i++) {
-                const drop = document.createElement('div');
-                drop.classList.add('drop');
-                drop.style.left = `${Math.random() * 100}vw`;
-                drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
-                drop.style.animationDelay = `${Math.random() * 2}s`;
-                rainContainer.appendChild(drop);
-            }
-        }
+           // Funktio vesisateen luomiseen
+           function startRain() {
+               const raindrops = 100; // Sateen määrä
+               for (let i = 0; i < raindrops; i++) {
+                   const drop = document.createElement('div');
+                   drop.classList.add('drop');
+                   drop.style.left = `${Math.random() * 100}vw`;
+                   drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+                   drop.style.animationDelay = `${Math.random() * 2}s`;
+                   rainContainer.appendChild(drop);
+               }
+           }
 
-        // Funktio pomppivan videon liikuttamiseksi
-        function startBouncing() {
-            let xPos = 0;
-            let yPos = 0;
-            let xSpeed = 1;
-            let ySpeed = 1;
-            const video = bouncingVideo;
+           // Funktio pomppivan videon liikuttamiseksi
+           function startBouncing() {
+               let xPos = 0;
+               let yPos = 0;
+               let xSpeed = 1;
+               let ySpeed = 1;
+               const video = bouncingVideo;
 
-            function updatePosition() {
-                const maxX = window.innerWidth - video.clientWidth;
-                const maxY = window.innerHeight - video.clientHeight;
+               function updatePosition() {
+                   const maxX = window.innerWidth - video.clientWidth;
+                   const maxY = window.innerHeight - video.clientHeight;
 
-                xPos += xSpeed;
-                yPos += ySpeed;
+                   xPos += xSpeed;
+                   yPos += ySpeed;
 
-                if (xPos <= 0 || xPos >= maxX) {
-                    xSpeed *= -1;
-                }
-                if (yPos <= 0 || yPos >= maxY) {
-                    ySpeed *= -1;
-                }
+                   if (xPos <= 0 || xPos >= maxX) {
+                       xSpeed *= -1;
+                   }
+                   if (yPos <= 0 || yPos >= maxY) {
+                       ySpeed *= -1;
+                   }
 
-                video.style.left = `${xPos}px`;
-                video.style.top = `${yPos}px`;
-                requestAnimationFrame(updatePosition);
-            }
+                   video.style.left = `${xPos}px`;
+                   video.style.top = `${yPos}px`;
+                   requestAnimationFrame(updatePosition);
+               }
 
-            requestAnimationFrame(updatePosition);
-        }
+               requestAnimationFrame(updatePosition);
+           }
 
-        // Volume control
-        volumeControl.addEventListener('input', function() {
-            audioPlayer.volume = volumeControl.value;
-        });
-    </script>
+           // Volume control
+           volumeControl.addEventListener('input', function() {
+               audioPlayer.volume = volumeControl.value;
+           });
+       </script>
+    </div>
 </body>
 </html>
