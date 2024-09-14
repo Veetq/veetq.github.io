@@ -151,6 +151,7 @@
                 clearTimeout(noClickTimer); // Nollaa ajastin
                 noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
                 setTimeout(() => clickable = true, gameSpeed); // Salli klikkaus seuraavalla kuvalla
+                moveImage(pohna); // Vaihda kuva heti klikkauksen jälkeen
             }
         }
 
