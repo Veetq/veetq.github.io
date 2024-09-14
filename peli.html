@@ -10,52 +10,96 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
-            background-color: #1f2120; /* Taustaväri */
-            color: #fff; /* Tekstin väri */
-            font-family: 'Arial', sans-serif;
-            text-align: center;
+            background-color: #1f2120;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            color: #fff;
         }
 
-        #difficulty {
+        #difficultySelector {
             margin: 20px;
             font-size: 24px;
         }
 
-        #gameCanvas {
+        #gameArea {
             position: relative;
-            width: 80%;
-            height: 80%;
-            border: 1px solid #fff;
-            background: #000;
+            width: 80vw;
+            height: 80vh;
+            border: 2px solid #fff;
+            overflow: hidden;
         }
 
-        .gameObject {
+        .pohna, .evilpohna {
             position: absolute;
+            cursor: pointer;
             width: 100px;
-            height: 100px;
+            height: auto;
+        }
+
+        #scoreBoard {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #gameOver {
+            display: none;
+            font-size: 36px;
+            color: red;
+        }
+
+        #restartButton {
+            display: none;
+            padding: 10px 20px;
+            font-size: 24px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
 
-        .pohna {
-            background: url('pohna.png') no-repeat center center;
-            background-size: contain;
-        }
-
-        .evilpohna {
-            background: url('evilpohna.png') no-repeat center center;
-            background-size: contain;
+        #restartButton:hover {
+            background-color: #666;
         }
     </style>
 </head>
 <body>
-    <div id="difficulty">Vaikeustaso: helppo</div>
-    <div id="gameCanvas"></div>
+    <div id="difficultySelector">
+        Vaikeustaso: 
+        <select id="difficultyDropdown">
+            <option value="helppo">Helppo</option>
+            <option value="keskitaso">Keskitaso</option>
+            <option value="hankala">Hankala</option>
+            <option value="truepöhna">True Pöhnä</option>
+        </select>
+    </div>
+    <div id="scoreBoard">Pisteet: 0</div>
+    <div id="gameArea">
+        <img id="pohna" class="pohna" src="pohna.png" alt="Pöhnä">
+        <img id="evilpohna" class="evilpohna" src="evilpohna.png" alt="Evil Pöhnä">
+    </div>
+    <div id="gameOver">Peli ohi!</div>
+    <button id="restartButton" onclick="restartGame()">Aloita alusta</button>
 
     <script>
-        // Difficulty level and game speed settings
+        const pohna = document.getElementById('pohna');
+        const evilpohna = document.getElementById('evilpohna');
+        const scoreBoard = document.getElementById('scoreBoard');
+        const gameOverText = document.getElementById('gameOver');
+        const restartButton = document.getElementById('restartButton');
+        const gameArea = document.getElementById('gameArea');
+        const difficultyDropdown = document.getElementById('difficultyDropdown');
+
+        let score = 0;
+        let gameSpeed; // Tämä asetetaan vaikeustason perusteella
+        let speedIncrement = 100; // Nopeutuu asteittain
+        let interval;
+        let gameOver = false;
+        let noClickTimer;
+
         const difficultyLevels = {
             helppo: 1000,
             keskitaso: 600,
@@ -63,74 +107,92 @@
             truepöhna: 100
         };
 
-        let difficulty = 'helppo';
-        let gameSpeed = difficultyLevels[difficulty];
-        let gameInterval;
-        let gameOver = false;
+        // Liikuta kuvaa satunnaiseen paikkaan
+        function moveImage(image) {
+            const maxX = gameArea.clientWidth - image.clientWidth;
+            const maxY = gameArea.clientHeight - image.clientHeight;
 
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            image.style.left = `${randomX}px`;
+            image.style.top = `${randomY}px`;
+        }
+
+        // Pelin aloitus
         function startGame() {
-            const canvas = document.getElementById('gameCanvas');
-            canvas.innerHTML = ''; // Clear previous game objects
-            let score = 0;
-            let missCount = 0;
-            let timeSinceLastMove = 0;
+            score = 0;
             gameOver = false;
+            scoreBoard.textContent = `Pisteet: ${score}`;
+            gameSpeed = difficultyLevels[difficultyDropdown.value];
+            moveImage(pohna);
+            moveImage(evilpohna);
 
-            function createObject() {
-                if (gameOver) return;
-
-                const gameObject = document.createElement('div');
-                gameObject.classList.add('gameObject');
-                const isEvil = Math.random() < 0.2; // 20% chance of evilpohna
-                gameObject.classList.add(isEvil ? 'evilpohna' : 'pohna');
-                gameObject.style.left = `${Math.random() * (canvas.clientWidth - 100)}px`;
-                gameObject.style.top = `${Math.random() * (canvas.clientHeight - 100)}px`;
-                canvas.appendChild(gameObject);
-
-                gameObject.addEventListener('click', () => {
-                    if (gameOver) return;
-
-                    if (isEvil) {
-                        gameOver = true;
-                        alert('Peli päättyi! Painoit evilpöhnaa.');
-                        clearInterval(gameInterval);
-                    } else {
-                        score++;
-                        canvas.removeChild(gameObject);
-                        timeSinceLastMove = 0; // Reset the timer on a successful click
-                    }
-                });
-            }
-
-            function update() {
-                if (gameOver) return;
-
-                timeSinceLastMove += gameSpeed;
-                if (timeSinceLastMove >= gameSpeed) {
-                    createObject();
-                    timeSinceLastMove = 0;
+            interval = setInterval(() => {
+                if (!gameOver) {
+                    moveImage(pohna);
+                    moveImage(evilpohna);
+                    gameSpeed = Math.max(200, gameSpeed - speedIncrement); // Nopeutuu asteittain
+                    clearInterval(interval); // Pysäytä nykyinen intervalli
+                    interval = setInterval(() => {
+                        moveImage(pohna);
+                        moveImage(evilpohna);
+                    }, gameSpeed); // Uusi nopeampi intervalli
                 }
-            }
+            }, gameSpeed);
 
-            gameInterval = setInterval(update, gameSpeed);
-
-            // Update difficulty display
-            document.getElementById('difficulty').textContent = `Vaikeustaso: ${difficulty}`;
+            noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Häviää jos ei klikata ajoissa
         }
 
-        function selectDifficulty() {
-            const selectedDifficulty = prompt('Valitse vaikeustaso: helppo, keskitaso, hankala', 'helppo');
-            if (difficultyLevels[selectedDifficulty]) {
-                difficulty = selectedDifficulty;
-                gameSpeed = difficultyLevels[difficulty];
-                startGame();
-            } else {
-                alert('Virheellinen vaikeustaso.');
+        // Klikkaaminen pohna kuvaan
+        pohna.addEventListener('click', () => {
+            if (!gameOver) {
+                score++;
+                scoreBoard.textContent = `Pisteet: ${score}`;
+                clearTimeout(noClickTimer); // Nollaa ajastin
+                noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
             }
+        });
+
+        // Klikkaaminen evilpohna kuvaan
+        evilpohna.addEventListener('click', () => {
+            if (!gameOver) {
+                endGame(); // Peli päättyy
+            }
+        });
+
+        // Pelin häviäminen
+        function endGame() {
+            clearInterval(interval); // Pysäytä kaikki intervallit
+            clearTimeout(noClickTimer); // Pysäytä ajastin
+            gameOver = true;
+            pohna.style.display = 'none';
+            evilpohna.style.display = 'none';
+            gameOverText.style.display = 'block';
+            restartButton.style.display = 'block';
         }
 
-        // Start game on page load and allow difficulty selection
-        selectDifficulty();
+        // Pelin uudelleenaloitus
+        function restartGame() {
+            score = 0;
+            gameOver = false;
+            scoreBoard.textContent = `Pisteet: 0`;
+            pohna.style.display = 'block';
+            evilpohna.style.display = 'block';
+            gameOverText.style.display = 'none';
+            restartButton.style.display = 'none';
+            startGame();
+        }
+
+        // Vaihda vaikeustaso ja aloita peli uudelleen
+        difficultyDropdown.addEventListener('change', () => {
+            if (!gameOver) {
+                restartGame();
+            }
+        });
+
+        // Aloita peli aluksi
+        startGame();
     </script>
 </body>
 </html>
