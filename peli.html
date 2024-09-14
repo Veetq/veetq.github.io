@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pöhnä clicker 2</title>
+    <title>Pöhnä Peli</title>
     <style>
         body {
             margin: 0;
@@ -39,11 +39,6 @@
             margin-bottom: 20px;
         }
 
-        #difficulty {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
         #gameOver {
             display: none;
             font-size: 36px;
@@ -64,10 +59,10 @@
         #restartButton:hover {
             background-color: #666;
         }
+
     </style>
 </head>
 <body>
-    <div id="difficulty">Vaikeustaso: Keskitaso</div>
     <div id="scoreBoard">Pisteet: 0</div>
     <div id="gameArea">
         <img id="pohna" class="pohna" src="pohna.png" alt="Pöhnä">
@@ -83,11 +78,10 @@
         const gameOverText = document.getElementById('gameOver');
         const restartButton = document.getElementById('restartButton');
         const gameArea = document.getElementById('gameArea');
-        const difficultyText = document.getElementById('difficulty');
 
         let score = 0;
-        let gameSpeed = 600; // Aloita keskitasolla
-        let speedIncrement = 50; // Nopeutuu asteittain
+        let gameSpeed = 2000; // Alkaa hitaasti (2 sekuntia per liike)
+        let speedIncrement = 100; // Nopeutuu asteittain
         let interval;
         let gameOver = false;
         let noClickTimer;
@@ -113,7 +107,7 @@
                 if (!gameOver) {
                     moveImage(pohna);
                     moveImage(evilpohna);
-                    gameSpeed = Math.max(200, gameSpeed - speedIncrement); // Nopeutuu asteittain
+                    gameSpeed = Math.max(500, gameSpeed - speedIncrement); // Nopeuttaa peliä asteittain
                     clearInterval(interval); // Pysäytä nykyinen intervalli
                     interval = setInterval(() => {
                         moveImage(pohna);
@@ -156,7 +150,7 @@
         // Pelin uudelleenaloitus
         function restartGame() {
             score = 0;
-            gameSpeed = 600; // Palauta keskitaso
+            gameSpeed = 2000; // Palauta alkuperäinen nopeus
             gameOver = false;
             scoreBoard.textContent = `Pisteet: 0`;
             pohna.style.display = 'block';
