@@ -143,7 +143,7 @@
         }
 
         // Klikkaaminen pohna kuvaan
-        pohna.addEventListener('click', () => {
+        function pohnaClickHandler() {
             if (!gameOver && clickable) {
                 score++;
                 scoreBoard.textContent = `Pisteet: ${score}`;
@@ -152,7 +152,9 @@
                 noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
                 setTimeout(() => clickable = true, gameSpeed); // Salli klikkaus seuraavalla kuvalla
             }
-        });
+        }
+
+        pohna.addEventListener('click', pohnaClickHandler);
 
         // Klikkaaminen evilpohna kuvaan
         function evilClickHandler() {
