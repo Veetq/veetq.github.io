@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pöhnä Peli</title>
+    <title>pöhnä clicker 2</title>
     <style>
         body {
             margin: 0;
@@ -39,6 +39,11 @@
             margin-bottom: 20px;
         }
 
+        #difficulty {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
         #gameOver {
             display: none;
             font-size: 36px;
@@ -62,6 +67,7 @@
     </style>
 </head>
 <body>
+    <div id="difficulty">Vaikeustaso: Keskitaso</div>
     <div id="scoreBoard">Pisteet: 0</div>
     <div id="gameArea">
         <img id="pohna" class="pohna" src="pohna.png" alt="Pöhnä">
@@ -77,10 +83,11 @@
         const gameOverText = document.getElementById('gameOver');
         const restartButton = document.getElementById('restartButton');
         const gameArea = document.getElementById('gameArea');
+        const difficultyText = document.getElementById('difficulty');
 
         let score = 0;
-        let gameSpeed = 500; // Aloita nopeasti (0.5 sekuntia per liike)
-        let speedIncrement = 100; // Nopeutuu asteittain
+        let gameSpeed = 600; // Aloita keskitasolla
+        let speedIncrement = 50; // Nopeutuu asteittain
         let interval;
         let gameOver = false;
         let noClickTimer;
@@ -93,8 +100,8 @@
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
 
-            image.style.left = ${randomX}px;
-            image.style.top = ${randomY}px;
+            image.style.left = `${randomX}px`;
+            image.style.top = `${randomY}px`;
         }
 
         // Pelin aloitus
@@ -122,7 +129,7 @@
         pohna.addEventListener('click', () => {
             if (!gameOver) {
                 score++;
-                scoreBoard.textContent = Pisteet: ${score};
+                scoreBoard.textContent = `Pisteet: ${score}`;
                 clearTimeout(noClickTimer); // Nollaa ajastin
                 noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
             }
@@ -149,9 +156,9 @@
         // Pelin uudelleenaloitus
         function restartGame() {
             score = 0;
-            gameSpeed = 500; // Palauta alkuperäinen nopeus
+            gameSpeed = 600; // Palauta keskitaso
             gameOver = false;
-            scoreBoard.textContent = Pisteet: 0;
+            scoreBoard.textContent = `Pisteet: 0`;
             pohna.style.display = 'block';
             evilpohna.style.display = 'block';
             gameOverText.style.display = 'none';
