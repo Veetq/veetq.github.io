@@ -37,10 +37,10 @@
             position: absolute;
             width: 300px; /* Pienennetty videon koko */
             height: auto;
-            display: none; /* Piilottaa pomppivan videon aluksi */
+            display: block; /* Näyttää videon */
             opacity: 0.6; /* Läpinäkyvyys */
             pointer-events: none; /* Estää videon klikkauksen */
-            z-index: 9; /* Varmistaa, että video on päällimmäinen */
+            z-index: 100; /* Varmistaa, että video on päällimmäinen */
         }
 
         #volumeControls {
@@ -177,8 +177,8 @@
         function startBouncing() {
             let xPos = 0;
             let yPos = 0;
-            let xSpeed = 1;
-            let ySpeed = 1;
+            let xSpeed = 2; // Muutettu nopeudeksi
+            let ySpeed = 2;
             const video = bouncingVideo;
 
             function updatePosition() {
@@ -197,10 +197,13 @@
 
                 video.style.left = `${xPos}px`;
                 video.style.top = `${yPos}px`;
+
+                // Ensure the video stays within bounds and is updated smoothly
                 requestAnimationFrame(updatePosition);
             }
 
-            requestAnimationFrame(updatePosition);
+            // Start the animation
+            updatePosition();
         }
 
         // Volume control
