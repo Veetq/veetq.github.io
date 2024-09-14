@@ -24,6 +24,7 @@
             width: 80vw;
             height: 80vh;
             border: 2px solid #fff;
+            overflow: hidden;
         }
 
         #pohna, #evilPohna {
@@ -80,51 +81,35 @@
 
         let score = 0;
         let gameSpeed = 2000; // Alkaa hitaasti (2 sekuntia per liike)
-        let speedIncrement = 50; // Nopeutuu asteittain
+        let speedIncrement = 100; // Nopeutuu asteittain
         let interval;
         let gameOver = false;
-        let noClickTimer; // Ajastin jos ei klikata mitään
+        let noClickTimer;
 
         // Pöhnän liikuttaminen
-        function movePohna() {
-            if (gameOver) return;
-
-            const maxX = gameArea.clientWidth - pohna.clientWidth;
-            const maxY = gameArea.clientHeight - pohna.clientHeight;
+        function moveImage(image) {
+            const maxX = gameArea.clientWidth - image.clientWidth;
+            const maxY = gameArea.clientHeight - image.clientHeight;
 
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
 
-            pohna.style.left = `${randomX}px`;
-            pohna.style.top = `${randomY}px`;
-        }
-
-        // Evil Pöhnän liikuttaminen
-        function moveEvilPohna() {
-            if (gameOver) return;
-
-            const maxX = gameArea.clientWidth - evilPohna.clientWidth;
-            const maxY = gameArea.clientHeight - evilPohna.clientHeight;
-
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-
-            evilPohna.style.left = `${randomX}px`;
-            evilPohna.style.top = `${randomY}px`;
+            image.style.left = `${randomX}px`;
+            image.style.top = `${randomY}px`;
         }
 
         // Pelin aloitus
         function startGame() {
-            movePohna();
-            moveEvilPohna();
+            moveImage(pohna);
+            moveImage(evilPohna);
             interval = setInterval(() => {
-                movePohna();
-                moveEvilPohna();
+                moveImage(pohna);
+                moveImage(evilPohna);
                 gameSpeed = Math.max(500, gameSpeed - speedIncrement); // Nopeuttaa peliä asteittain (pienin arvo on 500ms)
                 clearInterval(interval); // Pysäytä nykyinen intervalli
                 interval = setInterval(() => {
-                    movePohna();
-                    moveEvilPohna();
+                    moveImage(pohna);
+                    moveImage(evilPohna);
                 }, gameSpeed); // Uusi nopeampi intervalli
             }, gameSpeed);
 
@@ -139,7 +124,7 @@
             noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
         });
 
-        // Evil Pöhnää klikattaessa peli hävitään
+        // Evil Pöhnää klikattaessa peli häviää
         evilPohna.addEventListener('click', endGame);
 
         // Pelin häviäminen
