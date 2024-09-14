@@ -16,7 +16,6 @@
             height: 100vh;
             background-color: #1f2120; /* Taustaväri */
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
-            text-align: center;
         }
 
         #text {
@@ -24,7 +23,9 @@
             margin-bottom: 20px;
             font-family: 'Arial', sans-serif;
             color: #fff; /* Valkoinen teksti */
+            text-align: center;
             z-index: 10; /* Teksti on päällimmäinen */
+            display: block; /* Näyttää tekstin oletusarvoisesti */
         }
 
         #playButton {
@@ -37,10 +38,9 @@
             position: absolute;
             width: 300px; /* Pienennetty videon koko */
             height: auto;
-            display: block; /* Näyttää videon */
+            display: none; /* Piilottaa pomppivan videon aluksi */
             opacity: 0.6; /* Läpinäkyvyys */
             pointer-events: none; /* Estää videon klikkauksen */
-            z-index: 100; /* Varmistaa, että video on päällimmäinen */
         }
 
         #volumeControls {
@@ -90,6 +90,7 @@
             display: none; /* Piilottaa tekstialueen aluksi */
             z-index: 10; /* Teksti on päällimmäinen */
             overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
+            text-align: center;
         }
 
         audio {
@@ -99,7 +100,7 @@
         /* Nappityyli */
         #gameButton {
             margin-top: 20px;
-            padding: 15px 30px;
+            padding: 10px 20px;
             font-size: 24px;
             background-color: #444;
             color: white;
@@ -107,8 +108,7 @@
             border-radius: 5px;
             cursor: pointer;
             z-index: 10;
-            display: block; /* Näyttää napin */
-            margin: 20px auto; /* Keskittää napin vaakasuunnassa */
+            display: none; /* Piilotetaan nappi aluksi */
         }
 
         #gameButton:hover {
@@ -133,10 +133,12 @@
     </div>
     
     <div id="largeTextArea">
-        Welcome to the Pöhnä center info place from Finland.
-        <!-- Lisää nappi, joka siirtää pelisivulle -->
-        <button id="gameButton" onclick="location.href='pelit.html';">Pöhnä Pelit</button>
-    </div>
+       Wellcome to the pöhnä center info place from finland.
+
+    <!-- Lisää nappi, joka siirtää pelisivulle -->
+    <button id="gameButton" onclick="location.href='pelit.html';">Pöhnä Pelit</button>
+
+    <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
 
     <script>
         // Hae elementit
@@ -146,6 +148,7 @@
         const bouncingVideo = document.getElementById('bouncingVideo');
         const volumeControl = document.getElementById('volume');
         const largeTextArea = document.getElementById('largeTextArea');
+        const rainContainer = document.getElementById('rainContainer');
         const gameButton = document.getElementById('gameButton'); // Nappielementti
 
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
@@ -177,8 +180,8 @@
         function startBouncing() {
             let xPos = 0;
             let yPos = 0;
-            let xSpeed = 2; // Muutettu nopeudeksi
-            let ySpeed = 2;
+            let xSpeed = 1;
+            let ySpeed = 1;
             const video = bouncingVideo;
 
             function updatePosition() {
@@ -197,13 +200,10 @@
 
                 video.style.left = `${xPos}px`;
                 video.style.top = `${yPos}px`;
-
-                // Ensure the video stays within bounds and is updated smoothly
                 requestAnimationFrame(updatePosition);
             }
 
-            // Start the animation
-            updatePosition();
+            requestAnimationFrame(updatePosition);
         }
 
         // Volume control
