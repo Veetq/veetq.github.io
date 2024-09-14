@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pöhnä Peli</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1f2120; /* Tumma taustaväri */
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Estää vierityksen */
+            position: relative;
+        }
+
+        #pohna, #evilPohna {
+            position: absolute;
+            cursor: pointer;
+        }
+
+        #score {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="score">Pisteet: 0</div>
+    <img id="pohna" src="pohna.png" alt="Pohna" width="100" height="100">
+    <img id="evilPohna" src="evilpohna.png" alt="Evil Pohna" width="100" height="100">
+
+    <script>
+        const pohna = document.getElementById('pohna');
+        const evilPohna = document.getElementById('evilPohna');
+        const scoreDisplay = document.getElementById('score');
+        let score = 0;
+
+        function startGame() {
+            movePohna();
+            moveEvilPohna();
+        }
+
+        function movePohna() {
+            const x = Math.random() * (window.innerWidth - pohna.clientWidth);
+            const y = Math.random() * (window.innerHeight - pohna.clientHeight);
+            pohna.style.left = `${x}px`;
+            pohna.style.top = `${y}px`;
+
+            setTimeout(movePohna, 1000); // Liikuta pöhnää joka sekunti
+        }
+
+        function moveEvilPohna() {
+            const x = Math.random() * (window.innerWidth - evilPohna.clientWidth);
+            const y = Math.random() * (window.innerHeight - evilPohna.clientHeight);
+            evilPohna.style.left = `${x}px`;
+            evilPohna.style.top = `${y}px`;
+
+            setTimeout(moveEvilPohna, 1000); // Liikuta evilPohnaa joka sekunti
+        }
+
+        pohna.addEventListener('click', () => {
+            score++;
+            scoreDisplay.textContent = `Pisteet: ${score}`;
+        });
+
+        evilPohna.addEventListener('click', () => {
+            alert('Hävisit pelin!');
+            score = 0;
+            scoreDisplay.textContent = `Pisteet: ${score}`;
+        });
+
+        window.onload = startGame;
+    </script>
+</body>
+</html>
