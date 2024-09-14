@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whatsapp Web</title>
+    <title>Welcome</title>
     <link rel="icon" href="icon.ico" type="image/x-icon"> <!-- Favicon -->
     <style>
         body {
@@ -16,16 +16,15 @@
             height: 100vh;
             background-color: #1f2120; /* Taustaväri */
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
+            font-family: 'Arial', sans-serif;
         }
 
         #text {
             font-size: 36px; /* Pienennetty fonttikoko */
             margin-bottom: 20px;
-            font-family: 'Arial', sans-serif;
             color: #fff; /* Valkoinen teksti */
             text-align: center;
             z-index: 10; /* Teksti on päällimmäinen */
-            display: block; /* Näyttää tekstin oletusarvoisesti */
         }
 
         #playButton {
@@ -85,7 +84,6 @@
             border: none; /* Ei reunoja */
             padding: 20px;
             font-size: 24px; /* Suuri fonttikoko */
-            font-family: 'Arial', sans-serif;
             color: #fff; /* Valkoinen teksti */
             display: none; /* Piilottaa tekstialueen aluksi */
             z-index: 10; /* Teksti on päällimmäinen */
@@ -99,7 +97,10 @@
 
         /* Nappityyli */
         #gameButton {
-            margin-top: 20px;
+            position: absolute;
+            bottom: 50px; /* Voit säätää tätä arvoa tarpeen mukaan */
+            left: 50%;
+            transform: translateX(-50%); /* Keskittää napin vaakasuunnassa */
             padding: 10px 20px;
             font-size: 24px;
             background-color: #444;
@@ -108,11 +109,6 @@
             border-radius: 5px;
             cursor: pointer;
             z-index: 10;
-            display: none; /* Piilotetaan nappi aluksi */
-            position: absolute; /* Absoluuttinen sijainti */
-            bottom: 70px; /* Sijoitetaan nappi 20px alareunasta */
-            left: 50%; /* Keskittää napin vaakasuunnassa */
-            transform: translateX(-50%); /* Korjaa keskittämisen */
         }
 
         #gameButton:hover {
@@ -138,9 +134,10 @@
     
     <div id="largeTextArea">
        Wellcome to the pöhnä center info place from finland.
-
+    </div>
+    
     <!-- Lisää nappi, joka siirtää pelisivulle -->
-    <button id="gameButton" onclick="location.href='pelit.html';">Pöhnä Pelit</button>
+    <button id="gameButton" onclick="location.href='peli.html';">Pöhnä Pelit</button>
 
     <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
 
