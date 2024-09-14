@@ -27,7 +27,7 @@
             overflow: hidden;
         }
 
-        #pohna, #evilPohna {
+        .pohna, .evilpohna {
             position: absolute;
             cursor: pointer;
             width: 100px;
@@ -65,15 +65,15 @@
 <body>
     <div id="scoreBoard">Pisteet: 0</div>
     <div id="gameArea">
-        <img id="pohna" src="pohna.png" alt="Pöhnä">
-        <img id="evilPohna" src="evilpohna.png" alt="Evil Pöhnä">
+        <img id="pohna" class="pohna" src="pohna.png" alt="Pöhnä">
+        <img id="evilpohna" class="evilpohna" src="evilpohna.png" alt="Evil Pöhnä">
     </div>
     <div id="gameOver">Peli ohi!</div>
     <button id="restartButton" onclick="restartGame()">Aloita alusta</button>
 
     <script>
         const pohna = document.getElementById('pohna');
-        const evilPohna = document.getElementById('evilPohna');
+        const evilpohna = document.getElementById('evilpohna');
         const scoreBoard = document.getElementById('scoreBoard');
         const gameOverText = document.getElementById('gameOver');
         const restartButton = document.getElementById('restartButton');
@@ -86,7 +86,7 @@
         let gameOver = false;
         let noClickTimer;
 
-        // Pöhnän liikuttaminen
+        // Pöhnän ja evilpöhna liikuttaminen
         function moveImage(image) {
             const maxX = gameArea.clientWidth - image.clientWidth;
             const maxY = gameArea.clientHeight - image.clientHeight;
@@ -101,31 +101,40 @@
         // Pelin aloitus
         function startGame() {
             moveImage(pohna);
-            moveImage(evilPohna);
+            moveImage(evilpohna);
+
             interval = setInterval(() => {
-                moveImage(pohna);
-                moveImage(evilPohna);
-                gameSpeed = Math.max(500, gameSpeed - speedIncrement); // Nopeuttaa peliä asteittain (pienin arvo on 500ms)
-                clearInterval(interval); // Pysäytä nykyinen intervalli
-                interval = setInterval(() => {
+                if (!gameOver) {
                     moveImage(pohna);
-                    moveImage(evilPohna);
-                }, gameSpeed); // Uusi nopeampi intervalli
+                    moveImage(evilpohna);
+                    gameSpeed = Math.max(500, gameSpeed - speedIncrement); // Nopeuttaa peliä asteittain
+                    clearInterval(interval); // Pysäytä nykyinen intervalli
+                    interval = setInterval(() => {
+                        moveImage(pohna);
+                        moveImage(evilpohna);
+                    }, gameSpeed); // Uusi nopeampi intervalli
+                }
             }, gameSpeed);
 
             noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Häviää jos ei klikata ajoissa
         }
 
-        // Pöhnää klikattaessa
+        // Klikkaaminen pohna kuvaan
         pohna.addEventListener('click', () => {
-            score++;
-            scoreBoard.textContent = `Pisteet: ${score}`;
-            clearTimeout(noClickTimer); // Nollaa ajastin
-            noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
+            if (!gameOver) {
+                score++;
+                scoreBoard.textContent = `Pisteet: ${score}`;
+                clearTimeout(noClickTimer); // Nollaa ajastin
+                noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
+            }
         });
 
-        // Evil Pöhnää klikattaessa peli häviää
-        evilPohna.addEventListener('click', endGame);
+        // Klikkaaminen evilpohna kuvaan
+        evilpohna.addEventListener('click', () => {
+            if (!gameOver) {
+                endGame(); // Peli päättyy
+            }
+        });
 
         // Pelin häviäminen
         function endGame() {
@@ -133,7 +142,7 @@
             clearTimeout(noClickTimer); // Pysäytä ajastin
             gameOver = true;
             pohna.style.display = 'none';
-            evilPohna.style.display = 'none';
+            evilpohna.style.display = 'none';
             gameOverText.style.display = 'block';
             restartButton.style.display = 'block';
         }
@@ -145,7 +154,7 @@
             gameOver = false;
             scoreBoard.textContent = `Pisteet: 0`;
             pohna.style.display = 'block';
-            evilPohna.style.display = 'block';
+            evilpohna.style.display = 'block';
             gameOverText.style.display = 'none';
             restartButton.style.display = 'none';
             startGame();
