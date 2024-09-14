@@ -3,53 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pelit Valikko</title>
+    <title>Pelit</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Linkitä tyylitiedosto, jos käytät ulkoista CSS-tiedostoa -->
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #1f2120; /* Taustaväri */
             font-family: Arial, sans-serif;
-            color: #fff; /* Valkoinen teksti */
+            color: #fff;
+        }
+
+        .container {
             text-align: center;
         }
 
-        #menu {
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
         }
 
-        button {
+        .button {
+            display: inline-block;
             padding: 15px 30px;
             font-size: 24px;
+            color: #fff;
             background-color: #444;
-            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            text-decoration: none;
         }
 
-        button:hover {
+        .button:hover {
             background-color: #666;
         }
 
-        #comingSoon {
-            font-size: 18px;
-            color: #888; /* Harmaa väri tulevaisuuden peliä varten */
-        }
     </style>
 </head>
 <body>
-    <div id="menu">
-        <button onclick="location.href='peli.html';">Aloita Pöhnä Peli</button>
-        <button id="comingSoon" disabled>Toinen Peli (Tulee pian)</button>
+    <div class="container">
+        <h1>Valitse peli</h1>
+        <div class="button-container">
+            <a href="peli.html" class="button">Pöhnä Peli</a>
+            <a href="#" class="button">Toinen Peli (tulee pian)</a>
+        </div>
     </div>
 </body>
 </html>
