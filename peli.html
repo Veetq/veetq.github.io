@@ -60,12 +60,12 @@
             background-color: #666;
         }
 
-        #difficultyButton {
+        #leaderboardButton {
             position: absolute;
             top: 10px;
             right: 10px;
-            padding: 10px;
-            font-size: 16px;
+            padding: 10px 20px;
+            font-size: 18px;
             background-color: #444;
             color: white;
             border: none;
@@ -73,48 +73,38 @@
             cursor: pointer;
         }
 
-        #difficultyButton:hover {
+        #leaderboardButton:hover {
             background-color: #666;
         }
     </style>
 </head>
 <body>
+    <button id="leaderboardButton" onclick="window.location.href='leaderboard.html'">Leaderboard</button>
     <div id="scoreBoard">Pisteet: 0</div>
     <div id="gameArea">
-        <img id="pohna1" class="pohna" src="pohna.png" alt="Pöhnä">
-        <img id="pohna2" class="pohna" src="pohna.png" alt="Pöhnä">
-        <img id="evilpohna1" class="evilpohna" src="evilpohna.png" alt="Evil Pöhnä">
-        <img id="evilpohna2" class="evilpohna" src="evilpohna.png" alt="Evil Pöhnä">
+        <img id="pohna" class="pohna" src="pohna.png" alt="Pöhnä">
+        <img id="evilpohna1" class="evilpohna" src="evilpohna.png" alt="Evil Pöhnä 1">
+        <img id="evilpohna2" class="evilpohna" src="evilpohna.png" alt="Evil Pöhnä 2">
     </div>
     <div id="gameOver">Peli ohi!</div>
     <button id="restartButton" onclick="restartGame()">Aloita alusta</button>
-    <button id="difficultyButton" onclick="setDifficulty()">Vaikeustaso: Helppo</button>
 
     <script>
-        const pohna1 = document.getElementById('pohna1');
-        const pohna2 = document.getElementById('pohna2');
+        const pohna = document.getElementById('pohna');
         const evilpohna1 = document.getElementById('evilpohna1');
         const evilpohna2 = document.getElementById('evilpohna2');
         const scoreBoard = document.getElementById('scoreBoard');
         const gameOverText = document.getElementById('gameOver');
         const restartButton = document.getElementById('restartButton');
-        const difficultyButton = document.getElementById('difficultyButton');
         const gameArea = document.getElementById('gameArea');
 
         let score = 0;
-        let gameSpeed = 2000; // Alkaa hitaasti (2 sekuntia per liike)
+        let gameSpeed = 1000; // Alkaa hitaasti (1 sekunti per liike)
         let speedIncrement = 100; // Nopeutuu asteittain
         let interval;
         let gameOver = false;
         let noClickTimer;
-        let difficulty = 'easy'; // Initial difficulty
-
-        // Difficulty settings
-        const difficultySettings = {
-            easy: { gameSpeed: 2000, speedIncrement: 100 },
-            medium: { gameSpeed: 1500, speedIncrement: 150 },
-            hard: { gameSpeed: 1000, speedIncrement: 200 }
-        };
+        let clickable = true; // Uusi muuttuja
 
         // Pöhnän ja evilpöhna liikuttaminen
         function moveImage(image) {
@@ -128,74 +118,57 @@
             image.style.top = `${randomY}px`;
         }
 
-        function setupClickListeners() {
-            const pohnaImages = [pohna1, pohna2];
-            const evilpohnaImages = [evilpohna1, evilpohna2];
-
-            // Clear previous listeners
-            pohnaImages.forEach(image => image.removeEventListener('click', handlePohnaClick));
-            evilpohnaImages.forEach(image => image.removeEventListener('click', handleEvilPohnaClick));
-
-            // Set up new listeners
-            pohnaImages.forEach(image => image.addEventListener('click', handlePohnaClick));
-            evilpohnaImages.forEach(image => image.addEventListener('click', handleEvilPohnaClick));
-        }
-
-        function handlePohnaClick() {
-            if (!gameOver) {
-                score++;
-                scoreBoard.textContent = `Pisteet: ${score}`;
-                this.style.pointerEvents = 'none'; // Disable clicking
-                setTimeout(() => {
-                    this.style.pointerEvents = 'auto'; // Re-enable clicking
-                    moveImage(this);
-                }, gameSpeed); // Ensure it only gets clicked once per appearance
-                clearTimeout(noClickTimer);
-                noClickTimer = setTimeout(endGame, gameSpeed + 1000);
-            }
-        }
-
-        function handleEvilPohnaClick() {
-            if (!gameOver) {
-                endGame();
-            }
-        }
-
         // Pelin aloitus
         function startGame() {
-            setupClickListeners();
-            moveImage(pohna1);
-            moveImage(pohna2);
+            moveImage(pohna);
             moveImage(evilpohna1);
             moveImage(evilpohna2);
 
             interval = setInterval(() => {
                 if (!gameOver) {
-                    moveImage(pohna1);
-                    moveImage(pohna2);
+                    moveImage(pohna);
                     moveImage(evilpohna1);
                     moveImage(evilpohna2);
-                    gameSpeed = Math.max(500, gameSpeed - speedIncrement);
-                    clearInterval(interval);
+                    gameSpeed = Math.max(500, gameSpeed - speedIncrement); // Nopeuttaa peliä asteittain
+                    clearInterval(interval); // Pysäytä nykyinen intervalli
                     interval = setInterval(() => {
-                        moveImage(pohna1);
-                        moveImage(pohna2);
+                        moveImage(pohna);
                         moveImage(evilpohna1);
                         moveImage(evilpohna2);
-                    }, gameSpeed);
+                    }, gameSpeed); // Uusi nopeampi intervalli
                 }
             }, gameSpeed);
 
-            noClickTimer = setTimeout(endGame, gameSpeed + 1000);
+            noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Häviää jos ei klikata ajoissa
         }
+
+        // Klikkaaminen pohna kuvaan
+        pohna.addEventListener('click', () => {
+            if (!gameOver && clickable) {
+                score++;
+                scoreBoard.textContent = `Pisteet: ${score}`;
+                clickable = false; // Estää useita klikkauksia
+                clearTimeout(noClickTimer); // Nollaa ajastin
+                noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
+                setTimeout(() => clickable = true, gameSpeed); // Salli klikkaus seuraavalla kuvalla
+            }
+        });
+
+        // Klikkaaminen evilpohna kuvaan
+        function evilClickHandler() {
+            if (!gameOver) {
+                endGame(); // Peli päättyy
+            }
+        }
+        evilpohna1.addEventListener('click', evilClickHandler);
+        evilpohna2.addEventListener('click', evilClickHandler);
 
         // Pelin häviäminen
         function endGame() {
-            clearInterval(interval);
-            clearTimeout(noClickTimer);
+            clearInterval(interval); // Pysäytä kaikki intervallit
+            clearTimeout(noClickTimer); // Pysäytä ajastin
             gameOver = true;
-            pohna1.style.display = 'none';
-            pohna2.style.display = 'none';
+            pohna.style.display = 'none';
             evilpohna1.style.display = 'none';
             evilpohna2.style.display = 'none';
             gameOverText.style.display = 'block';
@@ -205,26 +178,16 @@
         // Pelin uudelleenaloitus
         function restartGame() {
             score = 0;
+            gameSpeed = 1000; // Palauta alkuperäinen nopeus
             gameOver = false;
+            clickable = true; // Palauta klikkaus
             scoreBoard.textContent = `Pisteet: 0`;
-            pohna1.style.display = 'block';
-            pohna2.style.display = 'block';
+            pohna.style.display = 'block';
             evilpohna1.style.display = 'block';
             evilpohna2.style.display = 'block';
             gameOverText.style.display = 'none';
             restartButton.style.display = 'none';
             startGame();
-        }
-
-        function setDifficulty() {
-            const difficultyOptions = ['easy', 'medium', 'hard'];
-            const currentIndex = difficultyOptions.indexOf(difficulty);
-            const nextIndex = (currentIndex + 1) % difficultyOptions.length;
-            difficulty = difficultyOptions[nextIndex];
-            difficultyButton.textContent = `Vaikeustaso: ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}`;
-            gameSpeed = difficultySettings[difficulty].gameSpeed;
-            speedIncrement = difficultySettings[difficulty].speedIncrement;
-            restartGame(); // Restart the game with new difficulty settings
         }
 
         // Aloita peli
