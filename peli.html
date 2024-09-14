@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pöhnä Clicker 2 ™</title>
+    <title>Pöhnä Peli</title>
     <style>
         body {
             margin: 0;
@@ -60,9 +60,26 @@
             background-color: #666;
         }
 
+        #leaderboardButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #leaderboardButton:hover {
+            background-color: #666;
+        }
     </style>
 </head>
 <body>
+    <button id="leaderboardButton" onclick="window.location.href='leaderboard.html'">Leaderboard</button>
     <div id="scoreBoard">Pisteet: 0</div>
     <div id="gameArea">
         <img id="pohna" class="pohna" src="pohna.png" alt="Pöhnä">
@@ -80,8 +97,8 @@
         const gameArea = document.getElementById('gameArea');
 
         let score = 0;
-        let gameSpeed = 1000; // Alkaa hitaasti (2 sekuntia per liike)
-        let speedIncrement = 120; // Nopeutuu asteittain
+        let gameSpeed = 2000; // Alkaa hitaasti (2 sekuntia per liike)
+        let speedIncrement = 100; // Nopeutuu asteittain
         let interval;
         let gameOver = false;
         let noClickTimer;
@@ -107,7 +124,7 @@
                 if (!gameOver) {
                     moveImage(pohna);
                     moveImage(evilpohna);
-                    gameSpeed = Math.max(500, gameSpeed - speedIncrement); // Nopeuttaa peliä asteittain
+                    gameSpeed = Math.max(500, gameSpeed - speedIncrement); // Nopeutuu asteittain
                     clearInterval(interval); // Pysäytä nykyinen intervalli
                     interval = setInterval(() => {
                         moveImage(pohna);
@@ -150,7 +167,7 @@
         // Pelin uudelleenaloitus
         function restartGame() {
             score = 0;
-            gameSpeed = 1000; // Palauta alkuperäinen nopeus
+            gameSpeed = 2000; // Palauta alkuperäinen nopeus
             gameOver = false;
             scoreBoard.textContent = `Pisteet: 0`;
             pohna.style.display = 'block';
