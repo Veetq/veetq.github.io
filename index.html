@@ -97,32 +97,6 @@
             display: none; /* Piilottaa audio-elementin */
         }
 
-        /* Rain effect styles */
-        .rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .drop {
-            position: absolute;
-            width: 2px;
-            height: 30px;
-            background: rgba(255, 255, 255, 0.2); /* 20% opacity */
-            bottom: 100%;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
-        }
-
         /* Nappityyli */
         #gameButton {
             margin-top: 20px;
@@ -134,6 +108,7 @@
             border-radius: 5px;
             cursor: pointer;
             z-index: 10;
+            display: none; /* Piilotetaan nappi aluksi */
         }
 
         #gameButton:hover {
@@ -175,6 +150,7 @@
         const volumeControl = document.getElementById('volume');
         const largeTextArea = document.getElementById('largeTextArea');
         const rainContainer = document.getElementById('rainContainer');
+        const gameButton = document.getElementById('gameButton'); // Nappielementti
 
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
@@ -183,6 +159,7 @@
             audioPlayer.play(); // Käynnistää musiikin
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
+            gameButton.style.display = 'block'; // Näyttää "Aloita Pöhnä Peli" -napin
             startRain(); // Käynnistää vesisateen
             startBouncing(); // Käynnistää pomppimisen
         });
