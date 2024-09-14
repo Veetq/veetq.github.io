@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>Whatsapp Web</title>
     <link rel="icon" href="icon.ico" type="image/x-icon"> <!-- Favicon -->
     <style>
         body {
@@ -16,15 +16,16 @@
             height: 100vh;
             background-color: #1f2120; /* Taustaväri */
             overflow: hidden; /* Estää vierityspalkkien näkymisen */
-            font-family: 'Arial', sans-serif;
         }
 
         #text {
             font-size: 36px; /* Pienennetty fonttikoko */
             margin-bottom: 20px;
+            font-family: 'Arial', sans-serif;
             color: #fff; /* Valkoinen teksti */
             text-align: center;
             z-index: 10; /* Teksti on päällimmäinen */
+            display: block; /* Näyttää tekstin oletusarvoisesti */
         }
 
         #playButton {
@@ -84,6 +85,7 @@
             border: none; /* Ei reunoja */
             padding: 20px;
             font-size: 24px; /* Suuri fonttikoko */
+            font-family: 'Arial', sans-serif;
             color: #fff; /* Valkoinen teksti */
             display: none; /* Piilottaa tekstialueen aluksi */
             z-index: 10; /* Teksti on päällimmäinen */
@@ -96,11 +98,8 @@
         }
 
         /* Nappityyli */
-        #gameButton {
-            position: absolute;
-            bottom: 50px; /* Voit säätää tätä arvoa tarpeen mukaan */
-            left: 50%;
-            transform: translateX(-50%); /* Keskittää napin vaakasuunnassa */
+        #gameButton, #hallOfFameButton {
+            margin-top: 20px;
             padding: 10px 20px;
             font-size: 24px;
             background-color: #444;
@@ -109,12 +108,19 @@
             border-radius: 5px;
             cursor: pointer;
             z-index: 10;
+            display: none; /* Piilotetaan nappi aluksi */
         }
 
-        #gameButton:hover {
+        #gameButton:hover, #hallOfFameButton:hover {
             background-color: #666;
         }
 
+        /* Sijoita nappit keskelle */
+        #buttonContainer {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -133,11 +139,13 @@
     </div>
     
     <div id="largeTextArea">
-       Wellcome to the pöhnä center info place from finland.
-    </div>
-    
-    <!-- Lisää nappi, joka siirtää pelisivulle -->
-    <button id="gameButton" onclick="location.href='peli.html';">Pöhnä Pelit</button>
+       Welcome to the pöhnä center info place from Finland.
+
+        <!-- Lisää nappit -->
+        <div id="buttonContainer">
+            <button id="gameButton" onclick="location.href='peli.html';">Pöhnä Pelit</button>
+            <button id="hallOfFameButton">Hall of Fame</button>
+        </div>
 
     <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
 
@@ -151,6 +159,7 @@
         const largeTextArea = document.getElementById('largeTextArea');
         const rainContainer = document.getElementById('rainContainer');
         const gameButton = document.getElementById('gameButton'); // Nappielementti
+        const hallOfFameButton = document.getElementById('hallOfFameButton'); // Nappielementti
 
         // Lisää tapahtumankäsittelijä kuvan klikkaukselle
         playButton.addEventListener('click', () => {
@@ -160,6 +169,7 @@
             bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
             largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
             gameButton.style.display = 'block'; // Näyttää "Pöhnä Pelit" -napin
+            hallOfFameButton.style.display = 'block'; // Näyttää "Hall of Fame" -napin
             startRain(); // Käynnistää vesisateen
             startBouncing(); // Käynnistää pomppimisen
         });
@@ -214,3 +224,4 @@
     </script>
 </body>
 </html>
+
