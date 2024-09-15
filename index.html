@@ -54,8 +54,9 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100px;
-            height: 100px;
+            width: 300px; /* Isompi video */
+            height: 200px; /* Isompi video */
+            display: none;
         }
 
         #videoContainer video {
@@ -76,6 +77,15 @@
             cursor: pointer;
         }
 
+        #gifText {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #fff;
+        }
+
         #volumeControls {
             position: absolute;
             top: 10px;
@@ -89,9 +99,12 @@
 </head>
 <body>
 
+    <!-- Teksti "Paina Pöhnistä" -->
+    <div id="gifText">Paina Pöhnistä</div>
+
     <!-- GIF Container -->
     <div id="gifContainer">
-        <img src="kuva.gif" alt="Click Me" onclick="showContent()">
+        <img src="yourgif.gif" alt="Click Me" onclick="showContent()">
     </div>
 
     <!-- Main content hidden until GIF is clicked -->
@@ -145,13 +158,14 @@
             requestAnimationFrame(moveVideo);
         }
 
-        moveVideo();
-
         // Show content after GIF is clicked
         function showContent() {
             document.querySelector('.container').style.display = 'block';
             document.getElementById('gifContainer').style.display = 'none';
+            document.getElementById('gifText').style.display = 'none'; // Piilotetaan "Paina Pöhnistä" teksti
+            document.getElementById('videoContainer').style.display = 'block'; // Näytetään video
             document.getElementById('backgroundMusic').play();
+            moveVideo(); // Aloita videon pomppiminen
         }
 
         // Volume control
