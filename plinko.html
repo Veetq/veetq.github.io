@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pöhnä Plinko</title>
-    <link rel="icon" href="plinko.ico" type="image/x-icon"> <!-- Ikoni -->
+    <link rel="icon" href="slots.ico" type="image/x-icon"> <!-- Ikoni -->
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             background-color: #1f2120; /* Taustaväri */
@@ -19,13 +19,14 @@
             overflow: hidden;
         }
 
-        .container {
-            text-align: center;
-        }
-
         h1 {
             font-size: 36px;
-            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        p {
+            text-align: center;
+            margin: 20px;
         }
 
         #plinko-board {
@@ -35,15 +36,45 @@
             border: 2px solid #444;
             background-color: #222;
             overflow: hidden;
-            margin: 0 auto;
+            margin: 20px auto;
         }
 
-        .plinko-chip {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #f39c12;
-            border-radius: 50%;
+        .bucket-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            list-style: none;
+            margin: 0;
+        }
+
+        .bucket-container li {
+            width: 20%;
+            text-align: center;
+            color: #fff;
+        }
+
+        .percents {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            list-style: none;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .bucket, .percent {
+            width: 20%;
+            text-align: center;
+        }
+
+        .bucket {
+            background-color: #333;
+            padding: 5px;
+        }
+
+        .percent {
+            background-color: #444;
+            padding: 5px;
         }
 
         .button-container {
@@ -66,62 +97,98 @@
             background-color: #666;
         }
 
+        #credits {
+            font-size: 24px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Pöhnä Plinko</h1>
-        <div id="plinko-board"></div>
-        <div class="button-container">
-            <button class="button" onclick="startGame()">Aloita Peli</button>
-        </div>
-        <p id="score">Pisteet: 500</p>
+    <h1>Plinko</h1>
+    <p>Press <strong>[Space]</strong> to drop a single puck, or hold it down to let loose. There's a 50% chance of each puck going left or right at each peg. <a href="https://github.com/willdages/plinko">Made in 2013</a> with boring old javascript.</p>
+
+    <div id="plinko-board">
+        <ul class="bucket-container">
+            <li class="bucket" id="one">0</li>
+            <li class="bucket" id="two">0</li>
+            <li class="bucket" id="three">0</li>
+            <li class="bucket" id="four">0</li>
+            <li class="bucket" id="five">0</li>
+        </ul>
+        <ul class="percents">
+            <li class="percent" id="one_percent">0.00%</li>
+            <li class="percent" id="two_percent">0.00%</li>
+            <li class="percent" id="three_percent">0.00%</li>
+            <li class="percent" id="four_percent">0.00%</li>
+            <li class="percent" id="five_percent">0.00%</li>
+        </ul>
+    </div>
+
+    <div id="credits">Pisteet: 500</div>
+    <div class="button-container">
+        <button class="button" onclick="startGame()">Aloita Peli</button>
     </div>
 
     <script>
-        let score = 500;
-        const plinkoBoard = document.getElementById('plinko-board');
-        const scoreDisplay = document.getElementById('score');
+        let credits = 500;
+        const creditsDisplay = document.getElementById('credits');
+        const buckets = [document.getElementById('one'), document.getElementById('two'), document.getElementById('three'), document.getElementById('four'), document.getElementById('five')];
+        const percentDisplays = [document.getElementById('one_percent'), document.getElementById('two_percent'), document.getElementById('three_percent'), document.getElementById('four_percent'), document.getElementById('five_percent')];
 
         function startGame() {
+            if (credits <= 0) {
+                alert('Et voi pelata, koska sinulla ei ole pisteitä.');
+                return;
+            }
+
+            credits -= 10; // Vähennä pisteitä
+            creditsDisplay.textContent = 'Pisteet: ' + credits;
+
             for (let i = 0; i < 10; i++) {
                 setTimeout(() => {
-                    createChip();
-                }, i * 1000); // Luo uusi pallos per sekunti
+                    dropPuck();
+                }, i * 1000); // Luo uusi kiekko per sekunti
             }
         }
 
-        function createChip() {
-            const chip = document.createElement('div');
-            chip.classList.add('plinko-chip');
-            chip.style.top = '0px';
-            chip.style.left = `${Math.random() * (plinkoBoard.offsetWidth - 20)}px`;
+        function dropPuck() {
+            const puck = document.createElement('div');
+            puck.classList.add('plinko-chip');
+            puck.style.top = '0px';
+            puck.style.left = `${Math.random() * (600 - 20)}px`;
 
-            plinkoBoard.appendChild(chip);
+            document.getElementById('plinko-board').appendChild(puck);
 
             let fallingInterval = setInterval(() => {
-                let top = parseFloat(chip.style.top);
-                if (top >= plinkoBoard.offsetHeight - 20) {
+                let top = parseFloat(puck.style.top);
+                if (top >= 780) {
                     clearInterval(fallingInterval);
-                    determineScore(chip);
-                    plinkoBoard.removeChild(chip);
+                    calculateBucket(puck);
+                    document.getElementById('plinko-board').removeChild(puck);
                 } else {
-                    chip.style.top = top + 5 + 'px'; // Pallon liikkuminen
+                    puck.style.top = top + 5 + 'px'; // Pallon liikkuminen
                 }
             }, 30);
         }
 
-        function determineScore(chip) {
-            const x = parseFloat(chip.style.left);
-            const boardWidth = plinkoBoard.offsetWidth;
-            const sectionWidth = boardWidth / 5; // Oletetaan, että on 5 erilaista tulosaluetta
+        function calculateBucket(puck) {
+            const x = parseFloat(puck.style.left);
+            const bucketWidth = 600 / 5; // 5 bucketia
+            const bucketIndex = Math.floor(x / bucketWidth);
+            const points = [100, 200, 300, 400, 500];
 
-            const scorePerSection = [100, 200, 300, 400, 500];
-            let sectionIndex = Math.floor(x / sectionWidth);
-            let chipScore = scorePerSection[sectionIndex];
+            credits += points[bucketIndex];
+            updateBuckets(bucketIndex, points[bucketIndex]);
+            creditsDisplay.textContent = 'Pisteet: ' + credits;
+        }
 
-            score += chipScore;
-            scoreDisplay.textContent = 'Pisteet: ' + score;
+        function updateBuckets(index, points) {
+            const bucket = buckets[index];
+            bucket.textContent = parseInt(bucket.textContent) + points;
+            const totalPoints = buckets.reduce((total, b) => total + parseInt(b.textContent), 0);
+            percentDisplays.forEach((p, i) => {
+                p.textContent = ((parseInt(buckets[i].textContent) / totalPoints) * 100).toFixed(2) + '%';
+            });
         }
     </script>
 </body>
