@@ -68,7 +68,7 @@
         }
 
         .spin-animation {
-            animation: spin 1s linear;
+            animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
@@ -136,18 +136,21 @@
                 document.querySelectorAll('#slotMachine img').forEach(img => img.classList.remove('spin-animation'));
 
                 if (result[0] === result[1] && result[1] === result[2]) {
+                    let multiplier = 1;
+
                     if (result[0] === 'pohna.png') {
-                        alert('Voitit isosti! Kaikki kolme ovat Pöhnä!');
-                        points += spinPoints * 2; // Voitto
+                        multiplier = 3; // 3x voitto
                     } else if (result[0] === 'evilpohna.png') {
-                        alert('Voitit isosti! Kaikki kolme ovat Evil Pöhnä!');
-                        points += spinPoints * 1.5; // Voitto
-                    } else if (result[0] === 'jehna.png') {
-                        alert('Valitettavasti et voittanut mitään. Jehna kuva ilmestyi!');
+                        multiplier = 3; // 3x voitto
                     }
-                    document.getElementById('points').innerText = 'Pisteet: ' + points;
-                    // Lisää voittoanimaatio
-                    document.querySelectorAll('#slotMachine img').forEach(img => img.classList.add('win-animation'));
+
+                    if (multiplier > 1) {
+                        alert('Voitit isosti! Kaikki kolme ovat ' + (result[0] === 'pohna.png' ? 'Pöhnä' : 'Evil Pöhnä') + '!');
+                        points += spinPoints * multiplier; // Voitto
+                        document.getElementById('points').innerText = 'Pisteet: ' + points;
+                        // Lisää voittoanimaatio
+                        document.querySelectorAll('#slotMachine img').forEach(img => img.classList.add('win-animation'));
+                    }
                 }
             }, 1000); // Animaatio kestää 1 sekunnin
         }
