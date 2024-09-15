@@ -17,11 +17,14 @@
             color: white;
             text-align: center;
             overflow: hidden;
+            position: relative;
         }
 
         .container {
             text-align: center;
             display: none;
+            position: relative;
+            z-index: 2; /* Nappien päälle asettaminen */
         }
 
         h1 {
@@ -57,6 +60,7 @@
             width: 300px; /* Isompi video */
             height: 200px; /* Isompi video */
             display: none;
+            z-index: 1; /* Videon siirtäminen nappien taakse */
         }
 
         #videoContainer video {
@@ -109,7 +113,7 @@
 
     <!-- Main content hidden until GIF is clicked -->
     <div class="container">
-        <h1>Welcome to the pöhnä center info place from Finland.</h1>
+        <h1>Wellcome to the pöhnä center info place from Finland.</h1>
         <div class="buttons">
             <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
             <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
