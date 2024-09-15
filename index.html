@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanoma Pro</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon"> <!-- Lisää tämä rivi -->
     <style>
         body {
             margin: 0;
@@ -17,14 +18,11 @@
             color: white;
             text-align: center;
             overflow: hidden;
-            position: relative;
         }
 
         .container {
             text-align: center;
             display: none;
-            position: relative;
-            z-index: 2; /* Nappien päälle asettaminen */
         }
 
         h1 {
@@ -60,7 +58,6 @@
             width: 300px; /* Isompi video */
             height: 200px; /* Isompi video */
             display: none;
-            z-index: 1; /* Videon siirtäminen nappien taakse */
         }
 
         #videoContainer video {
