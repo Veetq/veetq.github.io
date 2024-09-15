@@ -3,220 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whatsapp Web</title>
-    <link rel="icon" href="icon.ico" type="image/x-icon"> <!-- Favicon -->
+    <title>Pöhnä Pelit</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1f2120; /* Taustaväri */
-            overflow: hidden; /* Estää vierityspalkkien näkymisen */
-        }
-
-        #text {
-            font-size: 36px; /* Pienennetty fonttikoko */
-            margin-bottom: 20px;
-            font-family: 'Arial', sans-serif;
-            color: #fff; /* Valkoinen teksti */
-            text-align: center;
-            z-index: 10; /* Teksti on päällimmäinen */
-            display: block; /* Näyttää tekstin oletusarvoisesti */
-        }
-
-        #playButton {
-            max-width: 100%;
-            height: auto;
-            cursor: pointer; /* Näyttää osoittimen, kun kuvaa voi klikata */
-        }
-
-        #bouncingVideo {
-            position: absolute;
-            width: 300px; /* Pienennetty videon koko */
-            height: auto;
-            display: none; /* Piilottaa pomppivan videon aluksi */
-            opacity: 0.6; /* Läpinäkyvyys */
-            pointer-events: none; /* Estää videon klikkauksen */
-        }
-
-        #volumeControls {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(33, 33, 33, 0.8);
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Working style */
-            z-index: 10; /* Varmistaa, että säätimet ovat päällimmäisiä */
-        }
-
-        #volumeControls input[type="range"] {
-            -webkit-appearance: none;
-            width: 120px; /* Leveämpi säätöalue */
-            height: 10px; /* Korkeampi alue */
-            background: #444; /* Tumma tausta */
-            border-radius: 5px;
-            outline: none;
-            margin: 10px 0;
-            cursor: pointer;
-            position: relative;
-        }
-
-        #volumeControls input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.7); /* Musta pallo */
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        #largeTextArea {
-            position: absolute;
-            top: 120px; /* Sijoita tekstialue alemmaksi, jotta se ei peitä tekstiä */
-            width: 80%;
-            background: transparent; /* Ei taustaa */
-            border: none; /* Ei reunoja */
-            padding: 20px;
-            font-size: 24px; /* Suuri fonttikoko */
-            font-family: 'Arial', sans-serif;
-            color: #fff; /* Valkoinen teksti */
-            display: none; /* Piilottaa tekstialueen aluksi */
-            z-index: 10; /* Teksti on päällimmäinen */
-            overflow: auto; /* Näyttää vierityspalkin, jos teksti ylittää alueen */
-            text-align: center;
-        }
-
-        audio {
-            display: none; /* Piilottaa audio-elementin */
-        }
-
-        /* Nappityyli */
-        #gameButton, #hallOfFameButton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 24px;
-            background-color: #444;
+            background-color: #2d2d2d;
+            font-family: Arial, sans-serif;
             color: white;
+            text-align: center;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            background-color: #4e4e4e;
+            color: white;
+            padding: 15px 25px;
             border: none;
             border-radius: 5px;
+            font-size: 18px;
             cursor: pointer;
-            z-index: 10;
-            display: none; /* Piilotetaan nappi aluksi */
-            text-align: center;
+            transition: background-color 0.3s;
         }
 
-        #gameButton:hover, #hallOfFameButton:hover {
-            background-color: #666;
+        button:hover {
+            background-color: #5c5c5c;
         }
-
-        #hallOfFameButton {
-            margin-top: 10px;
-        }
-
     </style>
 </head>
 <body>
-    <div id="text">PAINA PÖHNÄÄ</div>
-    <img id="playButton" src="kuva.gif" alt="GIF-kuva">
-    <video id="bouncingVideo" autoplay loop muted>
-        <source src="pomppiva.mp4" type="video/mp4">
-        Your browser does not support the video element.
-    </video>
-    <audio id="audioPlayer">
-        <source src="musa.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <div id="volumeControls">
-        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
+    <div class="container">
+        <h1>Wellcome to the pöhnä center info place from Finland.</h1>
+        <div class="buttons">
+            <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
+            <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
+        </div>
     </div>
-    
-    <div id="largeTextArea">
-        Wellcome to the pöhnä center info place from Finland.
-        <button id="gameButton" onclick="location.href='pelit.html';">Pöhnä Pelit</button>
-        <button id="hallOfFameButton" onclick="location.href='hallOfFame.html';">Hall of Fame</button>
-    </div>
-
-    <div id="rainContainer" class="rain"></div> <!-- Vesisateen elementti -->
-
-    <script>
-        // Hae elementit
-        const playButton = document.getElementById('playButton');
-        const text = document.getElementById('text');
-        const audioPlayer = document.getElementById('audioPlayer');
-        const bouncingVideo = document.getElementById('bouncingVideo');
-        const volumeControl = document.getElementById('volume');
-        const largeTextArea = document.getElementById('largeTextArea');
-        const rainContainer = document.getElementById('rainContainer');
-        const gameButton = document.getElementById('gameButton');
-        const hallOfFameButton = document.getElementById('hallOfFameButton');
-
-        // Lisää tapahtumankäsittelijä kuvan klikkaukselle
-        playButton.addEventListener('click', () => {
-            text.style.display = 'none'; // Poistaa tekstin näkyvistä
-            playButton.style.display = 'none'; // Poistaa GIF-kuvan näkyvistä
-            audioPlayer.play(); // Käynnistää musiikin
-            bouncingVideo.style.display = 'block'; // Näyttää pomppivan videon
-            largeTextArea.style.display = 'block'; // Näyttää suuren tekstialueen
-            gameButton.style.display = 'block'; // Näyttää "Pöhnä Pelit" -napin
-            hallOfFameButton.style.display = 'block'; // Näyttää "Hall of Fame" -napin
-            startRain(); // Käynnistää vesisateen
-            startBouncing(); // Käynnistää pomppimisen
-        });
-
-        // Funktio vesisateen luomiseen
-        function startRain() {
-            const raindrops = 100; // Sateen määrä
-            for (let i = 0; i < raindrops; i++) {
-                const drop = document.createElement('div');
-                drop.classList.add('drop');
-                drop.style.left = `${Math.random() * 100}vw`;
-                drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
-                drop.style.animationDelay = `${Math.random() * 2}s`;
-                rainContainer.appendChild(drop);
-            }
-        }
-
-        // Funktio pomppivan videon liikuttamiseksi
-        function startBouncing() {
-            let xPos = 0;
-            let yPos = 0;
-            let xSpeed = 1;
-            let ySpeed = 1;
-            const video = bouncingVideo;
-
-            function updatePosition() {
-                const maxX = window.innerWidth - video.clientWidth;
-                const maxY = window.innerHeight - video.clientHeight;
-
-                xPos += xSpeed;
-                yPos += ySpeed;
-
-                if (xPos <= 0 || xPos >= maxX) {
-                    xSpeed *= -1;
-                }
-                if (yPos <= 0 || yPos >= maxY) {
-                    ySpeed *= -1;
-                }
-
-                video.style.left = `${xPos}px`;
-                video.style.top = `${yPos}px`;
-                requestAnimationFrame(updatePosition);
-            }
-
-            requestAnimationFrame(updatePosition);
-        }
-
-        // Volume control
-        volumeControl.addEventListener('input', function() {
-            audioPlayer.volume = volumeControl.value;
-        });
-    </script>
 </body>
 </html>
