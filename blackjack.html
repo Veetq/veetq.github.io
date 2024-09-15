@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pöhnä Blackjack</title>
+    <link rel="icon" href="slots.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #2d2d2d;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #game {
+            width: 600px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #444;
+            border-radius: 10px;
+        }
+
+        .card {
+            width: 80px;
+            height: 120px;
+            display: inline-block;
+            margin: 5px;
+            border: 2px solid white;
+            border-radius: 10px;
+            background-color: #fff;
+            color: #000;
+            text-align: center;
+            line-height: 120px;
+            font-size: 24px;
+        }
+
+        button {
+            background-color: #4e4e4e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #5c5c5c;
+        }
+
+        #points {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        #betAmount {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        #betAmount input {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            color: #fff;
+            background-color: #333;
+        }
+
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Pöhnä Blackjack</h1>
+    <div id="game">
+        <div id="points">Pisteet: 50</div>
+        <div id="betAmount">
+            <label for="betPoints">Syötä panos: </label>
+            <input type="number" id="betPoints" min="1" value="10">
+        </div>
+        <button onclick="startGame()">Aloita peli</button>
+        <div id="gameBoard"></div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+        const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+        let points = 50;
+        let bet = 0;
+
+        function createDeck() {
+            const deck = [];
+            for (let suit of suits) {
+                for (let value of values) {
+                    deck.push({ suit, value });
+                }
+            }
+            return deck;
+        }
+
+        function shuffleDeck(deck) {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            return deck;
+        }
+
+        function cardValue(card) {
+            if (['J', 'Q', 'K'].includes(card.value)) return 10;
+            if (card.value === 'A') return 11;
+            return parseInt(card.value);
+        }
+
+        function calculateHandValue(hand) {
+            let value = 0;
+            let numAces = 0;
+            for (let card of hand) {
+                value += cardValue(card);
+                if (card.value === 'A') numAces++;
+            }
+            while (value > 21 && numAces > 0) {
+                value -= 10;
+                numAces--;
+            }
+            return value;
+        }
+
+        function startGame() {
+            bet = parseInt(document.getElementById('betPoints').value, 10);
+
+            if (points < bet) {
+                alert('Ei tarpeeksi pisteitä!');
+                return;
+            }
+
+            points -= bet;
+            document.getElementById('points').innerText = 'Pisteet: ' + points;
+
+            const deck = shuffleDeck(createDeck());
+            const playerHand = [deck.pop(), deck.pop()];
+            const dealerHand = [deck.pop(), deck.pop()];
+
+            const playerValue = calculateHandValue(playerHand);
+            const dealerValue = calculateHandValue(dealerHand);
+
+            let result = '';
+            if (playerValue === 21) {
+                result = 'Blackjack! Voitit ' + (bet * 2.5) + ' pistettä!';
+                points += bet * 2.5;
+            } else if (dealerValue > 21 || playerValue > dealerValue) {
+                result = 'Voitit! Voitit ' + (bet * 2) + ' pistettä!';
+                points += bet * 2;
+            } else if (playerValue < dealerValue) {
+                result = 'Hävisit! Menetit ' + bet + ' pistettä.';
+            } else {
+                result = 'Tasapeli! Pisteet pysyvät samana.';
+                points += bet;
+            }
+
+            document.getElementById('gameBoard').innerHTML = `
+                <div>Sinun kätesi: ${playerHand.map(card => `<div class="card">${card.value} ${card.suit}</div>`).join('')}</div>
+                <div>Jakajan käsi: ${dealerHand.map(card => `<div class="card">${card.value} ${card.suit}</div>`).join('')}</div>
+            `;
+            document.getElementById('result').innerText = result;
+            document.getElementById('points').innerText = 'Pisteet: ' + points;
+        }
+    </script>
+</body>
+</html>
