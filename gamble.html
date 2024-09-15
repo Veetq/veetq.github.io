@@ -22,6 +22,7 @@
         #slotMachine {
             display: flex;
             gap: 10px;
+            margin-bottom: 20px;
         }
 
         #slotMachine img {
@@ -29,6 +30,7 @@
             height: 100px;
             border: 2px solid white;
             border-radius: 10px;
+            animation: none;
         }
 
         button {
@@ -50,11 +52,49 @@
             font-size: 24px;
             margin: 20px 0;
         }
+
+        #spinAmount {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        #spinAmount input {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            color: #fff;
+            background-color: #333;
+        }
+
+        .spin-animation {
+            animation: spin 1s linear;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .win-animation {
+            animation: win 1s ease-out;
+        }
+
+        @keyframes win {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
     </style>
 </head>
 <body>
     <h1>Pöhnä Slot Machine</h1>
     <div id="points">Pisteet: 500</div>
+    <div id="spinAmount">
+        <label for="spinPoints">Syötä pistemäärä: </label>
+        <input type="number" id="spinPoints" min="1" value="10">
+    </div>
     <div id="slotMachine">
         <img id="slot1" src="pohna.png" alt="Slot 1">
         <img id="slot2" src="pohna.png" alt="Slot 2">
@@ -64,37 +104,52 @@
 
     <script>
         let points = 500;
-        const slotImages = ['pohna.png', 'evilpohna.png'];
+        const slotImages = ['pohna.png', 'evilpohna.png', 'jehna.png'];
 
         function spin() {
-            if (points <= 0) {
+            const spinPoints = parseInt(document.getElementById('spinPoints').value, 10);
+
+            if (points < spinPoints) {
                 alert('Ei tarpeeksi pisteitä!');
                 return;
             }
 
-            points -= 10; // Alennetaan pisteitä jokaisesta pyöräytyksestä
+            points -= spinPoints; // Alennetaan pisteitä spinnin mukaan
             document.getElementById('points').innerText = 'Pisteet: ' + points;
 
+            // Pyöritetään slotteja
             const result = [
                 slotImages[Math.floor(Math.random() * slotImages.length)],
                 slotImages[Math.floor(Math.random() * slotImages.length)],
                 slotImages[Math.floor(Math.random() * slotImages.length)]
             ];
 
-            document.getElementById('slot1').src = result[0];
-            document.getElementById('slot2').src = result[1];
-            document.getElementById('slot3').src = result[2];
+            // Lisää pyörimis-animaatio
+            document.querySelectorAll('#slotMachine img').forEach(img => img.classList.add('spin-animation'));
 
-            if (result[0] === result[1] && result[1] === result[2]) {
-                if (result[0] === 'pohna.png') {
-                    alert('Voitit isosti! Kaikki kolme ovat Pöhnä!');
-                    points += 1000; // Voitto
-                } else if (result[0] === 'evilpohna.png') {
-                    alert('Voitit isosti! Kaikki kolme ovat Evil Pöhnä!');
-                    points += 500; // Voitto
+            setTimeout(() => {
+                document.getElementById('slot1').src = result[0];
+                document.getElementById('slot2').src = result[1];
+                document.getElementById('slot3').src = result[2];
+
+                // Poista pyörimis-animaatio
+                document.querySelectorAll('#slotMachine img').forEach(img => img.classList.remove('spin-animation'));
+
+                if (result[0] === result[1] && result[1] === result[2]) {
+                    if (result[0] === 'pohna.png') {
+                        alert('Voitit isosti! Kaikki kolme ovat Pöhnä!');
+                        points += spinPoints * 2; // Voitto
+                    } else if (result[0] === 'evilpohna.png') {
+                        alert('Voitit isosti! Kaikki kolme ovat Evil Pöhnä!');
+                        points += spinPoints * 1.5; // Voitto
+                    } else if (result[0] === 'jehna.png') {
+                        alert('Valitettavasti et voittanut mitään. Jehna kuva ilmestyi!');
+                    }
+                    document.getElementById('points').innerText = 'Pisteet: ' + points;
+                    // Lisää voittoanimaatio
+                    document.querySelectorAll('#slotMachine img').forEach(img => img.classList.add('win-animation'));
                 }
-                document.getElementById('points').innerText = 'Pisteet: ' + points;
-            }
+            }, 1000); // Animaatio kestää 1 sekunnin
         }
     </script>
 </body>
