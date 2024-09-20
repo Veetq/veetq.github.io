@@ -31,9 +31,24 @@
             background-color: #666;
         }
 
-        .result {
-            margin-top: 20px;
-            font-size: 24px;
+        .result img {
+            width: 100px;
+            height: auto;
+            margin: 10px;
+        }
+
+        .bet-container {
+            margin: 20px 0;
+        }
+
+        .bet-input {
+            padding: 10px;
+            font-size: 18px;
+            width: 100px;
+        }
+
+        .balance {
+            font-size: 20px;
         }
     </style>
 </head>
@@ -41,30 +56,43 @@
 
     <div class="container">
         <h1>Pöhnä Coinari</h1>
-        <p>Choose your side: Pöhnä or Evilpöhnä</p>
+        <p>Choose your side:</p>
 
         <button onclick="flipCoin('pohna')">Pöhnä</button>
         <button onclick="flipCoin('evilpohna')">Evilpöhnä</button>
 
+        <div class="bet-container">
+            <input type="number" id="betAmount" class="bet-input" placeholder="Bet Amount" min="1" max="500">
+        </div>
+
+        <div class="balance">Balance: <span id="balance">500</span> points</div>
         <div id="result" class="result"></div>
     </div>
 
     <script>
-        let playerMoney = 1000; // Player starts with 1000 points
+        let playerBalance = 500;
 
         function flipCoin(playerChoice) {
             const sides = ['pohna', 'evilpohna'];
             const result = sides[Math.floor(Math.random() * sides.length)];
+            const betAmount = parseInt(document.getElementById('betAmount').value);
             let message = '';
 
+            if (isNaN(betAmount) || betAmount <= 0 || betAmount > playerBalance) {
+                alert('Please enter a valid bet amount.');
+                return;
+            }
+
             if (result === playerChoice) {
-                playerMoney *= 2;
-                message = `You won! It's ${result}. Your new balance is ${playerMoney} points.`;
+                playerBalance += betAmount; // Double the bet on win
+                message = `<p>You won!</p><img src="pohna.png" alt="Pöhnä"><img src="evilpohna.png" alt="Evil Pöhnä">`;
             } else {
-                message = `You lost. It's ${result}. Your balance remains at ${playerMoney} points.`;
+                playerBalance -= betAmount; // Deduct the bet on loss
+                message = `<p>You lost!</p><img src="evilpohna.png" alt="Evil Pöhnä"><img src="pohna.png" alt="Pöhnä">`;
             }
 
             document.getElementById('result').innerHTML = message;
+            document.getElementById('balance').innerText = playerBalance;
         }
     </script>
 
