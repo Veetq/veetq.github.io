@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pöhnä Coinari</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1f2120;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #666;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Pöhnä Coinari</h1>
+        <p>Choose your side: Pöhnä or Evilpöhnä</p>
+
+        <button onclick="flipCoin('pohna')">Pöhnä</button>
+        <button onclick="flipCoin('evilpohna')">Evilpöhnä</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        let playerMoney = 1000; // Player starts with 1000 points
+
+        function flipCoin(playerChoice) {
+            const sides = ['pohna', 'evilpohna'];
+            const result = sides[Math.floor(Math.random() * sides.length)];
+            let message = '';
+
+            if (result === playerChoice) {
+                playerMoney *= 2;
+                message = `You won! It's ${result}. Your new balance is ${playerMoney} points.`;
+            } else {
+                message = `You lost. It's ${result}. Your balance remains at ${playerMoney} points.`;
+            }
+
+            document.getElementById('result').innerHTML = message;
+        }
+    </script>
+
+</body>
+</html>
