@@ -24,6 +24,7 @@
         video, img {
             width: 100%;
             height: auto;
+            cursor: pointer;
         }
 
         .description {
@@ -64,11 +65,9 @@
         <div class="description">Here is samppa falling again to the same trap in the bedwars game.</div>
     </div>
 
-    <!-- Now using images for video4 and video5 -->
     <div class="media-container">
-        <img src="video4.png" alt="Video 4 Image">
-        <div class="description">ponnerrus
-    </div>
+        <img src="video4.png" alt="Video 4 Image" onclick="playAudio()">
+        <div class="description">ponnerrus</div>
     </div>
 
     <div class="media-container">
@@ -115,15 +114,15 @@
         </video>
         <div class="description">porno hetket salpan kanssa</div>
     </div>
- 
+
     <div class="media-container">
         <video controls>
             <source src="video11.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="description">tuli tulipallo moka korhoselle</div>
-  
     </div>
+
     <div class="media-container">
         <video controls>
             <source src="video12.mp4" type="video/mp4">
@@ -131,8 +130,7 @@
         </video>
         <div class="description">klassinen rellu moka</div>
     </div>
-      
-    </div>
+
     <div class="media-container">
         <video controls>
             <source src="video13.mp4" type="video/mp4">
@@ -140,8 +138,7 @@
         </video>
         <div class="description">kuulostaa nörsältä tosiaan</div>
     </div>
-      
-    </div>
+
     <div class="media-container">
         <video controls>
             <source src="video14.mp4" type="video/mp4">
@@ -149,8 +146,7 @@
         </video>
         <div class="description">nuketin pimpassa</div>
     </div>
-      
-    </div>
+
     <div class="media-container">
         <video controls>
             <source src="video15.mp4" type="video/mp4">
@@ -158,8 +154,7 @@
         </video>
         <div class="description">tähän ei kehtaa ees miettiä descriptionia</div>
     </div>
-          
-    </div>
+
     <div class="media-container">
         <video controls>
             <source src="video16.mp4" type="video/mp4">
@@ -167,6 +162,14 @@
         </video>
         <div class="description">pientä pongerrusta on havaittavissa</div>
     </div>
-    
+
+    <audio id="audio" src="hynda.mp3"></audio>
+
+    <script>
+        function playAudio() {
+            const audio = document.getElementById('audio');
+            audio.play();
+        }
+    </script>
 </body>
 </html>
