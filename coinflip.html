@@ -85,10 +85,10 @@
 
             if (result === playerChoice) {
                 playerBalance += betAmount; // Double the bet on win
-                message = `<p>You won!</p><img src="pohna.png" alt="Pöhnä"><img src="evilpohna.png" alt="Evil Pöhnä">`;
+                message = `<p>You won!</p><img src="pohna.png" alt="Pöhnä">`;
             } else {
                 playerBalance -= betAmount; // Deduct the bet on loss
-                message = `<p>You lost!</p><img src="evilpohna.png" alt="Evil Pöhnä"><img src="pohna.png" alt="Pöhnä">`;
+                message = `<p>You lost!</p><img src="evilpohna.png" alt="Evil Pöhnä">`;
             }
 
             document.getElementById('result').innerHTML = message;
