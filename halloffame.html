@@ -3,117 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hall of Fame</title>
+    <title>Pöhnä Slots</title>
+    <link rel="icon" href="slots.ico">
     <style>
         body {
-            margin: 0;
-            padding: 0;
             font-family: Arial, sans-serif;
             background-color: #1f2120;
-            color: #fff;
+            color: white;
             text-align: center;
         }
 
-        .media-container {
-            margin: 20px auto;
-            width: 80%;
-            max-width: 800px;
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            margin: 50px 0;
         }
 
-        video, img {
-            width: 100%;
-            height: auto;
+        .slot {
+            width: 100px;
+            height: 100px;
+            background-color: #333;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
         }
 
-        .description {
-            font-size: 14px;
-            margin-top: 5px;
-            color: #ccc;
+        .slot img {
+            max-width: 100%;
+            max-height: 100%;
         }
 
-        h1 {
-            color: #fff;
+        #spinButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #spinButton:hover {
+            background-color: #666;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 24px;
         }
     </style>
 </head>
 <body>
-    <h1>Hall of Fame</h1>
 
-    <div class="media-container">
-        <video controls>
-            <source src="video1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="description">Classic awp fail witch took place in Nuke.</div>
-    </div>
+    <h1>Pöhnä Slots</h1>
 
-    <div class="media-container">
-        <video controls>
-            <source src="video2.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="description">Classic pöhnä moka witch took place in hypixel bedwars.</div>
+    <div class="slot-machine">
+        <div class="slot" id="slot1"><img src="animation.gif" id="slot1img"></div>
+        <div class="slot" id="slot2"><img src="animation.gif" id="slot2img"></div>
+        <div class="slot" id="slot3"><img src="animation.gif" id="slot3img"></div>
     </div>
 
-    <div class="media-container">
-        <video controls>
-            <source src="video3.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="description">Here is samppa falling again to the same trap in the bedwars game.</div>
+    <div>
+        <label for="betAmount">Bet Amount:</label>
+        <input type="number" id="betAmount" min="1" max="500" value="1">
+        <button id="spinButton" onclick="spinSlots()">Spin</button>
     </div>
 
-    <!-- Now using images for video4 and video5 -->
-    <div class="media-container">
-        <img src="video4.png" alt="Video 4 Image">
-        <div class="description">ponnerrus
-    </div>
-    </div>
+    <p>Points: <span id="playerPoints">500</span></p>
+    <div class="result" id="resultMessage"></div>
 
-    <div class="media-container">
-        <img src="video5.png" alt="Video 5 Image">
-        <div class="description">pöhnä hacked his way into the minecraft server: fisucraft.</div>
-    </div>
+    <script>
+        let playerPoints = 500; // Starting points
+        const pohnas = ['pohna.png', 'evilpohna.png', 'jehna.png'];
 
-    <div class="media-container">
-        <video controls>
-            <source src="video6.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="description">#neverloseyourpöhnä #pöhnäclassic #savepöhnä #vrilpöhnä</div>
-    </div>
+        function spinSlots() {
+            let betAmount = parseInt(document.getElementById('betAmount').value);
+            
+            if (betAmount > playerPoints) {
+                alert("You don't have enough points to place this bet.");
+                return;
+            }
 
-    <div class="media-container">
-        <video controls>
-            <source src="video7.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="description">klassinen paskannus oraaliin</div>
-    </div>
+            playerPoints -= betAmount; // Deduct the bet
+            document.getElementById('playerPoints').textContent = playerPoints;
 
-    <div class="media-container">
-        <video controls>
-            <source src="video8.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="description">samuel sebastian korhonen</div>
-    </div>
+            // Reset animation images to "spinning"
+            document.getElementById('slot1img').src = 'animation.gif';
+            document.getElementById('slot2img').src = 'animation.gif';
+            document.getElementById('slot3img').src = 'animation.gif';
 
-    <div class="media-container">
-        <video controls>
-            <source src="video9.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="description">limanörtti</div>
-    </div>
+            // Simulate a short delay for slot machine spinning effect
+            setTimeout(() => {
+                // Determine results
+                const result1 = pohnas[Math.floor(Math.random() * pohnas.length)];
+                const result2 = pohnas[Math.floor(Math.random() * pohnas.length)];
+                const result3 = pohnas[Math.floor(Math.random() * pohnas.length)];
 
-    <div class="media-container">
-        <video controls>
-            <source src="video10.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="description">Classic fail moment in Inferno balcony push.</div>
-    </div>
+                // Show the results one by one with delay
+                setTimeout(() => document.getElementById('slot1img').src = result1, 500);
+                setTimeout(() => document.getElementById('slot2img').src = result2, 1000);
+                setTimeout(() => document.getElementById('slot3img').src = result3, 1500);
+
+                // Check if the player wins
+                setTimeout(() => {
+                    if (result1 === result2 && result2 === result3) {
+                        let winnings = betAmount * 3; // Triple the bet if 3 in a row
+                        playerPoints += winnings;
+                        document.getElementById('playerPoints').textContent = playerPoints;
+                        document.getElementById('resultMessage').textContent = `You won ${winnings} points!`;
+                    } else {
+                        document.getElementById('resultMessage').textContent = "You lost.";
+                    }
+                }, 2000);
+            }, 1000);
+        }
+    </script>
 
 </body>
 </html>
