@@ -142,17 +142,13 @@
             noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Häviää jos ei klikata ajoissa
         }
 
-        // Klikkaaminen pohna kuvaan
-        pohna.addEventListener('click', () => {
-            if (!gameOver && clickable) {
-                score++;
-                scoreBoard.textContent = `Pisteet: ${score}`;
-                clickable = false; // Estää useita klikkauksia
-                clearTimeout(noClickTimer); // Nollaa ajastin
-                noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
-                setTimeout(() => clickable = true, gameSpeed); // Salli klikkaus seuraavalla kuvalla
-            }
-        });
+// Klikkaaminen pohna kuvaan
+pohna.addEventListener('click', () => {
+    if (!gameOver) {
+        score++;
+        scoreBoard.textContent = `Pisteet: ${score}`;
+    }
+});
 
         // Klikkaaminen evilpohna kuvaan
         function evilClickHandler() {
