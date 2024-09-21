@@ -28,7 +28,7 @@
         }
 
         .pohna, .evilpohna {
-            position: absolute;
+            position: absolute; /* Ensure the images can move */
             cursor: pointer;
             width: 100px;
             height: auto;
@@ -114,8 +114,8 @@
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
 
-            image.style.left = ${randomX}px;
-            image.style.top = ${randomY}px;
+            image.style.left = `${randomX}px`;
+            image.style.top = `${randomY}px`;
         }
 
         // Pelin aloitus
@@ -146,7 +146,7 @@
         pohna.addEventListener('click', () => {
             if (!gameOver && clickable) {
                 score++;
-                scoreBoard.textContent = Pisteet: ${score};
+                scoreBoard.textContent = `Pisteet: ${score}`;
                 clickable = false; // Estää useita klikkauksia
                 clearTimeout(noClickTimer); // Nollaa ajastin
                 noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
@@ -181,7 +181,7 @@
             gameSpeed = 1000; // Palauta alkuperäinen nopeus
             gameOver = false;
             clickable = true; // Palauta klikkaus
-            scoreBoard.textContent = Pisteet: 0;
+            scoreBoard.textContent = `Pisteet: 0`;
             pohna.style.display = 'block';
             evilpohna1.style.display = 'block';
             evilpohna2.style.display = 'block';
