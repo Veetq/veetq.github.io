@@ -3,195 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pöhnä Clicker™</title>
+    <link rel="icon" href="palli.ico">
+    <title>Pöhnä Pelit</title>
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #1f2120;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
+        }
+
+        /* Video background styling */
+        #background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        /* Keep rest of the page styling intact */
+        body {
             font-family: Arial, sans-serif;
-            color: #fff;
-        }
-
-        #gameArea {
-            position: relative;
-            width: 80vw;
-            height: 80vh;
-            border: 2px solid #fff;
-            overflow: hidden;
-        }
-
-        .pohna, .evilpohna {
-            position: absolute;
-            cursor: pointer;
-            width: 100px;
-            height: auto;
-        }
-
-        #scoreBoard {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        #gameOver {
-            display: none;
-            font-size: 36px;
-            color: red;
-        }
-
-        #restartButton {
-            display: none;
-            padding: 10px 20px;
-            font-size: 24px;
-            background-color: #444;
+            text-align: center;
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
         }
 
-        #restartButton:hover {
-            background-color: #666;
+        h1 {
+            margin-top: 20px;
+            font-size: 48px;
         }
 
-        #leaderboardButton {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        .button-container {
+            margin-top: 50px;
+        }
+
+        button {
             padding: 10px 20px;
             font-size: 18px;
-            background-color: #444;
-            color: white;
             border: none;
-            border-radius: 5px;
+            background-color: #e74c3c;
+            color: white;
             cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
         }
 
-        #leaderboardButton:hover {
-            background-color: #666;
+        button:hover {
+            background-color: #c0392b;
         }
     </style>
 </head>
 <body>
-    <button id="leaderboardButton" onclick="window.location.href='leaderboard.html'">Leaderboard</button>
-    <div id="scoreBoard">Pisteet: 0</div>
-    <div id="gameArea">
-        <img id="pohna" class="pohna" src="pohna.png" alt="Pöhnä">
-        <img id="evilpohna1" class="evilpohna" src="evilpohna.png" alt="Evil Pöhnä 1">
-        <img id="evilpohna2" class="evilpohna" src="evilpohna.png" alt="Evil Pöhnä 2">
+
+    <!-- Video background -->
+    <video autoplay muted loop id="background-video">
+        <source src="tausta.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <h1>Pöhnä Pelit</h1>
+
+    <div class="button-container">
+        <button onclick="window.location.href='gamble.html'">Pöhnä Slots</button>
+        <button onclick="window.location.href='plinko.html'">Pöhnä Plinko</button>
+        <button onclick="window.location.href='coinflip.html'">Pöhnä Coinari</button>
+        <button onclick="window.location.href='halloffame.html'">Hall of Fame</button>
     </div>
-    <div id="gameOver">Peli ohi!</div>
-    <button id="restartButton" onclick="restartGame()">Aloita alusta</button>
 
-    <script>
-        const pohna = document.getElementById('pohna');
-        const evilpohna1 = document.getElementById('evilpohna1');
-        const evilpohna2 = document.getElementById('evilpohna2');
-        const scoreBoard = document.getElementById('scoreBoard');
-        const gameOverText = document.getElementById('gameOver');
-        const restartButton = document.getElementById('restartButton');
-        const gameArea = document.getElementById('gameArea');
-
-        let score = 0;
-        let gameSpeed = 1000; // Alkaa hitaasti (1 sekunti per liike)
-        let speedIncrement = 100; // Nopeutuu asteittain
-        let interval;
-        let gameOver = false;
-        let noClickTimer;
-        let clickable = true; // Uusi muuttuja
-
-        // Pöhnän ja evilpöhna liikuttaminen
-        function moveImage(image) {
-            const maxX = gameArea.clientWidth - image.clientWidth;
-            const maxY = gameArea.clientHeight - image.clientHeight;
-
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-
-            image.style.left = `${randomX}px`;
-            image.style.top = `${randomY}px`;
-        }
-
-        // Pelin aloitus
-        function startGame() {
-            moveImage(pohna);
-            moveImage(evilpohna1);
-            moveImage(evilpohna2);
-
-            interval = setInterval(() => {
-                if (!gameOver) {
-                    moveImage(pohna);
-                    moveImage(evilpohna1);
-                    moveImage(evilpohna2);
-                    gameSpeed = Math.max(500, gameSpeed - speedIncrement); // Nopeuttaa peliä asteittain
-                    clearInterval(interval); // Pysäytä nykyinen intervalli
-                    interval = setInterval(() => {
-                        moveImage(pohna);
-                        moveImage(evilpohna1);
-                        moveImage(evilpohna2);
-                    }, gameSpeed); // Uusi nopeampi intervalli
-                }
-            }, gameSpeed);
-
-            noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Häviää jos ei klikata ajoissa
-        }
-
-        // Klikkaaminen pohna kuvaan
-        pohna.addEventListener('click', () => {
-            if (!gameOver && clickable) {
-                score++;
-                scoreBoard.textContent = `Pisteet: ${score}`;
-                clickable = false; // Estää useita klikkauksia
-                clearTimeout(noClickTimer); // Nollaa ajastin
-                noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Uusi ajastin
-                setTimeout(() => clickable = true, gameSpeed); // Salli klikkaus seuraavalla kuvalla
-            }
-        });
-
-        // Klikkaaminen evilpohna kuvaan
-        function evilClickHandler() {
-            if (!gameOver) {
-                endGame(); // Peli päättyy
-            }
-        }
-        evilpohna1.addEventListener('click', evilClickHandler);
-        evilpohna2.addEventListener('click', evilClickHandler);
-
-        // Pelin häviäminen
-        function endGame() {
-            clearInterval(interval); // Pysäytä kaikki intervallit
-            clearTimeout(noClickTimer); // Pysäytä ajastin
-            gameOver = true;
-            pohna.style.display = 'none';
-            evilpohna1.style.display = 'none';
-            evilpohna2.style.display = 'none';
-            gameOverText.style.display = 'block';
-            restartButton.style.display = 'block';
-        }
-
-        // Pelin uudelleenaloitus
-        function restartGame() {
-            score = 0;
-            gameSpeed = 1000; // Palauta alkuperäinen nopeus
-            gameOver = false;
-            clickable = true; // Palauta klikkaus
-            scoreBoard.textContent = `Pisteet: 0`;
-            pohna.style.display = 'block';
-            evilpohna1.style.display = 'block';
-            evilpohna2.style.display = 'block';
-            gameOverText.style.display = 'none';
-            restartButton.style.display = 'none';
-            startGame();
-        }
-
-        // Aloita peli
-        startGame();
-    </script>
 </body>
 </html>
