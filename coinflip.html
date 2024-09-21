@@ -84,12 +84,13 @@
                 return;
             }
 
+            // Check if the player's choice matches the result
             if (result === playerChoice) {
-                playerBalance += betAmount; // Double the bet on win
-                message = `<p>You won!</p><img src="pohna.png" alt="Pöhnä">`;
+                playerBalance += betAmount; // Player wins, double the bet
+                message = `<p>You won!</p><img src="${result}.png" alt="${result.charAt(0).toUpperCase() + result.slice(1)}">`;
             } else {
-                playerBalance -= betAmount; // Deduct the bet on loss
-                message = `<p>You lost!</p><img src="evilpohna.png" alt="Evil Pöhnä">`;
+                playerBalance -= betAmount; // Player loses, deduct the bet
+                message = `<p>You lost!</p><img src="${result}.png" alt="${result.charAt(0).toUpperCase() + result.slice(1)}">`;
             }
 
             document.getElementById('result').innerHTML = message;
