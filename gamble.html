@@ -1,156 +1,36 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pöhnä Slots</title>
-    <link rel="icon" href="slots.ico">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1f2120;
-            color: #fff;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        h1 {
-            margin-top: 50px;
-            font-size: 48px;
-        }
-
-        #slots {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
+        /* Your CSS styles including the slot visibility adjustments */
         .slot {
             width: 100px;
             height: 100px;
-            margin: 0 10px;
-            background-color: #333;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 48px;
+            overflow: hidden;
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 24px;
-            background-color: #444;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:disabled {
-            background-color: #666;
-            cursor: not-allowed;
-        }
-
-        button:hover:enabled {
-            background-color: #666;
-        }
-
-        #points {
-            margin-top: 20px;
-            font-size: 24px;
-        }
-
-        #bet {
-            margin-bottom: 20px;
+        .slot img {
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
 <body>
-
     <h1>Pöhnä Slots</h1>
-
-    <div id="slots">
-        <div class="slot" id="slot1">?</div>
-        <div class="slot" id="slot2">?</div>
-        <div class="slot" id="slot3">?</div>
+    <div id="balance-container">Balance: <span id="balance">500</span></div>
+    
+    <div id="slot-machine">
+        <div class="slot"><img id="slot1" src="pohna.png" alt="Slot 1"></div>
+        <div class="slot"><img id="slot2" src="pohna.png" alt="Slot 2"></div>
+        <div class="slot"><img id="slot3" src="pohna.png" alt="Slot 3"></div>
     </div>
 
-    <div id="bet">
-        <label for="betAmount">Panos: </label>
-        <input type="number" id="betAmount" value="50" min="1" max="500">
-    </div>
+    <input type="number" id="bet" placeholder="Enter your bet" />
+    <button onclick="spinSlots()">Spin</button>
 
-    <button id="spinButton">Pyöräytä</button>
-
-    <div id="points">Pisteet: 500</div>
-
-    <script>
-        const slotImages = ['pohna.png', 'evilpohna.png', 'jehna.png'];
-        let points = 500;
-
-        const spinButton = document.getElementById('spinButton');
-        const slot1 = document.getElementById('slot1');
-        const slot2 = document.getElementById('slot2');
-        const slot3 = document.getElementById('slot3');
-        const pointsDisplay = document.getElementById('points');
-        const betAmount = document.getElementById('betAmount');
-
-        function spin() {
-            const bet = parseInt(betAmount.value);
-
-            if (isNaN(bet) || bet < 1 || bet > points) {
-                alert('Invalid bet amount!');
-                return;
-            }
-
-            points -= bet;
-            updatePoints();
-
-            const result1 = getRandomSlot();
-            const result2 = getRandomSlot();
-            const result3 = getRandomSlot();
-
-            slot1.textContent = '';
-            slot1.style.backgroundImage = `url(${result1})`;
-
-            slot2.textContent = '';
-            slot2.style.backgroundImage = `url(${result2})`;
-
-            slot3.textContent = '';
-            slot3.style.backgroundImage = `url(${result3})`;
-
-            checkWin(result1, result2, result3, bet);
-        }
-
-        function getRandomSlot() {
-            const randomIndex = Math.floor(Math.random() * slotImages.length);
-            return slotImages[randomIndex];
-        }
-
-        function checkWin(res1, res2, res3, bet) {
-            if (res1 === res2 && res2 === res3) {
-                if (res1 === 'pohna.png' || res1 === 'evilpohna.png') {
-                    points += bet * 3;
-                    alert('Voitit! Kolme peräkkäistä pöhnää!');
-                }
-            } else if (res1 === 'jehna.png' || res2 === 'jehna.png' || res3 === 'jehna.png') {
-                alert('Valitettavasti et voittanut mitään. Jehna kuva ilmestyi!');
-            }
-            updatePoints();
-        }
-
-        function updatePoints() {
-            pointsDisplay.textContent = `Pisteet: ${points}`;
-            if (points <= 0) {
-                spinButton.disabled = true;
-                alert('Peli ohi! Sinulla ei ole enää pisteitä.');
-            }
-        }
-
-        spinButton.addEventListener('click', spin);
-    </script>
-
+    <script src="your-slot-machine.js"></script> <!-- Link to the JS file or script directly -->
 </body>
 </html>
