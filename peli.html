@@ -28,7 +28,7 @@
         }
 
         .pohna, .evilpohna {
-            position: absolute; /* Ensure the images can move */
+            position: absolute;
             cursor: pointer;
             width: 100px;
             height: auto;
@@ -103,8 +103,6 @@
         let speedIncrement = 100; // Nopeutuu asteittain
         let interval;
         let gameOver = false;
-        let noClickTimer;
-        let clickable = true; // Uusi muuttuja
 
         // Pöhnän ja evilpöhna liikuttaminen
         function moveImage(image) {
@@ -138,17 +136,15 @@
                     }, gameSpeed); // Uusi nopeampi intervalli
                 }
             }, gameSpeed);
-
-            noClickTimer = setTimeout(endGame, gameSpeed + 1000); // Häviää jos ei klikata ajoissa
         }
 
-// Klikkaaminen pohna kuvaan
-pohna.addEventListener('click', () => {
-    if (!gameOver) {
-        score++;
-        scoreBoard.textContent = `Pisteet: ${score}`;
-    }
-});
+        // Klikkaaminen pohna kuvaan
+        pohna.addEventListener('click', () => {
+            if (!gameOver) {
+                score++;
+                scoreBoard.textContent = `Pisteet: ${score}`;
+            }
+        });
 
         // Klikkaaminen evilpohna kuvaan
         function evilClickHandler() {
@@ -162,7 +158,6 @@ pohna.addEventListener('click', () => {
         // Pelin häviäminen
         function endGame() {
             clearInterval(interval); // Pysäytä kaikki intervallit
-            clearTimeout(noClickTimer); // Pysäytä ajastin
             gameOver = true;
             pohna.style.display = 'none';
             evilpohna1.style.display = 'none';
@@ -176,7 +171,6 @@ pohna.addEventListener('click', () => {
             score = 0;
             gameSpeed = 1000; // Palauta alkuperäinen nopeus
             gameOver = false;
-            clickable = true; // Palauta klikkaus
             scoreBoard.textContent = `Pisteet: 0`;
             pohna.style.display = 'block';
             evilpohna1.style.display = 'block';
