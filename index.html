@@ -16,13 +16,13 @@
             background-color: #2d2d2d;
             font-family: Arial, sans-serif;
             color: white;
-            text-align: center;
             overflow: hidden;
+            position: relative; /* Add this to contain absolute elements */
         }
 
         .container {
             text-align: center;
-            display: none;
+            display: none; /* Hidden until GIF is clicked */
         }
 
         h1 {
@@ -80,7 +80,7 @@
 
         #gifText {
             position: absolute;
-            top: 20%; /* Adjust this value to move the text higher or lower */
+            top: 30%; /* Adjust this value to move the text higher or lower */
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 36px; /* Adjust size as needed */
