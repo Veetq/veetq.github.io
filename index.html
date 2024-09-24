@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lurkki archives</title>
+    <title>Sanoma Pro</title>
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <style>
         body {
@@ -82,9 +82,9 @@
         /* Wavy Text */
         #animated {
             position: absolute;
-            top: 10%;
+            top: 40%; /* Adjusted to position the text above the GIF */
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             font-size: 48px;
             color: #fff;
             z-index: 1;
@@ -155,8 +155,7 @@
 
     <script>
         // Your original wavy text animation function
-        function updateText(text){
-
+        function updateText(text) {
             let delay = 200;
             let h1 = document.getElementById("animated");
 
