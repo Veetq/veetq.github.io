@@ -91,9 +91,8 @@
         }
 
         @keyframes wavy {
-            0% { top: 0px; }
-            50% { top: -15px; }
-            100% { top: 0px; }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
         #volumeControls {
@@ -110,7 +109,7 @@
 <body>
 
     <!-- Text with gradient effect -->
-    <div id="gifText" class="gradient-text">another lurkki.info classic</div>
+    <div id="gifText">another lurkki.info classic</div>
 
     <!-- GIF Container -->
     <div id="gifContainer">
@@ -119,7 +118,7 @@
 
     <!-- Main content hidden until GIF is clicked -->
     <div class="container">
-        <h1>Wellcome to the pöhnä center info place from Finland.</h1>
+        <h1>Welcome to the pöhnä center info place from Finland.</h1>
         <div class="buttons">
             <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
             <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
