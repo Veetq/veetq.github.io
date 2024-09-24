@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanoma Pro</title>
-    <link rel="icon" href="icon.ico" type="image/x-icon"> <!-- Lisää tämä rivi -->
+    <link rel="icon" href="icon.ico" type="image/x-icon">
     <style>
         body {
             margin: 0;
@@ -22,17 +22,12 @@
         }
 
         #textField {
-            border: 1px solid #fff;
-            background: #fff;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
-            font-size: inherit;
+            display: none;
         }
 
         #animated {
-            margin-top: 1rem; /* Moves the text more up */
-            font-size: 36px;  /* Makes the text bigger */
+            margin-top: 1rem;
+            font-size: 36px;
         }
 
         .wavy {
@@ -61,8 +56,8 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 300px; /* Isompi video */
-            height: 200px; /* Isompi video */
+            width: 300px;
+            height: 200px;
             display: none;
         }
 
@@ -93,6 +88,10 @@
             color: #fff;
         }
 
+        .container {
+            display: none; /* Hidden until GIF is clicked */
+        }
+
         #volumeControls {
             position: absolute;
             top: 10px;
@@ -102,13 +101,11 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
-
     </style>
 </head>
 <body>
 
-    <!-- Teksti "Paina Pöhnistä" -->
-    <input type="text" id="textField" value="another lurkki.info classic" />
+    <!-- Teksti "another lurkki.info classic" -->
     <h1 id="animated"></h1>
 
     <!-- GIF Container -->
@@ -200,10 +197,6 @@
                 }, index * 60 + delay);
             });
         }
-
-        document.getElementById('textField').addEventListener('input', (event) => {
-            updateText(event.target.value);
-        });
 
         // Initial text update
         updateText("another lurkki.info classic");
