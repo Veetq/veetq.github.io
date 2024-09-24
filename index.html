@@ -18,38 +18,37 @@
             color: white;
             text-align: center;
             overflow: hidden;
-            flex-direction: column;
         }
 
-        #textField {
+        .container {
+            text-align: center;
             display: none;
         }
 
-        #animated {
-            margin-top: 1rem;
-            font-size: 36px;
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
-        .wavy {
-            animation-name: wavy;
-            animation-duration: 1.3s;
-            animation-timing-function: ease;
-            animation-iteration-count: infinite;
-            position: relative;
-            top: 0;
-            left: 0;
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        @keyframes wavy {
-            0% {
-                top: 0px;
-            }
-            50% {
-                top: -15px;
-            }
-            100% {
-                top: 0px;
-            }
+        button {
+            background-color: #4e4e4e;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5c5c5c;
         }
 
         #videoContainer {
@@ -88,10 +87,6 @@
             color: #fff;
         }
 
-        .container {
-            display: none; /* Hidden until GIF is clicked */
-        }
-
         #volumeControls {
             position: absolute;
             top: 10px;
@@ -101,11 +96,37 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
+
+        /* Wavy text animation */
+        .wavy {
+            animation-name: wavy;
+            animation-duration: 1.3s;
+            animation-timing-function: ease;
+            animation-iteration-count: infinite;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        @keyframes wavy {
+            0% {
+                top: 0px;
+            }
+            50% {
+                top: -15px;
+            }
+            100% {
+                top: 0px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Teksti "another lurkki.info classic" -->
+    <!-- Wavy Text Input -->
+    <input type="text" id="textField" value="Lurkki.info Classic!" style="display: none;" />
+    
+    <!-- Wavy Text Display -->
     <h1 id="animated"></h1>
 
     <!-- GIF Container -->
@@ -115,7 +136,7 @@
 
     <!-- Main content hidden until GIF is clicked -->
     <div class="container">
-        <h1>Wellcome to the pöhnä center info place from Finland.</h1>
+        <h1>Welcome to the pöhnä center info place from Finland.</h1>
         <div class="buttons">
             <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
             <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
@@ -136,6 +157,26 @@
     <audio id="backgroundMusic" src="musa.mp3" loop></audio>
 
     <script>
+        // Function to update and animate text
+        function updateText(text) {
+            let delay = 200;
+            let h1 = document.getElementById("animated");
+
+            h1.innerHTML = text
+                .split("")
+                .map(letter => `<span>${letter}</span>`)
+                .join("");
+
+            Array.from(h1.children).forEach((span, index) => {
+                setTimeout(() => {
+                    span.classList.add("wavy");
+                }, index * 60 + delay);
+            });
+        }
+
+        // Initialize the wavy text
+        updateText("Lurkki.info Classic!");
+
         // Bouncing video functionality
         const videoContainer = document.getElementById('videoContainer');
         let xPos = 100;
@@ -168,40 +209,19 @@
         function showContent() {
             document.querySelector('.container').style.display = 'block';
             document.getElementById('gifContainer').style.display = 'none';
-            document.getElementById('gifText').style.display = 'none'; // Piilotetaan "Paina Pöhnistä" teksti
-            document.getElementById('videoContainer').style.display = 'block'; // Näytetään video
+            document.getElementById('animated').style.display = 'block';
+            document.getElementById('videoContainer').style.display = 'block';
             document.getElementById('backgroundMusic').play();
-            moveVideo(); // Aloita videon pomppiminen
+            moveVideo(); // Start video movement
         }
 
         // Volume control
         const volumeSlider = document.getElementById('volumeSlider');
         const backgroundMusic = document.getElementById('backgroundMusic');
-        
+
         volumeSlider.addEventListener('input', function() {
             backgroundMusic.volume = volumeSlider.value;
         });
-
-        // Wavy text animation
-        function updateText(text){
-            let delay = 200;
-            let h1 = document.getElementById("animated");
-
-            h1.innerHTML = text.split("")
-                .map(letter => `<span>${letter}</span>`)
-                .join("");
-
-            Array.from(h1.children).forEach((span, index) => {
-                setTimeout(() => {
-                    span.classList.add("wavy");
-                }, index * 60 + delay);
-            });
-        }
-
-        // Initial text update
-        updateText("another lurkki.info classic");
-
     </script>
-
 </body>
 </html>
