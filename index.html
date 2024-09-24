@@ -17,7 +17,7 @@
             font-family: Arial, sans-serif;
             color: white;
             overflow: hidden;
-            position: relative; /* Add this to contain absolute elements */
+            position: relative; /* To position absolute elements */
         }
 
         .container {
@@ -28,12 +28,6 @@
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
-        }
-
-        .buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
         }
 
         button {
@@ -80,19 +74,35 @@
 
         #gifText {
             position: absolute;
-            top: 30%; /* Adjust this value to move the text higher or lower */
+            top: 40%; /* Move this value up or down to adjust position */
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 36px; /* Adjust size as needed */
             background: linear-gradient(to right, lightblue, blue);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: wavy 1.3s ease infinite; /* Add waving animation */
+        }
+
+        .wavy {
+            animation-name: wavy;
+            animation-duration: 1.3s;
+            animation-timing-function: ease;
+            animation-iteration-count: infinite;
+            position: relative;
+            top: 0;
+            left: 0;
         }
 
         @keyframes wavy {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            0% {
+                top: 0px;
+            }
+            50% {
+                top: -15px;
+            }
+            100% {
+                top: 0px;
+            }
         }
 
         #volumeControls {
@@ -109,7 +119,7 @@
 <body>
 
     <!-- Text with gradient effect -->
-    <div id="gifText">another lurkki.info classic</div>
+    <div id="gifText" class="wavy">another lurkki.info classic</div>
 
     <!-- GIF Container -->
     <div id="gifContainer">
@@ -119,10 +129,8 @@
     <!-- Main content hidden until GIF is clicked -->
     <div class="container">
         <h1>Welcome to the pöhnä center info place from Finland.</h1>
-        <div class="buttons">
-            <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
-            <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
-        </div>
+        <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
+        <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
     </div>
 
     <!-- Bouncing Video -->
