@@ -78,34 +78,19 @@
             cursor: pointer;
         }
 
-        #gifText {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
+        #animated {
+            font-size: 48px;
+            margin-top: 5%;
             color: #fff;
         }
 
-        #volumeControls {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(36, 36, 35, 0.8);
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Wavy text animation */
         .wavy {
+            display: inline-block;
             animation-name: wavy;
             animation-duration: 1.3s;
             animation-timing-function: ease;
             animation-iteration-count: infinite;
             position: relative;
-            top: 0;
-            left: 0;
         }
 
         @keyframes wavy {
@@ -119,15 +104,22 @@
                 top: 0px;
             }
         }
+
+        #volumeControls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(36, 36, 35, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
 
-    <!-- Wavy Text Input -->
-    <input type="text" id="textField" value="another lurkki.info classic" style="display: none;" />
-    
-    <!-- Wavy Text Display -->
-    <h1 id="animated"></h1>
+    <!-- Wavy text for "another lurkki.info classic" -->
+    <h1 id="animated">another lurkki.info classic</h1>
 
     <!-- GIF Container -->
     <div id="gifContainer">
@@ -157,25 +149,18 @@
     <audio id="backgroundMusic" src="musa.mp3" loop></audio>
 
     <script>
-        // Function to update and animate text
-        function updateText(text) {
-            let delay = 200;
+        // Wavy text animation
+        function updateText(text){
             let h1 = document.getElementById("animated");
 
             h1.innerHTML = text
                 .split("")
-                .map(letter => `<span>${letter}</span>`)
+                .map(letter => `<span class="wavy">${letter}</span>`)
                 .join("");
-
-            Array.from(h1.children).forEach((span, index) => {
-                setTimeout(() => {
-                    span.classList.add("wavy");
-                }, index * 60 + delay);
-            });
         }
 
-        // Initialize the wavy text
-        updateText("Lurkki.info Classic!");
+        // Initialize the text
+        updateText("another lurkki.info classic");
 
         // Bouncing video functionality
         const videoContainer = document.getElementById('videoContainer');
@@ -209,16 +194,16 @@
         function showContent() {
             document.querySelector('.container').style.display = 'block';
             document.getElementById('gifContainer').style.display = 'none';
-            document.getElementById('animated').style.display = 'block';
-            document.getElementById('videoContainer').style.display = 'block';
+            document.getElementById('animated').style.display = 'none'; // Hide the wavy text
+            document.getElementById('videoContainer').style.display = 'block'; // Show the video
             document.getElementById('backgroundMusic').play();
-            moveVideo(); // Start video movement
+            moveVideo(); // Start video bouncing
         }
 
         // Volume control
         const volumeSlider = document.getElementById('volumeSlider');
         const backgroundMusic = document.getElementById('backgroundMusic');
-
+        
         volumeSlider.addEventListener('input', function() {
             backgroundMusic.volume = volumeSlider.value;
         });
