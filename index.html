@@ -82,7 +82,7 @@
         /* Wavy Text */
         #animated {
             position: absolute;
-            top: 20%;
+            top: 10%;
             left: 50%;
             transform: translateX(-50%);
             font-size: 48px;
@@ -91,7 +91,6 @@
         }
 
         .wavy {
-            display: inline-block;
             animation-name: wavy;
             animation-duration: 1.3s;
             animation-timing-function: ease;
@@ -155,17 +154,27 @@
     <audio id="backgroundMusic" src="musa.mp3" loop></audio>
 
     <script>
-        // Wavy text animation
+        // Your original wavy text animation function
         function updateText(text){
+
+            let delay = 200;
             let h1 = document.getElementById("animated");
 
             h1.innerHTML = text
                 .split("")
-                .map(letter => `<span class="wavy">${letter}</span>`)
+                .map(letter => {
+                    return `<span>` + letter + `</span>`;
+                })
                 .join("");
+
+            Array.from(h1.children).forEach((span, index) => {
+                setTimeout(() => {
+                    span.classList.add("wavy");
+                }, index * 60 + delay);
+            });
         }
 
-        // Initialize the text
+        // Initialize the text with correct spacing
         updateText("another lurkki.info classic");
 
         // Bouncing video functionality
