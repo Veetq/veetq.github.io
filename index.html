@@ -81,7 +81,7 @@
             cursor: pointer;
         }
 
-        /* Wavy and Rainbow Text */
+        /* Wavy Text */
         #animated {
             position: absolute;
             top: 28%; /* Adjusted to position the text above the GIF */
@@ -90,7 +90,6 @@
             font-size: 48px;
             color: #fff;
             z-index: 2; /* Ensure text stays in front of the video */
-            letter-spacing: 5px;
         }
 
         .wavy {
@@ -99,15 +98,6 @@
             animation-timing-function: ease;
             animation-iteration-count: infinite;
             position: relative;
-        }
-
-        .rainbow_text_animated {
-            background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: rainbow_animation 6s ease-in-out infinite, wavy 1.3s ease infinite;
-            background-size: 400% 100%;
         }
 
         @keyframes wavy {
@@ -119,15 +109,6 @@
             }
             100% {
                 top: 0px;
-            }
-        }
-
-        @keyframes rainbow_animation {
-            0%, 100% {
-                background-position: 0 0;
-            }
-            50% {
-                background-position: 100% 0;
             }
         }
 
@@ -145,8 +126,8 @@
 </head>
 <body>
 
-    <!-- Wavy and Rainbow text for "another lurkki.info classic" above the GIF -->
-    <h1 id="animated" class="rainbow_text_animated">another lurkki.info classic</h1>
+    <!-- Wavy text for "another lurkki.info classic" above the GIF -->
+    <h1 id="animated">another lurkki.info classic</h1>
 
     <!-- GIF Container -->
     <div id="gifContainer">
