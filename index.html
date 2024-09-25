@@ -24,7 +24,7 @@
         .container {
             text-align: center;
             display: none;
-            z-index: 2; /* Ensure buttons stay in front of the video */
+            z-index: 2;
         }
 
         .welcome-text {
@@ -71,20 +71,13 @@
             background-color: #5c5c5c;
         }
 
-        #videoContainer {
-            position: absolute;
+        #videoBackground {
+            position: fixed;
             top: 0;
             left: 0;
-            width: 300px;
-            height: 200px;
-            display: none;
-            z-index: 1; /* Send video behind the buttons */
-        }
-
-        #videoContainer video {
-            width: 100%;
-            height: 100%;
-            opacity: 0.8;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
         }
 
         #gifContainer {
@@ -108,11 +101,26 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 3; /* Make sure volume control stays on top */
+            z-index: 3;
+        }
+
+        /* Lurkki Info Text */
+        .lurkki-text {
+            font-size: 18px;
+            color: #fff;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
         }
     </style>
 </head>
 <body>
+
+    <!-- Background Video -->
+    <video id="videoBackground" autoplay muted loop>
+        <source src="background.mp4" type="video/mp4">
+    </video>
 
     <!-- GIF Container -->
     <div id="gifContainer">
@@ -128,10 +136,8 @@
         </div>
     </div>
 
-    <!-- Bouncing Video -->
-    <div id="videoContainer">
-        <video src="pomppiva.mp4" autoplay muted loop></video>
-    </div>
+    <!-- Lurkki Info Text -->
+    <div class="lurkki-text">another lurkki.info classic</div>
 
     <!-- Volume Control -->
     <div id="volumeControls">
@@ -139,41 +145,11 @@
     </div>
 
     <script>
-        // Bouncing video functionality
-        const videoContainer = document.getElementById('videoContainer');
-        let xPos = 100;
-        let yPos = 100;
-        let xSpeed = 2;
-        let ySpeed = 2;
-
-        function moveVideo() {
-            const containerWidth = window.innerWidth;
-            const containerHeight = window.innerHeight;
-
-            xPos += xSpeed;
-            yPos += ySpeed;
-
-            if (xPos + videoContainer.offsetWidth >= containerWidth || xPos <= 0) {
-                xSpeed = -xSpeed;
-            }
-
-            if (yPos + videoContainer.offsetHeight >= containerHeight || yPos <= 0) {
-                ySpeed = -ySpeed;
-            }
-
-            videoContainer.style.left = xPos + 'px';
-            videoContainer.style.top = yPos + 'px';
-
-            requestAnimationFrame(moveVideo);
-        }
-
         // Show content after GIF is clicked
         function showContent() {
             document.querySelector('.container').style.display = 'block';
             document.getElementById('gifContainer').style.display = 'none';
-            document.getElementById('videoContainer').style.display = 'block'; // Show the video
             document.getElementById('backgroundMusic').play();
-            moveVideo(); // Start video bouncing
         }
 
         // Volume control
