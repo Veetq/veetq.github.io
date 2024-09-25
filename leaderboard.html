@@ -3,38 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gradient Animation</title>
+    <title>Rainbow Animation</title>
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: black;
+            background-color: #2d2d2d; /* Black background */
             margin: 0;
             font-family: 'Arial', sans-serif;
         }
 
         .rainbow-text {
-            font-size: 5em;
-            font-weight: bold;
-            background: linear-gradient(270deg, #14ffe9, #ffc800, #ff00e0, #14ffe9);
-            background-size: 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-animation 5s ease infinite;
+            font-size: 4em; /* Adjust size as needed */
+            color: white;
+            animation: rainbow 3s linear infinite; /* Animation duration */
         }
 
-        @keyframes gradient-animation {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+        @keyframes rainbow {
+            0% { color: #FF5733; }
+            14% { color: #FFBD33; }
+            28% { color: #33FF57; }
+            42% { color: #33FFBD; }
+            57% { color: #3357FF; }
+            71% { color: #BD33FF; }
+            85% { color: #FF33A6; }
+            100% { color: #FF5733; } /* Back to the start */
         }
     </style>
 </head>
