@@ -10,29 +10,26 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #000; /* Changed to black */
+            background-color: #000; /* Black background */
             color: white;
             font-family: 'Arial', sans-serif;
-            font-size: 24px; /* Smaller text size */
             margin: 0;
         }
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            text-align: center; /* Center the text */
         }
         .rainbow-text {
             position: relative;
-            color: #000;
-            background: #fff;
+            color: #fff; /* White text */
+            background: #000; /* Keep background black for text */
             mix-blend-mode: multiply;
             overflow: hidden;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             padding: 2px 4px 6px;
-            margin: -2px -4px -6px;
-            font-size: 3em; /* Adjusted to make text smaller */
-            font-family: 'Pacifico', sans-serif;
+            font-size: 2em; /* Adjusted text size */
         }
         .rainbow-text::before {
             content: "";
