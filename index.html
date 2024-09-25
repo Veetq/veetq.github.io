@@ -6,17 +6,21 @@
     <title>Lurkki Archives</title>
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
             display: flex;
+            height: 100vh;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #2d2d2d;
+            background-image: radial-gradient(
+                circle at 50% 0%,
+                rgb(67, 54, 74) 16.4%,
+                rgb(47, 48, 67) 68.2%,
+                rgb(27, 23, 36) 99.1%
+            );
             font-family: Arial, sans-serif;
             color: white;
-            text-align: center;
             overflow: hidden;
             position: relative;
         }
@@ -57,18 +61,20 @@
         }
 
         button {
-            background-color: #4e4e4e;
-            color: white;
-            padding: 15px 25px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            color: var(--bg);
+            font-weight: 600;
+            background-image: linear-gradient(315deg, #ffc4ec -10%, #efdbfd 50%, #ffedd6 110%);
+            padding: .8em 1.4em;
+            position: relative;
+            isolation: isolate;
+            border-radius: 0.66em;
+            scale: 1;
+            transition: all var(--spring-duration) var(--spring-easing);
         }
 
-        button:hover {
-            background-color: #5c5c5c;
+        button:hover:not(:active),
+        button.active {
+            scale: 1.2;
         }
 
         #videoContainer {
@@ -99,15 +105,16 @@
             cursor: pointer;
         }
 
-        /* New text style */
-        .top-text {
+        /* Text on top of the GIF */
+        #overlayText {
             position: absolute;
-            top: 10%; /* Adjust as needed */
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 24px;
+            font-size: 32px;
             color: white;
-            z-index: 3; /* Ensure it's above the GIF */
+            z-index: 3; /* Ensure it is on top */
+            cursor: pointer;
         }
 
         /* Volume Control */
@@ -118,19 +125,18 @@
             background: rgba(36, 36, 35, 0.8);
             padding: 10px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             z-index: 4; /* Make sure volume control stays on top */
         }
     </style>
 </head>
 <body>
 
-    <!-- Text on top of the GIF -->
-    <div class="top-text">paina pöhnää</div>
+    <!-- Overlay Text -->
+    <div id="overlayText" onclick="this.style.display='none'">Paina Pöhnää</div>
 
     <!-- GIF Container -->
     <div id="gifContainer">
-        <img src="kuva.gif" alt="Click Me" onclick="showContent()">
+        <img src="pohna.gif" alt="Click Me" onclick="showContent()">
     </div>
 
     <!-- Main content hidden until GIF is clicked -->
