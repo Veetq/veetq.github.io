@@ -10,51 +10,44 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #000; /* Changed to black */
+            background-color: #1f2120;
             color: white;
             font-family: 'Arial', sans-serif;
             font-size: 36px;
-            margin: 0; /* Added to prevent margin issues */
+            margin: 0;
         }
-
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: black; /* Ensured container background is black */
+            background: #eee url(http://api.thumbr.it/whitenoise-300x300.png?background=eeeeeeff&noise=000000&density=15&opacity=10) center;
         }
-
         .rainbow-text {
             position: relative;
             color: #000;
-            background: #fff;
+            background: #444444;
             mix-blend-mode: multiply;
             overflow: hidden;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             padding: 2px 4px 6px;
             margin: -2px -4px -6px;
-            font-size: 24px; /* Adjusted text size */
+            font-size: 6em;
+            font-family: 'Pacifico', sans-serif;
         }
-
         .rainbow-text::before {
             content: "";
             position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: -100%;
+            top: 0; right: 0; bottom: 0; left: -100%;
             background: white repeating-linear-gradient(90deg, #14ffe9 0%, #ffc800 16.66666%, #ff00e0 33.33333%, #14ffe9 50.0%);
             mix-blend-mode: screen;
             pointer-events: none;
             animation: move 1s linear infinite;
         }
-
         @keyframes move {
             0% { transform: translateX(0); }
             100% { transform: translateX(50%); }
         }
-
         @supports not (mix-blend-mode: multiply) {
             .rainbow-text {
                 -webkit-text-fill-color: transparent;
