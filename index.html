@@ -24,7 +24,7 @@
         .container {
             text-align: center;
             display: none;
-            z-index: 2; /* Ensure buttons stay in front of the video */
+            z-index: 2;
         }
 
         h1 {
@@ -57,18 +57,18 @@
         }
 
         button {
-            background-color: #4e4e4e;
+            background-color: transparent;
             color: white;
             padding: 15px 25px;
-            border: none;
+            border: 2px solid white;
             border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: transform 0.3s;
         }
 
         button:hover {
-            background-color: #5c5c5c;
+            transform: scale(1.1);
         }
 
         #videoContainer {
@@ -78,7 +78,7 @@
             width: 300px;
             height: 200px;
             display: none;
-            z-index: 1; /* Send video behind the buttons */
+            z-index: 1;
         }
 
         #videoContainer video {
@@ -99,47 +99,57 @@
             cursor: pointer;
         }
 
-        /* Volume Control */
         #volumeControls {
             position: absolute;
             top: 10px;
             right: 10px;
             background: rgba(36, 36, 35, 0.8);
-            padding: 10px;
+            padding: 5px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 4; /* Make sure volume control stays on top */
+            z-index: 4;
         }
 
-        /* Cat Image */
+        #muteButton {
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            width: 40px;  /* Adjusted size */
+            height: 40px; /* Adjusted size */
+            padding: 0;
+        }
+
+        #muteIcon {
+            width: 30px;  /* Set icon size */
+            height: 30px; /* Set icon size */
+        }
+
         #catImage {
             position: absolute;
             bottom: 20px;
             right: 20px;
             display: block;
-            width: 100px; /* Adjust the size as needed */
+            width: 100px;
             cursor: pointer;
         }
 
-        /* Explosion GIF */
         #explosion {
             position: absolute;
             bottom: 20px;
             right: 20px;
-            width: 200px; /* Adjust the size as needed */
-            display: none; /* Initially hidden */
-            pointer-events: none; /* Prevents clicking on the GIF */
+            width: 200px;
+            display: none;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- GIF Container -->
     <div id="gifContainer">
         <img src="kuva.gif" alt="Click Me" onclick="showContent()">
     </div>
 
-    <!-- Main content hidden until GIF is clicked -->
     <div class="container">
         <h1 class="rainbow_text_animated">Welcome to the pöhnä center info place from Finland.</h1>
         <div class="buttons">
@@ -148,58 +158,49 @@
         </div>
     </div>
 
-    <!-- Bouncing Video -->
     <div id="videoContainer">
-        <video src="pomppiva.mp4" autoplay muted loop></video>
+        <video id="backgroundVideo" src="pomppiva.mp4" autoplay muted loop></video>
     </div>
 
-    <!-- Volume Control -->
     <div id="volumeControls">
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
+        <button id="muteButton" onclick="toggleMute()">
+            <img id="muteIcon" src="sound1.ico" alt="Mute" onerror="this.onerror=null; this.src='sound1.png';" />
+        </button>
     </div>
 
-    <!-- Music -->
     <audio id="backgroundMusic" src="musa.mp3" loop></audio>
 
-    <!-- Cat Image -->
     <img id="catImage" src="cat.png" alt="Cat" onclick="playExplosion()">
-
-    <!-- Explosion GIF -->
     <img id="explosion" src="explosion.gif" alt="Explosion">
 
     <script>
-        // Show content after GIF is clicked
+        let isAudioPlaying = false; // Track audio state
+
         function showContent() {
             document.querySelector('.container').style.display = 'block';
-            document.getElementById('gifContainer').style.display = 'none'; // Hide the GIF
-            document.getElementById('videoContainer').style.display = 'block'; // Show the video
+            document.getElementById('gifContainer').style.display = 'none';
+            document.getElementById('videoContainer').style.display = 'block';
             document.getElementById('backgroundMusic').play();
-            moveVideo(); // Start video bouncing
+            isAudioPlaying = true; // Set audio state to playing
+            moveVideo();
         }
 
-        // Play explosion when cat is clicked
         function playExplosion() {
-            // Hide the cat image
             document.getElementById('catImage').style.display = 'none';
-            
-            // Show explosion GIF
             const explosion = document.getElementById('explosion');
             explosion.style.display = 'block';
             explosion.style.opacity = '1';
 
-            // Play random sound
             const sounds = ['boom1.mp3', 'boom2.wav', 'boom3.wav'];
             const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
             const audio = new Audio(randomSound);
             audio.play();
 
-            // Hide explosion after its duration
             setTimeout(() => {
                 explosion.style.display = 'none';
-            }, 1450); // Duration set to 1450ms
+            }, 1450);
         }
 
-        // Bouncing video functionality
         const videoContainer = document.getElementById('videoContainer');
         let xPos = 100;
         let yPos = 100;
@@ -227,13 +228,19 @@
             requestAnimationFrame(moveVideo);
         }
 
-        // Volume control
-        const volumeSlider = document.getElementById('volumeSlider');
-        const backgroundMusic = document.getElementById('backgroundMusic');
-        
-        volumeSlider.addEventListener('input', function() {
-            backgroundMusic.volume = volumeSlider.value;
-        });
+        function toggleMute() {
+            const music = document.getElementById('backgroundMusic');
+            const muteIcon = document.getElementById('muteIcon');
+            if (isAudioPlaying) {
+                if (music.paused) {
+                    music.play();
+                    muteIcon.src = 'sound1.ico'; // Set icon to unmuted
+                } else {
+                    music.pause();
+                    muteIcon.src = 'sound2.ico'; // Set icon to muted
+                }
+            }
+        }
     </script>
 </body>
 </html>
