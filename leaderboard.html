@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rainbow Animation</title>
+    <title>Leaderborat</title>
     <style>
         body {
             display: flex;
@@ -13,12 +13,18 @@
             background-color: #2d2d2d; /* Black background */
             margin: 0;
             font-family: 'Arial', sans-serif;
+            position: relative; /* Added for positioning the image */
         }
 
         .rainbow-text {
             font-size: 4em; /* Adjust size as needed */
             color: white;
             animation: rainbow 3s linear infinite; /* Animation duration */
+            position: absolute; /* Positioning the text in the center */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust to truly center */
+            z-index: 2; /* Ensure text is above the image */
         }
 
         @keyframes rainbow {
@@ -31,9 +37,24 @@
             85% { color: #FF33A6; }
             100% { color: #FF5733; } /* Back to the start */
         }
+
+        /* Styling for the image */
+        .bottom-left-image {
+            position: absolute;
+            bottom: 00px; /* Distance from the bottom */
+            right: 10px; /* Distance from the left */
+            width: 300px; /* Set image width */
+            height: auto; /* Maintain aspect ratio */
+            border: none; /* Remove borders if any */
+            z-index: 1; /* Ensure image is behind the text */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
     </style>
 </head>
 <body>
-    <div class="rainbow-text">joo tätä ei jaksanu tehä</div>
+    <div class="rainbow-text">loppu budjetti</div>
+    <a href="oho.jpg" target="_blank">
+        <img src="blehh.png" alt="Blehh" class="bottom-left-image"> <!-- Your image here -->
+    </a>
 </body>
 </html>
