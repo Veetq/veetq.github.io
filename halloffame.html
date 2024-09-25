@@ -15,6 +15,37 @@
             text-align: center;
         }
 
+        .customizeTab_userBackground__hCXpa {
+            color: rgb(15, 49, 89);
+            position: relative; /* Required for absolute positioning of children */
+        }
+
+        h1 {
+            position: relative; /* Position for z-index control */
+            font-size: 2em; /* Adjust size as needed */
+            color: white; /* Keep text color white */
+            display: inline-block; /* Allow for background */
+            overflow: hidden; /* Clip overflow */
+            z-index: 1; /* Text is above the background */
+        }
+
+        h1::before, h1::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://raw.githubusercontent.com/Veetq/veetq.github.io/refs/heads/main/sparkle_yellow.gif') repeat;
+            opacity: 0.5; /* Adjust opacity for the background */
+            z-index: -1; /* Background is behind the text */
+        }
+
+        h1::after {
+            opacity: 0.8; /* More opacity for the front effect */
+            z-index: 0; /* Ensure it appears in front of the main background */
+        }
+
         .media-container {
             margin: 20px auto;
             width: 80%;
@@ -32,14 +63,12 @@
             margin-top: 5px;
             color: #ccc;
         }
-
-        h1 {
-            color: #fff;
-        }
     </style>
 </head>
 <body>
-    <h1>Hall of Fame</h1>
+    <div class="customizeTab_userBackground__hCXpa">
+        <h1>Hall of Fame</h1>
+    </div>
 
     <div class="media-container">
         <video controls>
