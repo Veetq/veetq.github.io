@@ -3,62 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
+    <title>Rainbow Animation</title>
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #000; /* Black background */
-            color: white;
-            font-family: 'Arial', sans-serif;
+            background-color: black;
             margin: 0;
-        }
-
-        .rainbow-text {
-            position: relative;
-            color: #000;
-            background: #fff;
-            mix-blend-mode: multiply;
             overflow: hidden;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            padding: 2px 4px 6px;
-            font-size: 48px; /* Adjusted font size */
+            font-family: 'Arial', sans-serif;
         }
-
-        .rainbow-text::before {
-            content: "";
-            position: absolute;
-            top: 0; 
-            right: 0; 
-            bottom: 0; 
-            left: -100%;
-            background: white repeating-linear-gradient(90deg, #14ffe9 0%, #ffc800 16.66666%, #ff00e0 33.33333%, #14ffe9 50.0%);
-            mix-blend-mode: screen;
-            pointer-events: none;
-            animation: move 1s linear infinite;
+        .rainbow-text {
+            font-size: 6em;
+            background: linear-gradient(270deg, #ff007f, #7fff00, #00bfff, #ff007f);
+            background-size: 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 5s ease infinite;
         }
-
-        @keyframes move {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(50%); }
-        }
-
-        @supports not (mix-blend-mode: multiply) {
-            .rainbow-text {
-                -webkit-text-fill-color: transparent;
-                background-clip: text !important;
-                background: white repeating-linear-gradient(90deg, #14ffe9, #ffc800, #ff00e0, #14ffe9);
-                text-shadow: none;
-            }
-            .rainbow-text::before { content: none; }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
 <body>
-    <div>
-        <span class="rainbow-text">Rainbow Animation Example</span> <!-- Placeholder text -->
-    </div>
+    <div class="rainbow-text">Rainbow Animation</div>
 </body>
 </html>
