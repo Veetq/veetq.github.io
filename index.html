@@ -27,7 +27,7 @@
             z-index: 2; /* Ensure buttons stay in front of the video */
         }
 
-        h1 {
+        .welcome-text {
             font-size: 24px;
             margin-bottom: 20px;
         }
@@ -121,7 +121,7 @@
 
     <!-- Main content hidden until GIF is clicked -->
     <div class="container">
-        <h1 class="rainbow_text_animated">Welcome to the pöhnä center info place from Finland.</h1>
+        <h1 class="welcome-text rainbow_text_animated">Welcome to the pöhnä center info place from Finland.</h1>
         <div class="buttons">
             <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
             <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
@@ -138,19 +138,7 @@
         <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
     </div>
 
-    <!-- Music -->
-    <audio id="backgroundMusic" src="musa.mp3" loop></audio>
-
     <script>
-        // Show content after GIF is clicked
-        function showContent() {
-            document.querySelector('.container').style.display = 'block';
-            document.getElementById('gifContainer').style.display = 'none'; // Hide the GIF
-            document.getElementById('videoContainer').style.display = 'block'; // Show the video
-            document.getElementById('backgroundMusic').play();
-            moveVideo(); // Start video bouncing
-        }
-
         // Bouncing video functionality
         const videoContainer = document.getElementById('videoContainer');
         let xPos = 100;
@@ -177,6 +165,15 @@
             videoContainer.style.top = yPos + 'px';
 
             requestAnimationFrame(moveVideo);
+        }
+
+        // Show content after GIF is clicked
+        function showContent() {
+            document.querySelector('.container').style.display = 'block';
+            document.getElementById('gifContainer').style.display = 'none';
+            document.getElementById('videoContainer').style.display = 'block'; // Show the video
+            document.getElementById('backgroundMusic').play();
+            moveVideo(); // Start video bouncing
         }
 
         // Volume control
