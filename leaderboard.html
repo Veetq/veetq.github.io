@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rainbow Animation</title>
+    <title>Gradient Animation</title>
     <style>
         body {
             display: flex;
@@ -12,25 +12,33 @@
             height: 100vh;
             background-color: black;
             margin: 0;
-            overflow: hidden;
             font-family: 'Arial', sans-serif;
         }
+
         .rainbow-text {
-            font-size: 6em;
-            background: linear-gradient(270deg, #ff007f, #7fff00, #00bfff, #ff007f);
+            font-size: 5em;
+            font-weight: bold;
+            background: linear-gradient(270deg, #14ffe9, #ffc800, #ff00e0, #14ffe9);
             background-size: 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: rainbow 5s ease infinite;
+            animation: gradient-animation 3s ease infinite;
         }
-        @keyframes rainbow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="rainbow-text">Rainbow Animation</div>
+    <div class="rainbow-text">Welcome to the Leaderboard!</div>
 </body>
 </html>
