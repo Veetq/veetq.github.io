@@ -6,64 +6,30 @@
     <title>Lurkki Archives</title>
     <link rel="icon" href="icon.ico" type="image/x-icon">
     <style>
+        :root {
+            --glow-hue: 222deg;
+            --shadow-hue: 180deg;
+            --spring-easing: linear(0, 0.002, 0.01 0.9%, 0.038 1.8%, 0.156, 0.312 5.8%, 0.789 11.1%, 1.015 14.2%, 1.096, 1.157, 1.199, 1.224 20.3%, 1.231, 1.231, 1.226, 1.214 24.6%, 1.176 26.9%, 1.057 32.6%, 1.007 35.5%, 0.984, 0.968, 0.956, 0.949 42%, 0.946 44.1%, 0.95 46.5%, 0.998 57.2%, 1.007, 1.011 63.3%, 1.012 68.3%, 0.998 84%, 1);
+            --spring-duration: 1.33s;
+        }
+
         body, html {
-            margin: 0;
-            padding: 0;
             display: flex;
             height: 100vh;
-            justify-content: center;
-            align-items: center;
-            background-color: #272727; /* Solid color for testing */
-            font-family: Arial, sans-serif;
+            padding: 0;
+            background-image: radial-gradient(circle at 50% 0%, rgb(67, 54, 74) 16.4%, rgb(47, 48, 67) 68.2%, rgb(27, 23, 36) 99.1%);
             color: white;
             overflow: hidden;
             position: relative;
         }
 
-        .container {
-            text-align: center;
-            display: none;
-            z-index: 2; /* Ensure buttons stay in front of the video */
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .buttons {
+        main#app {
+            height: 100vh;
+            width: 100vw;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        button {
-            color: var(--bg);
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.2);
-            padding: .8em 1.4em;
-            border-radius: 0.66em;
-            transition: all 0.3s;
-        }
-
-        button:hover {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
-        #videoContainer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 300px;
-            height: 200px;
-            display: none;
-            z-index: 1; /* Send video behind the buttons */
-        }
-
-        #videoContainer video {
-            width: 100%;
-            height: 100%;
-            opacity: 0.8;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
         #gifContainer {
@@ -73,26 +39,66 @@
             transform: translate(-50%, -50%);
         }
 
-        #gifContainer img {
-            width: 200px;
-            cursor: pointer;
+        #gifText {
+            position: absolute;
+            top: 20px; /* Adjust position above GIF */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px; /* Increase font size */
+            z-index: 2; /* Ensure text is above GIF */
+            display: none; /* Initially hidden */
+        }
+
+        #videoContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Send video behind the text and buttons */
+        }
+
+        #videoContainer video {
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .container {
+            text-align: center;
+            display: none; /* Hidden until GIF is clicked */
+            z-index: 2; /* Ensure buttons stay in front */
+        }
+
+        button {
+            color: var(--bg);
+            font-weight: 600;
+            background-image: linear-gradient(315deg, #ffc4ec -10%, #efdbfd 50%, #ffedd6 110%);
+            padding: .8em 1.4em;
+            position: relative;
+            border-radius: 0.66em;
+            transition: all var(--spring-duration) var(--spring-easing);
+            margin: 10px; /* Add margin for spacing */
+        }
+
+        button:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
 
-    <!-- GIF Container -->
+    <!-- GIF and Text Container -->
     <div id="gifContainer">
         <img src="pohna.gif" alt="Click Me" onclick="showContent()">
+        <div id="gifText">Paina Pöhnää</div>
     </div>
 
     <!-- Main content hidden until GIF is clicked -->
     <div class="container">
         <h1>Welcome to the pöhnä center info place from Finland.</h1>
-        <div class="buttons">
-            <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
-            <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
-        </div>
+        <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
+        <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
     </div>
 
     <!-- Bouncing Video -->
@@ -104,9 +110,17 @@
         // Show content after GIF is clicked
         function showContent() {
             document.querySelector('.container').style.display = 'block';
-            document.getElementById('gifContainer').style.display = 'none'; // Hide the GIF
+            document.getElementById('gifText').style.display = 'none'; // Hide the text
             document.getElementById('videoContainer').style.display = 'block'; // Show the video
         }
+
+        // Show text when the GIF is clicked
+        document.getElementById('gifContainer').addEventListener('click', function() {
+            document.getElementById('gifText').style.display = 'block'; // Show text on GIF click
+            setTimeout(() => {
+                document.getElementById('gifText').style.display = 'none'; // Hide text after 2 seconds
+            }, 2000);
+        });
     </script>
 </body>
 </html>
