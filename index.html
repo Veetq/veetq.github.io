@@ -13,12 +13,7 @@
             height: 100vh;
             justify-content: center;
             align-items: center;
-            background-image: radial-gradient(
-                circle at 50% 0%,
-                rgb(67, 54, 74) 16.4%,
-                rgb(47, 48, 67) 68.2%,
-                rgb(27, 23, 36) 99.1%
-            );
+            background-color: #272727; /* Solid color for testing */
             font-family: Arial, sans-serif;
             color: white;
             overflow: hidden;
@@ -36,24 +31,6 @@
             margin-bottom: 20px;
         }
 
-        .rainbow_text_animated {
-            background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: rainbow_animation 6s ease-in-out infinite;
-            background-size: 400% 100%;
-        }
-
-        @keyframes rainbow_animation {
-            0%, 100% {
-                background-position: 0 0;
-            }
-            50% {
-                background-position: 100% 0;
-            }
-        }
-
         .buttons {
             display: flex;
             flex-direction: column;
@@ -63,18 +40,14 @@
         button {
             color: var(--bg);
             font-weight: 600;
-            background-image: linear-gradient(315deg, #ffc4ec -10%, #efdbfd 50%, #ffedd6 110%);
+            background: rgba(255, 255, 255, 0.2);
             padding: .8em 1.4em;
-            position: relative;
-            isolation: isolate;
             border-radius: 0.66em;
-            scale: 1;
-            transition: all var(--spring-duration) var(--spring-easing);
+            transition: all 0.3s;
         }
 
-        button:hover:not(:active),
-        button.active {
-            scale: 1.2;
+        button:hover {
+            background: rgba(255, 255, 255, 0.4);
         }
 
         #videoContainer {
@@ -104,35 +77,9 @@
             width: 200px;
             cursor: pointer;
         }
-
-        /* Text on top of the GIF */
-        #overlayText {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 32px;
-            color: white;
-            z-index: 3; /* Ensure it is on top */
-            cursor: pointer;
-        }
-
-        /* Volume Control */
-        #volumeControls {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(36, 36, 35, 0.8);
-            padding: 10px;
-            border-radius: 5px;
-            z-index: 4; /* Make sure volume control stays on top */
-        }
     </style>
 </head>
 <body>
-
-    <!-- Overlay Text -->
-    <div id="overlayText" onclick="this.style.display='none'">Paina Pöhnää</div>
 
     <!-- GIF Container -->
     <div id="gifContainer">
@@ -141,7 +88,7 @@
 
     <!-- Main content hidden until GIF is clicked -->
     <div class="container">
-        <h1 class="rainbow_text_animated">Welcome to the pöhnä center info place from Finland.</h1>
+        <h1>Welcome to the pöhnä center info place from Finland.</h1>
         <div class="buttons">
             <button onclick="window.location.href='pelit.html'">Pöhnä Pelit</button>
             <button onclick="window.location.href='halloffame.html'">Hall Of Fame</button>
@@ -153,59 +100,13 @@
         <video src="pomppiva.mp4" autoplay muted loop></video>
     </div>
 
-    <!-- Volume Control -->
-    <div id="volumeControls">
-        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5">
-    </div>
-
-    <!-- Music -->
-    <audio id="backgroundMusic" src="musa.mp3" loop></audio>
-
     <script>
         // Show content after GIF is clicked
         function showContent() {
             document.querySelector('.container').style.display = 'block';
             document.getElementById('gifContainer').style.display = 'none'; // Hide the GIF
             document.getElementById('videoContainer').style.display = 'block'; // Show the video
-            document.getElementById('backgroundMusic').play();
-            moveVideo(); // Start video bouncing
         }
-
-        // Bouncing video functionality
-        const videoContainer = document.getElementById('videoContainer');
-        let xPos = 100;
-        let yPos = 100;
-        let xSpeed = 2;
-        let ySpeed = 2;
-
-        function moveVideo() {
-            const containerWidth = window.innerWidth;
-            const containerHeight = window.innerHeight;
-
-            xPos += xSpeed;
-            yPos += ySpeed;
-
-            if (xPos + videoContainer.offsetWidth >= containerWidth || xPos <= 0) {
-                xSpeed = -xSpeed;
-            }
-
-            if (yPos + videoContainer.offsetHeight >= containerHeight || yPos <= 0) {
-                ySpeed = -ySpeed;
-            }
-
-            videoContainer.style.left = xPos + 'px';
-            videoContainer.style.top = yPos + 'px';
-
-            requestAnimationFrame(moveVideo);
-        }
-
-        // Volume control
-        const volumeSlider = document.getElementById('volumeSlider');
-        const backgroundMusic = document.getElementById('backgroundMusic');
-        
-        volumeSlider.addEventListener('input', function() {
-            backgroundMusic.volume = volumeSlider.value;
-        });
     </script>
 </body>
 </html>
