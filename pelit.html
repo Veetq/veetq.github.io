@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pelit</title>
-    <link rel="icon" href="peli.ico" type="image/x-icon"> <!-- Lisätty ikoni -->
+    <link rel="icon" href="peli.ico" type="image/x-icon">
     <style>
         body {
             margin: 0;
@@ -13,7 +13,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1f2120; /* Taustaväri */
+            background-color: #1f2120; /* Background color */
             font-family: Arial, sans-serif;
             color: #fff;
         }
@@ -34,22 +34,53 @@
             gap: 20px;
         }
 
+        /* Button styling */
         .button {
             display: inline-block;
             padding: 15px 30px;
             font-size: 24px;
-            color: #fff;
-            background-color: #444;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            color: #fff; /* Text color */
             text-decoration: none;
+            position: relative;
+            border-radius: 12px;
+            background-color: transparent; /* Transparent background */
+            overflow: hidden; /* Clip the pseudo-elements */
+            cursor: pointer;
+            border: 2px solid transparent; /* Initial border */
+            animation: color-change 6s linear infinite; /* Color change animation */
+            transition: transform 0.3s ease; /* Smooth transform on hover */
         }
 
+        /* Rainbow border effect */
+        @keyframes color-change {
+            0% {
+                border-color: red;
+            }
+            16% {
+                border-color: orange;
+            }
+            32% {
+                border-color: yellow;
+            }
+            48% {
+                border-color: green;
+            }
+            64% {
+                border-color: blue;
+            }
+            80% {
+                border-color: indigo;
+            }
+            100% {
+                border-color: violet;
+            }
+        }
+
+        /* Hover effect */
         .button:hover {
-            background-color: #666;
+            transform: scale(1.15); /* Slightly increase size on hover */
+            border: 2px solid #fff; /* Add white border on hover */
         }
-
     </style>
 </head>
 <body>
@@ -59,7 +90,6 @@
             <a href="peli.html" class="button">Pöhnä Clicker</a>
             <a href="gamble.html" class="button">Pöhnä Slots</a>
             <a href="coinflip.html" class="button">Pöhnä Coinari</a>
-            
         </div>
     </div>
 </body>
