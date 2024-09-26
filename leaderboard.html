@@ -10,10 +10,11 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #2d2d2d; /* Black background */
             margin: 0;
             font-family: 'Arial', sans-serif;
             position: relative; /* Added for positioning the image */
+            overflow: hidden; /* Prevents scrollbars from appearing */
+            background-color: #2d2d2d; /* Black background */
         }
 
         .rainbow-text {
@@ -41,7 +42,7 @@
         /* Styling for the image */
         .bottom-left-image {
             position: absolute;
-            bottom: 00px; /* Distance from the bottom */
+            bottom: 0; /* Distance from the bottom */
             right: 10px; /* Distance from the left */
             width: 300px; /* Set image width */
             height: auto; /* Maintain aspect ratio */
@@ -54,7 +55,21 @@
 <body>
     <div class="rainbow-text">loppu budjetti</div>
     <a href="oho.jpg" target="_blank">
-        <img src="blehh.png" alt="Blehh" class="bottom-left-image"> <!-- Your image here -->
+        <img src="blehh.png" alt="Blehh" class="bottom-left-image" id="cat"> <!-- Your image here -->
     </a>
+
+    <!-- Audio element for pool.mp3 -->
+    <audio id="poolSound" src="pool.mp3"></audio>
+
+    <script>
+        // Get the cat image and the audio element
+        const cat = document.getElementById('cat');
+        const poolSound = document.getElementById('poolSound');
+
+        // Play the sound when the cat is clicked
+        cat.addEventListener('click', function() {
+            poolSound.play();
+        });
+    </script>
 </body>
 </html>
