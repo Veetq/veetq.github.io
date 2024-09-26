@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ehkä huomenna</title>
+    <!-- Link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             overflow: hidden; /* Prevent scrolling */
-            background-color: #f0f0f0;
+            background-color: black; /* Set background to black */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height of the viewport */
+            font-family: 'Roboto', sans-serif; /* Apply the Google Font */
         }
         img {
             position: absolute;
@@ -18,18 +25,30 @@
             height: 100%; /* Full height of the viewport */
             object-fit: fill; /* Stretch image to fill */
             border: none;
+            display: none; /* Start with the image hidden */
+        }
+        #click-text {
+            position: relative;
+            font-size: 48px; /* Increased font size */
+            color: white; /* Text color */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
         }
     </style>
 </head>
 <body>
-    <img src="pic.png" alt="Picture" id="image" loading="lazy" onclick="playAudio()">
+    <div id="click-text">PAINAPPA JOSTAIN TOSIAAN</div>
+    <img src="pic.png" alt="Picture" id="image" loading="lazy">
     <audio id="background-audio" src="testi.mp3" preload="auto"></audio>
 
     <script>
-        function playAudio() {
+        document.body.onclick = function() {
+            // Hide the text and show the image
+            document.getElementById('click-text').style.display = 'none';
+            document.getElementById('image').style.display = 'block';
+            // Play the audio
             const audio = document.getElementById('background-audio');
             audio.play();
-        }
+        };
     </script>
 </body>
 </html>
