@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ehkä huomenna</title>
+    <title>Countdown Timer</title> <!-- Title in the browser tab -->
     <!-- Link to Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -12,10 +12,12 @@
             overflow: hidden; /* Prevent scrolling */
             background-color: black; /* Set background to black */
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
             height: 100vh; /* Full height of the viewport */
             font-family: 'Roboto', sans-serif; /* Apply the Google Font */
+            color: white; /* Set text color to white */
+            font-size: 64px; /* Font size for the countdown */
         }
         img {
             position: absolute;
@@ -28,27 +30,52 @@
             display: none; /* Start with the image hidden */
         }
         #click-text {
-            position: relative;
-            font-size: 48px; /* Increased font size */
-            color: white; /* Text color */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
+            font-size: 48px; /* Font size for the click instruction */
+            color: white; /* Set text color to white */
         }
     </style>
 </head>
 <body>
-    <div id="click-text">PAINAPPA JOSTAIN TOSIAAN</div>
+    <div id="click-text">PAINAPPA JOSTAIN TOSIAAN</div> <!-- Click instruction -->
     <img src="pic.png" alt="Picture" id="image" loading="lazy">
     <audio id="background-audio" src="testi.mp3" preload="auto"></audio>
 
     <script>
+        function updateCountdown() {
+            const now = new Date();
+            const tomorrow = new Date();
+            tomorrow.setDate(now.getDate() + 1); // Set to tomorrow
+            tomorrow.setHours(20, 0, 0, 0); // Set to 20:00 (8 PM)
+
+            const timeDifference = tomorrow - now; // Calculate time difference
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            // Update the document title with only the countdown time
+            document.title = `${hours}h ${minutes}m ${seconds}s`;
+
+            // If the countdown is over, show "EXPIRED"
+            if (timeDifference < 0) {
+                clearInterval(countdownInterval);
+                document.title = "Countdown Expired"; // Title when expired
+            }
+        }
+
+        // Update the countdown every second
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
         document.body.onclick = function() {
-            // Hide the text and show the image
-            document.getElementById('click-text').style.display = 'none';
-            document.getElementById('image').style.display = 'block';
+            // Hide the click text and show the image
+            document.getElementById('click-text').style.display = 'none'; // Hide click text
+            document.getElementById('image').style.display = 'block'; // Show image
             // Play the audio
             const audio = document.getElementById('background-audio');
             audio.play();
         };
+
+        // Initial countdown update
+        updateCountdown();
     </script>
 </body>
 </html>
