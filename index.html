@@ -3,24 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Picture Display</title>
+    <title>lataus meneillään</title>
     <style>
         body {
             margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            overflow: hidden; /* Prevent scrolling */
             background-color: #f0f0f0;
         }
         img {
-            max-width: 100%;
-            height: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;  /* Full width of the viewport */
+            height: 100%; /* Full height of the viewport */
+            object-fit: fill; /* Stretch image to fill */
             border: none;
         }
     </style>
 </head>
 <body>
-    <img src="pic.png" alt="Picture" loading="lazy">
+    <img src="pic.png" alt="Picture" id="image" loading="lazy" onclick="playAudio()">
+    <audio id="background-audio" src="testi.mp3" preload="auto"></audio>
+
+    <script>
+        function playAudio() {
+            const audio = document.getElementById('background-audio');
+            audio.play();
+        }
+    </script>
 </body>
 </html>
