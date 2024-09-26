@@ -16,6 +16,7 @@
             background-color: #1f2120; /* Background color */
             font-family: Arial, sans-serif;
             color: #fff;
+            position: relative; /* Added for positioning */
         }
 
         .container {
@@ -53,33 +54,58 @@
 
         /* Rainbow border effect */
         @keyframes color-change {
-            0% {
-                border-color: red;
-            }
-            16% {
-                border-color: orange;
-            }
-            32% {
-                border-color: yellow;
-            }
-            48% {
-                border-color: green;
-            }
-            64% {
-                border-color: blue;
-            }
-            80% {
-                border-color: indigo;
-            }
-            100% {
-                border-color: violet;
-            }
+            0% { border-color: red; }
+            16% { border-color: orange; }
+            32% { border-color: yellow; }
+            48% { border-color: green; }
+            64% { border-color: blue; }
+            80% { border-color: indigo; }
+            100% { border-color: violet; }
         }
 
         /* Hover effect */
         .button:hover {
-            transform: scale(1.15); /* Slightly increase size on hover */
+            transform: scale(1.05); /* Slightly increase size on hover */
             border: 2px solid #fff; /* Add white border on hover */
+        }
+
+        /* Video styling */
+        .video {
+            width: 300px; /* Set video width */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 12px; /* Ensure the video has rounded corners */
+            opacity: 0.8; /* 80% opacity */
+            display: block; /* Always visible */
+        }
+
+        /* Positioning video in the bottom right */
+        .video-container {
+            position: absolute;
+            bottom: 10px; /* Distance from the bottom */
+            right: 10px; /* Distance from the right */
+        }
+
+        /* Styling for puttyx image */
+        .puttyx-image {
+            position: absolute;
+            top: 10px; /* Distance from the top */
+            left: 10px; /* Distance from the left */
+            width: 100px; /* Set width of the image */
+            height: auto; /* Maintain aspect ratio */
+            z-index: 10; /* Ensure it appears above other elements */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            transition: transform 0.3s ease; /* Smooth transition for spinning */
+        }
+
+        /* Spinning animation */
+        .spin {
+            animation: spin 1s linear infinite; /* Infinite spinning */
+        }
+
+        /* Keyframes for spinning */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -92,5 +118,44 @@
             <a href="coinflip.html" class="button">Pöhnä Coinari</a>
         </div>
     </div>
+    
+    <!-- Video container without borders -->
+    <div class="video-container">
+        <video class="video" id="lurkkiganda" controls>
+            <source src="lurkkiganda1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Puttyx image in the top left corner -->
+    <img src="puttyx.png" alt="Puttyx" class="puttyx-image" id="puttyx">
+
+    <audio id="putty-audio" src="putty.mp3"></audio>
+
+    <script>
+        const video = document.getElementById('lurkkiganda');
+        const puttyImage = document.getElementById('puttyx');
+        const puttyAudio = document.getElementById('putty-audio');
+
+        // Function to play video when clicked
+        video.addEventListener('click', () => {
+            if (video.paused) {
+                video.play(); // Play video
+            } else {
+                video.pause(); // Pause video if already playing
+            }
+        });
+
+        // Function to play/pause audio when puttyx image is clicked
+        puttyImage.addEventListener('click', () => {
+            if (puttyAudio.paused) {
+                puttyAudio.play(); // Play audio
+                puttyImage.classList.add('spin'); // Add spinning class
+            } else {
+                puttyAudio.pause(); // Pause audio
+                puttyImage.classList.remove('spin'); // Remove spinning class
+            }
+        });
+    </script>
 </body>
 </html>
