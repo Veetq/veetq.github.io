@@ -8,10 +8,25 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #2c3e50;
+            background: url('kasino.jpg') no-repeat center center fixed;
+            background-size: cover;
             color: #ecf0f1;
             text-align: center;
             padding: 20px;
+            position: relative;
+        }
+
+        /* Full-screen blur effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            filter: blur(5px);
+            z-index: -1;
         }
 
         h1 {
@@ -39,7 +54,8 @@
 
         .slot img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover; /* Stretch images to fit the box */
         }
 
         #balance-container {
@@ -67,10 +83,40 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin: 10px 0; /* Space between buttons */
+            width: 200px; /* Make buttons uniform width */
+            display: block; /* Ensure buttons stack vertically */
+            margin-left: auto; /* Center the buttons */
+            margin-right: auto; /* Center the buttons */
         }
 
         button:hover {
             background-color: #c0392b;
+        }
+
+        button:disabled {
+            background-color: #7f8c8d;
+            cursor: not-allowed;
+        }
+
+        /* Kela button styling */
+        #kelaButton {
+            background-color: #2ecc71;
+        }
+
+        #kelaButton:disabled {
+            background-color: #7f8c8d;
+        }
+
+        /* Buy Bonus button styling */
+        #buyBonusButton {
+            background-color: #f39c12;
+        }
+
+        #bonusNotification {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #f39c12;
         }
     </style>
 </head>
@@ -93,19 +139,45 @@
     <div id="balance-container">Balance: <span id="balance">500</span></div>
 
     <input type="number" id="bet" placeholder="Enter your bet" min="1" max="500">
-    <br>
-    <button onclick="spinSlots()">Spin</button>
+    
+    <button id="spinButton" onclick="spinSlots()">Spin</button>
+    <button id="kelaButton" onclick="callKela()" disabled>Call Kela</button>
+    <button id="buyBonusButton" onclick="buyBonus()" disabled>Buy Bonus</button>
+    <button id="kotiutusButton" onclick="openKotiutus()">Kotiutus</button>
+
+    <div id="bonusNotification"></div> <!-- Notification for bonus result -->
+
+    <!-- Audio elements for spin and win sounds -->
+    <audio id="spinSound" src="spin.mp3"></audio>
+    <audio id="winSound" src="win.wav"></audio>
 
     <script>
-        let images = ["pohna.png", "evilpohna.png", "jehna.png"];
+        let images = [
+            "pohna.png", "pohna.png", "pohna.png", 
+            "evilpohna.png", "evilpohna.png", 
+            "jehna.png" // Reduced chance for jehna
+        ];
+
         let balance = 500;
+        let spinning = false; // To track if slots are still spinning
 
         function spinSlots() {
             let bet = parseInt(document.getElementById("bet").value);
-            if (isNaN(bet) || bet <= 0 || bet > balance) {
-                alert("Invalid bet amount.");
-                return;
+            if (isNaN(bet) || bet <= 0 || bet > balance || spinning) {
+                return; // Invalid bet or spinning in progress
             }
+
+            // Disable spin button during spin
+            spinning = true;
+            document.getElementById('spinButton').disabled = true;
+
+            // Hide slot images to indicate spinning
+            document.getElementById("slot1").style.visibility = "hidden";
+            document.getElementById("slot2").style.visibility = "hidden";
+            document.getElementById("slot3").style.visibility = "hidden";
+
+            // Play spin sound
+            document.getElementById('spinSound').play();
 
             // Deduct the bet from balance
             balance -= bet;
@@ -116,35 +188,79 @@
             let slot2 = images[Math.floor(Math.random() * images.length)];
             let slot3 = images[Math.floor(Math.random() * images.length)];
 
-            // Update slots with the selected images
-            document.getElementById("slot1").src = slot1;
-            document.getElementById("slot2").src = slot2;
-            document.getElementById("slot3").src = slot3;
+            // Spin each slot with slower delay to simulate real slot machine effect
+            setTimeout(() => {
+                document.getElementById("slot1").src = slot1;
+                document.getElementById("slot1").style.visibility = "visible";
+            }, 800); // First slot after 0.8 seconds
 
+            setTimeout(() => {
+                document.getElementById("slot2").src = slot2;
+                document.getElementById("slot2").style.visibility = "visible";
+            }, 1600); // Second slot after 1.6 seconds
+
+            setTimeout(() => {
+                document.getElementById("slot3").src = slot3;
+                document.getElementById("slot3").style.visibility = "visible";
+
+                // After the final slot, check for winning combinations
+                checkWin(slot1, slot2, slot3, bet);
+                
+                // Enable spin button again after spinning is done
+                spinning = false;
+                document.getElementById('spinButton').disabled = false;
+            }, 2400); // Third slot after 2.4 seconds
+        }
+
+        function checkWin(slot1, slot2, slot3, bet) {
             // Check for winning combinations
             if (slot1 === "pohna.png" && slot2 === "pohna.png" && slot3 === "pohna.png") {
                 balance += bet * 10; // Big win for 3 consecutive pohnas
-                alert("You win 10x your bet!");
+                document.getElementById('winSound').play(); // Play win sound
             } else if (slot1 === "evilpohna.png" && slot2 === "evilpohna.png" && slot3 === "evilpohna.png") {
                 balance += bet * 5; // Win for 3 consecutive evilpohnas
-                alert("You win 5x your bet!");
-            } else if (slot1 === "jehna.png" || slot2 === "jehna.png" || slot3 === "jehna.png") {
-                // No notification and no win for jehna.png
-            } else {
-                alert("Better luck next time!");
+                document.getElementById('winSound').play(); // Play win sound
             }
 
+            // Update the balance
             updateBalance();
         }
 
         function updateBalance() {
             document.getElementById("balance").innerText = balance;
+
+            // Enable "Call Kela" button if balance is 0
+            document.getElementById('kelaButton').disabled = (balance > 0);
+
+            // Enable "Buy Bonus" button if balance is 1000 or more
+            document.getElementById('buyBonusButton').disabled = (balance < 1000);
         }
 
-        window.onload = function() {
+        function buyBonus() {
+            const random = Math.random();
+            let multiplier;
+
+            if (random < 0.6) {
+                balance = 0; // 60% chance of losing all money
+                document.getElementById("bonusNotification").innerText = "You lost all your money!";
+            } else {
+                multiplier = Math.floor(Math.random() * 9) + 2; // Random multiplier between 2 and 10
+                balance *= multiplier; // 40% chance of multiplying money
+                document.getElementById("bonusNotification").innerText = "You multiplied your money by " + multiplier + "!";
+            }
+
             updateBalance();
         }
-    </script>
 
+        function callKela() {
+            balance = 500;
+            updateBalance();
+            document.getElementById("bonusNotification").innerText = ""; // Clear any bonus notifications
+        }
+
+        function openKotiutus() {
+            window.open("aha.png", "_blank");
+        }
+    </script>
 </body>
 </html>
