@@ -1,143 +1,114 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credits</title>
-    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <title>Background Video with Credits</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
+            height: 100vh;
             font-family: Arial, sans-serif;
-            color: white;
-            text-align: center;
+            background-color: black;
         }
 
-        #videoContainer {
+        /* YouTube iframe to act as the video background */
+        .video-background {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; /* Ensures clicks go through the video */
             z-index: -1;
         }
 
-        #backgroundVideo {
+        .credits-container {
+            position: absolute;
+            bottom: -100%;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            text-align: center;
+            color: white;
+            animation: scroll 60s linear forwards; /* Adjust scroll speed and remove infinite loop */
         }
 
-        #credits {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            opacity: 0.9;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            border: 3px solid rgba(255, 255, 255, 0.8); /* Border added */
-            display: inline-block;
+        @keyframes scroll {
+            0% {
+                bottom: -100%;
+            }
+            100% {
+                bottom: 100%;
+            }
         }
 
         h1, h2, h3 {
             margin: 0;
-            padding: 10px;
+            padding: 0;
         }
 
         h1 {
-            font-size: 48px;
+            font-size: 3em;
+            margin-bottom: 20px;
         }
 
         h2 {
-            font-size: 36px;
+            font-size: 2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
 
         h3 {
-            font-size: 28px;
-            line-height: 1.5; /* Add line spacing for better readability */
-        }
-
-        #volumeControls {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 2;
-        }
-
-        #muteButton {
-            background: rgba(255, 255, 255, 0.8);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            outline: none;
-            padding: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        }
-
-        #muteIcon {
-            width: 30px;
-            height: 30px;
+            font-size: 1.5em;
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
 
-    <div id="videoContainer">
-        <video id="backgroundVideo" src="lurkkiganda2.mp4" autoplay loop muted></video>
-    </div>
+    <!-- YouTube video as background -->
+    <iframe class="video-background" src="https://www.youtube.com/embed/zEKaFpa_dPs?autoplay=1&mute=0&loop=1&playlist=zEKaFpa_dPs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-    <div id="credits">
+    <!-- Scrolling credits -->
+    <div class="credits-container">
         <h1>Kiitokset kuuluu</h1>
-        <h2>Creator</h2>
+
+        <h2>Lurkki.Info master dev(ehkä)</h2>
         <h3>Veeti</h3>
 
-        <h2>Our Pöhnä</h2>
-        <h3>samppa/samuel/pöhnä/lurkki/AwpMegaFumble/sampsakurri</h3>
+        <h2>Itse päähenkilö</h2>
+        <h3>
+            samppa<br>
+            samuel<br>
+            pöhnä<br>
+            lurkki<br>
+            AwpMegaFumble<br>
+            sampsakurri
+        </h3>
 
         <h2>Testaajat</h2>
         <h3>
-            pietska<br>
+            pietska/leipäkunnari<br>
             lauri aka luke_fin<br>
-            timo27<br>
-            miska
+            timo27/timoteus/paypal:leevi.repo<br>
+            misantherian/therian
+        </h3>
+
+        <!-- New Category: Laillisista Syistä Nää -->
+        <h2>Laillisista syistä nää</h2>
+        <h3>
+            Pixlr<br>
+            Pixabay<br>
+            CapCut<br>
+            Adobe After Effects<br>
+            MixKit<br>
+            Paint.net<br>
+            porkbun<br>
+            github<br>
+            jerkmate
         </h3>
     </div>
-
-    <div id="volumeControls">
-        <button id="muteButton" onclick="toggleMute()">
-            <img id="muteIcon" src="sound1.ico" alt="Mute" onerror="this.onerror=null; this.src='sound1.png';" />
-        </button>
-    </div>
-
-    <script>
-        const video = document.getElementById('backgroundVideo');
-        let isMuted = true; // Track mute state
-
-        function toggleMute() {
-            const muteIcon = document.getElementById('muteIcon');
-            isMuted = !isMuted;
-            video.muted = isMuted; // Mute or unmute video
-            muteIcon.src = isMuted ? 'sound2.ico' : 'sound1.ico'; // Change icon
-        }
-
-        function playVideoAudio() {
-            if (video.muted) {
-                video.muted = false; // Unmute the video
-            }
-            video.play(); // Ensure video is playing
-        }
-
-        // Start video audio when the credits tab is clicked
-        window.onload = () => {
-            // Start with video muted
-            video.muted = true;
-            playVideoAudio(); // Call function to play video audio when the page loads
-        };
-    </script>
 
 </body>
 </html>
