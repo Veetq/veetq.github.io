@@ -3,79 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Timer</title> <!-- Title in the browser tab -->
-    <!-- Link to Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden; /* Prevent scrolling */
-            background-color: black; /* Set background to black */
-            display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: 100vh; /* Full height of the viewport */
-            font-family: 'Roboto', sans-serif; /* Apply the Google Font */
-            color: white; /* Set text color to white */
-            font-size: 64px; /* Font size for the countdown */
-        }
-        img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;  /* Full width of the viewport */
-            height: 100%; /* Full height of the viewport */
-            object-fit: fill; /* Stretch image to fill */
-            border: none;
-            display: none; /* Start with the image hidden */
-        }
-        #click-text {
-            font-size: 48px; /* Font size for the click instruction */
-            color: white; /* Set text color to white */
-        }
-    </style>
+    <title>se oli siinä</title>
 </head>
 <body>
-    <div id="click-text">PAINAPPA JOSTAIN TOSIAAN</div> <!-- Click instruction -->
-    <img src="pic.png" alt="Picture" id="image" loading="lazy">
-    <audio id="background-audio" src="testi.mp3" preload="auto"></audio>
-
-    <script>
-        function updateCountdown() {
-            const now = new Date();
-            const tomorrow = new Date();
-            tomorrow.setDate(now.getDate() + 1); // Set to tomorrow
-            tomorrow.setHours(22, 0, 0, 0); // Set to 20:00 (8 PM)
-
-            const timeDifference = tomorrow - now; // Calculate time difference
-            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-
-            // Update the document title with only the countdown time
-            document.title = `${hours}h ${minutes}m ${seconds}s`;
-
-            // If the countdown is over, show "EXPIRED"
-            if (timeDifference < 0) {
-                clearInterval(countdownInterval);
-                document.title = "Countdown Expired"; // Title when expired
-            }
-        }
-
-        // Update the countdown every second
-        const countdownInterval = setInterval(updateCountdown, 1000);
-
-        document.body.onclick = function() {
-            // Hide the click text and show the image
-            document.getElementById('click-text').style.display = 'none'; // Hide click text
-            document.getElementById('image').style.display = 'block'; // Show image
-            // Play the audio
-            const audio = document.getElementById('background-audio');
-            audio.play();
-        };
-
-        // Initial countdown update
-        updateCountdown();
-    </script>
+    <h1>peruttu</h1>
+    <audio controls autoplay>
+        <source src="a.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 </body>
 </html>
