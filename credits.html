@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Background Video with Credits</title>
+    <title><3</title>
     <style>
         body {
             margin: 0;
@@ -21,17 +21,33 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            pointer-events: none; /* Ensures clicks go through the video */
-            z-index: -1;
+            z-index: -2; /* Keeps the video in the background */
         }
 
+        /* Button Style */
+        .linkki-button {
+            position: absolute;
+            top: 20px; /* Distance from the top */
+            right: 20px; /* Distance from the right */
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 2; /* Ensures button is above the video */
+            color: black;
+        }
+
+        /* Credits Container */
         .credits-container {
             position: absolute;
             bottom: -100%;
             width: 100%;
             text-align: center;
             color: white;
-            animation: scroll 60s linear forwards; /* Adjust scroll speed and remove infinite loop */
+            z-index: 1; /* Ensures text is above the video */
+            animation: scroll 40s linear forwards; /* Adjust scroll speed */
         }
 
         @keyframes scroll {
@@ -67,17 +83,22 @@
 </head>
 <body>
 
-    <!-- YouTube video as background -->
-    <iframe class="video-background" src="https://www.youtube.com/embed/zEKaFpa_dPs?autoplay=1&mute=0&loop=1&playlist=zEKaFpa_dPs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <!-- Clickable YouTube video as background -->
+    <a href="https://www.youtube.com/watch?v=zEKaFpa_dPs" target="_blank">
+        <iframe class="video-background" src="https://www.youtube.com/embed/zEKaFpa_dPs?autoplay=1&mute=0&loop=1&playlist=zEKaFpa_dPs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </a>
+
+    <!-- Linkki Button -->
+    <button class="linkki-button" onclick="window.open('https://www.youtube.com/watch?v=zEKaFpa_dPs', '_blank');">Linkki</button>
 
     <!-- Scrolling credits -->
     <div class="credits-container">
         <h1>Kiitokset kuuluu</h1>
 
-        <h2>Lurkki.Info master dev(ehkä)</h2>
+        <h2>Creator</h2>
         <h3>Veeti</h3>
 
-        <h2>Itse päähenkilö</h2>
+        <h2>Päähahmo</h2>
         <h3>
             samppa<br>
             samuel<br>
@@ -89,10 +110,10 @@
 
         <h2>Testaajat</h2>
         <h3>
-            pietska/leipäkunnari<br>
+            pietska<br>
             lauri aka luke_fin<br>
-            timo27/timoteus/paypal:leevi.repo<br>
-            misantherian/therian
+            timo27<br>
+            miska
         </h3>
 
         <!-- New Category: Laillisista Syistä Nää -->
@@ -101,7 +122,7 @@
             Pixlr<br>
             Pixabay<br>
             CapCut<br>
-            Adobe After Effects<br>
+            Adobe After Effects<br>s
             MixKit<br>
             Paint.net<br>
             porkbun<br>
