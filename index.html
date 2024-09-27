@@ -1,15 +1,291 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>se oli siinä</title>
+    <title>Lurkki Archives</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #2d2d2d;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            display: none;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .rainbow_text_animated {
+            background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rainbow_animation 6s ease-in-out infinite;
+            background-size: 400% 100%;
+        }
+
+        @keyframes rainbow_animation {
+            0%, 100% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 100% 0;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            background-color: transparent;
+            color: white;
+            padding: 15px 25px;
+            border: 2px solid rgba(255, 255, 255, 0.7); /* Default border color */
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; /* Added border color transition */
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.6), 0 0 20px rgba(209, 55, 214, 0.6), 0 0 30px rgba(104, 20, 69, 0.6), 0 0 40px rgba(255, 0, 255, 0.6); /* Rainbow glow */
+            border-color: rgba(255, 0, 255, 0.6); /* Change border color to match glow on hover */
+        }
+
+        #videoContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 200px;
+            display: none;
+            z-index: 1; /* Position the video underneath the popup */
+        }
+
+        #videoContainer video {
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        #gifContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #gifContainer img {
+            width: 200px;
+            cursor: pointer;
+        }
+
+        #volumeControls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(36, 36, 35, 0.8);
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 4;
+        }
+
+        #muteButton {
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            width: 40px;  /* Adjusted size */
+            height: 40px; /* Adjusted size */
+            padding: 0;
+        }
+
+        #muteIcon {
+            width: 30px;  /* Set icon size */
+            height: 30px; /* Set icon size */
+        }
+
+        #catImage {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: block;
+            width: 100px;
+            cursor: pointer;
+        }
+
+        #explosion {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 200px;
+            display: none;
+            pointer-events: none;
+        }
+
+        #popupImage {
+            position: absolute;
+            top: 100px;
+            left: -60px; /* Start off-screen to the left */
+            display: none;
+            width: 300px; /* Set width to 300 pixels */
+            cursor: pointer; /* Add cursor pointer */
+            transition: left 0.5s ease; /* Add sliding animation */
+            z-index: 3; /* Position the popup above the video */
+        }
+    </style>
 </head>
 <body>
-    <h1>peruttu</h1>
-    <audio controls autoplay>
-        <source src="a.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+
+    <div id="gifContainer">
+        <img src="kuva.gif" alt="Click Me" onclick="showContent()">
+    </div>
+
+    <div class="container">
+        <h1 class="rainbow_text_animated">Welcome to the pöhnä center info place from Finland.</h1>
+        <div class="buttons">
+            <button onclick="window.location.href='pelit'">Pöhnä Pelit</button>
+            <button onclick="window.location.href='halloffame'">Hall Of Fame</button>
+            <button onclick="window.location.href='https://youtu.be/uqQEdaZ6qrM'">Mikä on lurkki.info?</button>
+            <button onclick="window.location.href='credits'">Credits</button> <!-- New button added -->
+        </div>
+    </div>
+
+    <div id="videoContainer">
+        <video id="backgroundVideo" src="pomppiva.mp4" autoplay muted loop></video>
+    </div>
+
+    <div id="volumeControls">
+        <button id="muteButton" onclick="toggleMute()">
+            <img id="muteIcon" src="sound1.ico" alt="Mute" onerror="this.onerror=null; this.src='sound1.png';" />
+        </button>
+    </div>
+
+    <audio id="backgroundMusic" src="musa.mp3" loop></audio>
+
+    <img id="catImage" src="cat.png" alt="Cat" onclick="playExplosion()">
+    <img id="explosion" src="explosion.gif" alt="Explosion">
+    <img id="popupImage" src="popup.png" alt="Popup" onclick="openVideo()">
+
+    <script>
+        let isAudioPlaying = false; // Track audio state
+        let isMutedByPopup = false; // Track if audio was muted by popup click
+
+        function showContent() {
+            // 60% chance to show the popup image
+            if (Math.random() < 0.6) {
+                const popupImage = document.getElementById('popupImage');
+                popupImage.style.display = 'block';
+                popupImage.style.transition = 'left 0.5s ease'; // Ensure transition is set
+                popupImage.style.left = '0'; // Slide in from the left
+            }
+            document.querySelector('.container').style.display = 'block';
+            document.getElementById('gifContainer').style.display = 'none';
+            document.getElementById('videoContainer').style.display = 'block';
+            document.getElementById('backgroundMusic').play();
+            isAudioPlaying = true; // Set audio state to playing
+            moveVideo();
+        }
+
+        function openVideo() {
+            const music = document.getElementById('backgroundMusic');
+            if (!music.paused) {
+                music.pause(); // Mute the audio when the popup is clicked
+                isMutedByPopup = true; // Remember it was muted by the popup
+            }
+            window.open('limppa.mp4', '_blank');
+        }
+
+        function playExplosion() {
+            document.getElementById('catImage').style.display = 'none';
+            const explosion = document.getElementById('explosion');
+            explosion.style.display = 'block';
+            explosion.style.opacity = '1';
+
+            const sounds = ['boom1.mp3', 'boom2.wav', 'boom3.wav'];
+            const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+            const audio = new Audio(randomSound);
+            audio.play();
+
+            setTimeout(() => {
+                explosion.style.display = 'none';
+            }, 1450);
+        }
+
+        const videoContainer = document.getElementById('videoContainer');
+        let xPos = 100;
+        let yPos = 100;
+        let xSpeed = 2;
+        let ySpeed = 2;
+
+        function moveVideo() {
+            const containerWidth = window.innerWidth;
+            const containerHeight = window.innerHeight;
+
+            xPos += xSpeed;
+            yPos += ySpeed;
+
+            if (xPos + videoContainer.offsetWidth >= containerWidth || xPos <= 0) {
+                xSpeed = -xSpeed;
+            }
+
+            if (yPos + videoContainer.offsetHeight >= containerHeight || yPos <= 0) {
+                ySpeed = -ySpeed;
+            }
+
+            videoContainer.style.left = xPos + 'px';
+            videoContainer.style.top = yPos + 'px';
+
+            requestAnimationFrame(moveVideo);
+        }
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                const music = document.getElementById('backgroundMusic');
+                music.pause(); // Mute the music when the tab is hidden
+                isMutedByPopup = true;
+            } else if (isMutedByPopup) {
+                const music = document.getElementById('backgroundMusic');
+                music.play(); // Resume the music when the user returns
+            }
+        });
+
+        function toggleMute() {
+            const music = document.getElementById('backgroundMusic');
+            const muteIcon = document.getElementById('muteIcon');
+            if (music.muted) {
+                music.muted = false;
+                muteIcon.src = 'sound1.ico';
+                isAudioPlaying = true;
+            } else {
+                music.muted = true;
+                muteIcon.src = 'sound2.ico';
+                isAudioPlaying = false;
+            }
+        }
+    </script>
+
 </body>
 </html>
