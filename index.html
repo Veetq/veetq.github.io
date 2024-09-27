@@ -45,7 +45,7 @@
             const now = new Date();
             const tomorrow = new Date();
             tomorrow.setDate(now.getDate() + 1); // Set to tomorrow
-            tomorrow.setHours(20, 0, 0, 0); // Set to 20:00 (8 PM)
+            tomorrow.setHours(22, 0, 0, 0); // Set to 20:00 (8 PM)
 
             const timeDifference = tomorrow - now; // Calculate time difference
             const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
