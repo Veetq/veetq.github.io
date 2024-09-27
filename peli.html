@@ -53,7 +53,7 @@
             top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: white; /* Score text color */
+            color: white;
             text-align: center;
             z-index: 10;
         }
@@ -112,12 +112,12 @@
             right: 10px;
             animation: rainbowGlow 3s linear infinite;
             z-index: 5;
-            transition: transform 0.3s, box-shadow 0.3s; /* Smooth animation */
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         #leaderboardButton:hover {
             animation: rainbowGlowHover 1s linear infinite;
-            transform: scale(1.1); /* Scale up on hover */
+            transform: scale(1.1);
         }
 
         @keyframes rainbowGlow {
@@ -159,6 +159,7 @@
         const finalScoreDisplay = document.getElementById('finalScore');
         const restartButton = document.getElementById('restartButton');
         const startButton = document.getElementById('startButton');
+        const popSound = new Audio('pop.mp3'); // Load the pop sound
 
         let score = 0;
         let timeLeft = 10;
@@ -191,36 +192,35 @@
 
         // Start the timer
         function startTimer() {
-            const timerInterval = setInterval(() => {
+            const countdown = setInterval(() => {
                 timeLeft--;
                 timerDisplay.textContent = `${timeLeft}`;
-
                 if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
+                    clearInterval(countdown);
                     endGame();
                 }
             }, 1000);
         }
 
-        // Handle Pöhnä click
-        pohna.onclick = function () {
+        // Handle Pöhnä image click
+        pohna.addEventListener('click', () => {
             score++;
+            popSound.play(); // Play the pop sound
             moveImage();
-        };
+        });
 
         // End the game
         function endGame() {
             timerDisplay.style.display = 'none'; // Hide timer
+            pohna.style.display = 'none'; // Hide Pöhnä image
             finalScoreDisplay.textContent = `Lopullinen pistemäärä: ${score}`;
             finalScoreDisplay.style.display = 'block'; // Show final score
             restartButton.style.display = 'block'; // Show restart button
-            pohna.style.display = 'none'; // Hide Pöhnä image
         }
 
         // Restart the game
         function restartGame() {
-            pohna.style.display = 'block'; // Show Pöhnä image
-            startGame(); // Restart the game
+            startGame();
         }
     </script>
 </body>
