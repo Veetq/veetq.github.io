@@ -17,25 +17,38 @@
             margin-top: 50px;
         }
 
-        button {
+        /* Matching button styling */
+        .button {
+            display: inline-block;
             padding: 15px 30px;
-            font-size: 18px;
-            margin: 20px;
+            font-size: 24px;
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+            border-radius: 12px;
+            background-color: transparent;
+            overflow: hidden;
             cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #444;
-            color: white;
+            border: 0px solid transparent;
+            animation: color-change 8s linear infinite;
+            transition: transform 2.10s ease;
         }
 
-        button:hover {
-            background-color: #666;
+        /* Rainbow border effect */
+        @keyframes color-change {
+            0% { border-color: red; }
+            16% { border-color: orange; }
+            32% { border-color: yellow; }
+            48% { border-color: green; }
+            64% { border-color: blue; }
+            80% { border-color: indigo; }
+            100% { border-color: violet; }
         }
 
-        .result img {
-            width: 100px;
-            height: auto;
-            margin: 10px;
+        /* Hover effect */
+        .button:hover {
+            transform: scale(1.05);
+            border: 2px solid #fff;
         }
 
         .bet-container {
@@ -51,6 +64,12 @@
         .balance {
             font-size: 20px;
         }
+
+        .result img {
+            width: 100px;
+            height: auto;
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
@@ -59,8 +78,9 @@
         <h1>Pöhnä Coinari</h1>
         <p>Choose your side:</p>
 
-        <button onclick="flipCoin('pohna')">Pöhnä</button>
-        <button onclick="flipCoin('evilpohna')">Evilpöhnä</button>
+        <!-- Updated buttons with matching design -->
+        <button class="button" onclick="flipCoin('pohna')">Pöhnä</button>
+        <button class="button" onclick="flipCoin('evilpohna')">Evilpöhnä</button>
 
         <div class="bet-container">
             <input type="number" id="betAmount" class="bet-input" placeholder="Bet Amount" min="1" max="500">
@@ -72,29 +92,38 @@
 
     <script>
         let playerBalance = 500;
+        let isFlipping = false;
 
         function flipCoin(playerChoice) {
+            if (isFlipping) return;
+            isFlipping = true;
+
             const sides = ['pohna', 'evilpohna'];
-            const result = sides[Math.floor(Math.random() * sides.length)];
             const betAmount = parseInt(document.getElementById('betAmount').value);
-            let message = '';
 
             if (isNaN(betAmount) || betAmount <= 0 || betAmount > playerBalance) {
                 alert('Please enter a valid bet amount.');
+                isFlipping = false;
                 return;
             }
 
-            // Check if the player's choice matches the result
-            if (result === playerChoice) {
-                playerBalance += betAmount; // Player wins, double the bet
-                message = `<p>You won!</p><img src="${result}.png" alt="${result.charAt(0).toUpperCase() + result.slice(1)}">`;
-            } else {
-                playerBalance -= betAmount; // Player loses, deduct the bet
-                message = `<p>You lost!</p><img src="${result}.png" alt="${result.charAt(0).toUpperCase() + result.slice(1)}">`;
-            }
+            document.getElementById('result').innerHTML = '<img src="koinari.gif" alt="Flipping Coin">';
+            setTimeout(() => {
+                const result = sides[Math.floor(Math.random() * sides.length)];
+                let message = '';
 
-            document.getElementById('result').innerHTML = message;
-            document.getElementById('balance').innerText = playerBalance;
+                if (result === playerChoice) {
+                    playerBalance += betAmount;
+                    message = `<p>You won!</p><img src="${result}.png" alt="${result.charAt(0).toUpperCase() + result.slice(1)}">`;
+                } else {
+                    playerBalance -= betAmount;
+                    message = `<p>You lost!</p><img src="${result}.png" alt="${result.charAt(0).toUpperCase() + result.slice(1)}">`;
+                }
+
+                document.getElementById('result').innerHTML = message;
+                document.getElementById('balance').innerText = playerBalance;
+                isFlipping = false;
+            }, 1500);
         }
     </script>
 
