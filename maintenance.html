@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance</title>
+  <style>
+    /* Taustaväri ja kokonaistyylit */
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      position: relative; /* Tärkeää, jotta saadaan sijoitettua kuvat oikeaan paikkaan */
+    }
+
+    /* Kelluvan tekstin tyyli */
+    .floating-text {
+      font-size: 50px;
+      font-weight: bold;
+      text-align: center;
+      animation: float 3s ease-in-out infinite;
+      position: absolute;
+    }
+
+    /* Kelluvan tekstin animaatio */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* Soy-kuvan tyyli */
+    .soy-image, .soija-gif {
+      position: absolute;
+      opacity: 0; /* Aluksi kuva on näkymätön */
+      animation: fadeIn 30s forwards; /* Animaatio kasvaa ja pysyy näkyvissä */
+    }
+
+    /* Soy-kuvan oikea sijainti */
+    .soy-image {
+      right: 00px;
+      bottom: 00px;
+      width: 300px; /* Kuvan koko voi vaihdella */
+      height: auto;
+    }
+
+    /* Soija GIFin oikea sijainti (00px bottom) */
+    .soija-gif {
+      left: 0px;
+      bottom: 0px;
+      width: 150px; /* Voit säätää koon tarpeen mukaan */
+      height: auto;
+    }
+
+    /* Animaatio kuville */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* Cursor trail effect */
+    .trail {
+      position: absolute;
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      background-color: white;
+      pointer-events: none;
+      animation: trail-animation 1s forwards;
+    }
+
+    @keyframes trail-animation {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Kelluva teksti -->
+  <div class="floating-text">
+    Huge update incoming!
+  </div>
+
+  <!-- Taustamusiikki -->
+  <audio autoplay loop>
+    <source src="maintenance.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Soy-kuva oikeassa alakulmassa -->
+  <img src="soy.webp" alt="Soy Image" class="soy-image">
+
+  <!-- Soija GIF oikeassa alakulmassa -->
+  <img src="soija.gif" alt="Soija GIF" class="soija-gif">
+
+  <!-- Cursor trail effect script -->
+  <script>
+    // Function to create a trail effect on mouse movement
+    document.body.addEventListener('mousemove', (e) => {
+      const trail = document.createElement('div');
+      trail.classList.add('trail');
+      document.body.appendChild(trail);
+
+      // Position the trail at the cursor location
+      trail.style.left = `${e.pageX - 7}px`;
+      trail.style.top = `${e.pageY - 7}px`;
+
+      // Remove the trail after animation ends
+      setTimeout(() => {
+        trail.remove();
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
