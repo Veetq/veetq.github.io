@@ -161,6 +161,28 @@
             transition: left 0.5s ease; /* Add sliding animation */
             z-index: 3; /* Position the popup above the video */
         }
+
+        /* Footer Styles */
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: #ccc;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #ccc;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -194,6 +216,12 @@
     <img id="catImage" src="cat.png" alt="Cat" onclick="playExplosion()">
     <img id="explosion" src="explosion.gif" alt="Explosion">
     <img id="popupImage" src="popup.png" alt="Popup" onclick="openVideo()">
+
+    <!-- Footer with text and Privacy Policy link -->
+    <footer>
+        lurkki.info kaikki oikeudet pidetään. <span>•</span>
+        <a href="privacypolicy.html">Privacy Policy</a>
+    </footer>
 
     <script>
         let isAudioPlaying = false; // Track audio state
