@@ -195,10 +195,6 @@
     <img id="explosion" src="explosion.gif" alt="Explosion">
     <img id="popupImage" src="popup.png" alt="Popup" onclick="openVideo()">
 
-    <!-- Clicky Analytics Tracking Code -->
-    <a title="GDPR-compliant Web Analytics" href="https://clicky.com/101469063"><img alt="Clicky" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
-    <script async data-id="101469063" src="//static.getclicky.com/js"></script>
-
     <script>
         let isAudioPlaying = false; // Track audio state
         let isMutedByPopup = false; // Track if audio was muted by popup click
@@ -229,32 +225,71 @@
         }
 
         function playExplosion() {
-            document.getElementById('explosion').style.display = 'block';
-            setTimeout(function() {
-                document.getElementById('explosion').style.display = 'none';
-            }, 1450); // Set explosion duration
+            document.getElementById('catImage').style.display = 'none';
+            const explosion = document.getElementById('explosion');
+            explosion.style.display = 'block';
+            explosion.style.opacity = '1';
+
+            const sounds = ['boom1.mp3', 'boom2.wav', 'boom3.wav'];
+            const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+            const audio = new Audio(randomSound);
+            audio.play();
+
+            setTimeout(() => {
+                explosion.style.display = 'none';
+            }, 1450);
         }
+
+        const videoContainer = document.getElementById('videoContainer');
+        let xPos = 100;
+        let yPos = 100;
+        let xSpeed = 2;
+        let ySpeed = 2;
+
+        function moveVideo() {
+            const containerWidth = window.innerWidth;
+            const containerHeight = window.innerHeight;
+
+            xPos += xSpeed;
+            yPos += ySpeed;
+
+            if (xPos + videoContainer.offsetWidth >= containerWidth || xPos <= 0) {
+                xSpeed = -xSpeed;
+            }
+
+            if (yPos + videoContainer.offsetHeight >= containerHeight || yPos <= 0) {
+                ySpeed = -ySpeed;
+            }
+
+            videoContainer.style.left = xPos + 'px';
+            videoContainer.style.top = yPos + 'px';
+
+            requestAnimationFrame(moveVideo);
+        }
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                const music = document.getElementById('backgroundMusic');
+                music.pause(); // Mute the music when the tab is hidden
+                isMutedByPopup = true;
+            } else if (isMutedByPopup) {
+                const music = document.getElementById('backgroundMusic');
+                music.play(); // Resume the music when the user returns
+            }
+        });
 
         function toggleMute() {
             const music = document.getElementById('backgroundMusic');
             const muteIcon = document.getElementById('muteIcon');
-            if (music.paused || music.muted) {
-                music.play();
-                muteIcon.src = 'sound1.ico'; // Change to sound icon
+            if (music.muted) {
+                music.muted = false;
+                muteIcon.src = 'sound1.ico';
+                isAudioPlaying = true;
             } else {
-                music.pause();
-                muteIcon.src = 'mute.ico'; // Change to mute icon
+                music.muted = true;
+                muteIcon.src = 'sound2.ico';
+                isAudioPlaying = false;
             }
-        }
-
-        function moveVideo() {
-            const video = document.getElementById('backgroundVideo');
-            video.style.transition = 'transform 1s ease-out';
-            video.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-                video.style.transition = 'none';
-                video.style.transform = 'translateX(0)';
-            }, 1000); // Reset to start position after the transition
         }
     </script>
     <script async data-id="101469063" src="//static.getclicky.com/js"></script>
