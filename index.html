@@ -107,6 +107,17 @@
             cursor: pointer;
         }
 
+        #clickStartText {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 10px;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
         #volumeControls {
             position: absolute;
             top: 10px;
@@ -144,7 +155,7 @@
 
         #explosion {
             position: absolute;
-            bottom: 20px;
+            bottom: 50px;
             right: 20px;
             width: 200px;
             display: none;
@@ -187,6 +198,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Add the Click Start text above the GIF -->
+    <div id="clickStartText">press the</div>
 
     <div id="gifContainer">
         <img src="kuva.gif" alt="Click Me" onclick="showContent()">
@@ -241,26 +255,25 @@
             document.getElementById('videoContainer').style.display = 'block';
             document.getElementById('backgroundMusic').play();
             isAudioPlaying = true; // Set audio state to playing
+            document.getElementById('clickStartText').style.display = 'none'; // Hide "Click Start" text
             moveVideo();
         }
         
-
         function openVideo() {
-    // Hide the popup image when it's clicked
-    const popupImage = document.getElementById('popupImage');
-    popupImage.style.display = 'none'; // Hide the popup image after it's clicked
+            // Hide the popup image when it's clicked
+            const popupImage = document.getElementById('popupImage');
+            popupImage.style.display = 'none'; // Hide the popup image after it's clicked
 
-    // Optionally, you can also pause the background music if needed
-    const music = document.getElementById('backgroundMusic');
-    if (!music.paused) {
-        music.pause(); // Pause the music when the popup is clicked
-        isMutedByPopup = true; // Remember it was muted by the popup
-    }
+            // Optionally, you can also pause the background music if needed
+            const music = document.getElementById('backgroundMusic');
+            if (!music.paused) {
+                music.pause(); // Pause the music when the popup is clicked
+                isMutedByPopup = true; // Remember it was muted by the popup
+            }
 
-    // Open the new video in a new window/tab
-    window.open('limppa.mp4', '_blank');
-}
-
+            // Open the new video in a new window/tab
+            window.open('limppa.mp4', '_blank');
+        }
 
         function playExplosion() {
             document.getElementById('catImage').style.display = 'none';
