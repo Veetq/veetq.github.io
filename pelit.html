@@ -1,1 +1,242 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelit</title>
+    <link rel="icon" href="peli.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            position: relative; /* Added for positioning */
+            overflow: hidden; /* Prevent scrollbar from appearing */
+            background-image: url('minetin.png'); /* Set the background image */
+            background-size: cover; /* Make the image cover the whole screen */
+            background-position: center; /* Center the background image */
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+        }
 
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
+            z-index: -1; /* Ensure the overlay is behind the content */
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Button styling */
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 24px;
+            color: #fff; /* Text color */
+            text-decoration: none;
+            position: relative;
+            border-radius: 12px;
+            background-color: transparent; /* Transparent background */
+            overflow: hidden; /* Clip the pseudo-elements */
+            cursor: pointer;
+            border: 2px solid transparent; /* Initial border */
+            animation: color-change 6s linear infinite; /* Color change animation */
+            transition: transform 0.3s ease; /* Smooth transform on hover */
+        }
+
+        /* Rainbow border effect */
+        @keyframes color-change {
+            0% { border-color: red; }
+            16% { border-color: orange; }
+            32% { border-color: yellow; }
+            48% { border-color: green; }
+            64% { border-color: blue; }
+            80% { border-color: indigo; }
+            100% { border-color: violet; }
+        }
+
+        /* Hover effect */
+        .button:hover {
+            transform: scale(1.05); /* Slightly increase size on hover */
+            border: 2px solid #fff; /* Add white border on hover */
+        }
+
+        /* Video styling */
+        .video {
+            width: 300px; /* Set video width */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 12px; /* Ensure the video has rounded corners */
+            opacity: 0.8; /* 80% opacity */
+            display: block; /* Always visible */
+        }
+
+        /* Positioning video in the bottom right */
+        .video-container-right {
+            position: absolute;
+            bottom: 10px; /* Distance from the bottom */
+            right: 10px; /* Distance from the right */
+        }
+
+        /* Positioning video in the bottom left */
+        .video-container-left {
+            position: absolute;
+            bottom: 10px; /* Distance from the bottom */
+            left: 10px; /* Distance from the left */
+        }
+
+        /* Styling for puttyx image */
+        .puttyx-image {
+            position: absolute;
+            top: 10px; /* Distance from the top */
+            right: 10px; /* Distance from the right */
+            width: 100px; /* Set width of the image */
+            height: auto; /* Maintain aspect ratio */
+            z-index: 10; /* Ensure it appears above other elements */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            transition: transform 0.3s ease; /* Smooth transition for spinning */
+            animation: spin 1s linear infinite; /* Set default spinning */
+            animation-play-state: paused; /* Start paused */
+        }
+
+        /* Spinning animation */
+        .spin {
+            animation: spin 1s linear infinite; /* Infinite spinning */
+        }
+
+        /* Keyframes for spinning */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Styling for the left arrow button */
+        #leftArrowButton {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: transparent;
+            border: 0px solid rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            outline: none;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            z-index: 20; /* Ensure it stays on top */
+        }
+
+        #leftArrowButton:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.6), 0 0 20px rgba(209, 55, 214, 0.6), 0 0 30px rgba(104, 20, 69, 0.6), 0 0 40px rgba(255, 0, 255, 0.6);
+            border-color: rgba(255, 0, 255, 0.6);
+        }
+
+        #leftArrowIcon {
+            font-size: 20px;
+            color: white;
+        }
+
+        /* Hide videos and images on mobile */
+        @media (max-width: 768px) {
+            .video-container-right,
+            .video-container-left,
+            .puttyx-image {
+                display: none; /* Hide the videos and the image */
+            }
+        }
+    </style>
+</head>
+<body>
+    <button id="leftArrowButton" onclick="window.location.href=''">
+        <i class="fas fa-arrow-left" id="leftArrowIcon"></i>
+    </button>
+
+    <div class="container">
+        <h1>Valitse peli</h1>
+        <div class="button-container">
+            <a href="peli" class="button">Pöhnä Clicker</a>
+            <a href="gamble" class="button">Pöhnä Slots</a>
+            <a href="coinflip" class="button">Pöhnä Coinari</a>
+        </div>
+    </div>
+    
+    <!-- Video container without borders (bottom-right) -->
+    <div class="video-container-right">
+        <video class="video" id="lurkkiganda" controls>
+            <source src="lurkkiganda1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Video container without borders (bottom-left) -->
+    <div class="video-container-left">
+        <video class="video" id="lurkkiganda3" controls>
+            <source src="lurkkiganda3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Puttyx image in the top left corner -->
+    <img src="puttyx.png" alt="Puttyx" class="puttyx-image" id="puttyx">
+
+    <audio id="putty-audio" src="putty.mp3"></audio>
+
+    <script>
+        const video = document.getElementById('lurkkiganda');
+        const puttyImage = document.getElementById('puttyx');
+        const puttyAudio = document.getElementById('putty-audio');
+        const video3 = document.getElementById('lurkkiganda3');
+
+        // Function to play video when clicked
+        video.addEventListener('click', () => {
+            if (video.paused) {
+                video.play(); // Play video
+            } else {
+                video.pause(); // Pause video if already playing
+            }
+        });
+
+        video3.addEventListener('click', () => {
+            if (video3.paused) {
+                video3.play(); // Play video
+            } else {
+                video3.pause(); // Pause video if already playing
+            }
+        });
+
+        // Function to play/pause audio when puttyx image is clicked
+        puttyImage.addEventListener('click', () => {
+            if (puttyAudio.paused) {
+                puttyAudio.play(); // Play audio
+                puttyImage.classList.add('spin'); // Add spinning class
+            } else {
+                puttyAudio.pause(); // Pause audio
+                puttyImage.classList.remove('spin'); // Remove spinning class
+            }
+        });
+    </script>
+</body>
+</html>
