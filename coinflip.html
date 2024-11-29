@@ -10,16 +10,58 @@
     <meta content="#43B581" data-react-helmet="true" name="theme-color" />
     <link rel="icon" href="coin.ico">
     <title>Pöhnä Coinari</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #1f2120;
+            background-image: url('raha.png');  /* Add your background image here */
+            background-size: cover;  /* Ensure the image stretches to cover the whole page */
+            background-position: center;  /* Center the image */
             color: white;
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;  /* Make sure the body takes up the full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
         }
 
         .container {
             margin-top: 50px;
+            z-index: 2;  /* Ensure content is above the background */
+            text-align: center;
+        }
+
+        /* Left Arrow Button (Square) */
+        #leftArrowButton {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.7); /* Border around the button */
+            padding: 10px; /* Equal padding for all sides */
+            width: 50px; /* Fixed width */
+            height: 50px; /* Fixed height to make it square */
+            cursor: pointer;
+            outline: none;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            z-index: 20; /* Ensure it stays on top */
+            text-align: center;
+        }
+
+        /* Hover effect for the Left Arrow Button */
+        #leftArrowButton:hover {
+            transform: scale(1.1); /* Slightly enlarges the button on hover */
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.6), 0 0 20px rgba(209, 55, 214, 0.6), 0 0 30px rgba(104, 20, 69, 0.6), 0 0 40px rgba(255, 0, 255, 0.6);
+            border-color: rgba(255, 0, 255, 0.6);
+        }
+
+        /* Icon styling for the Left Arrow */
+        #leftArrowIcon {
+            font-size: 20px;
+            color: white;
         }
 
         /* Matching button styling */
@@ -78,6 +120,11 @@
     </style>
 </head>
 <body>
+
+    <!-- Left Arrow Button -->
+    <button id="leftArrowButton" onclick="window.location.href='pelit'">
+        <i class="fas fa-arrow-left" id="leftArrowIcon"></i>
+    </button>
 
     <div class="container">
         <h1>Pöhnä Coinari</h1>
