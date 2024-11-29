@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="Lurkki clicker game">
-    <meta property="og:description" content="fun clicker game">
-    <meta property="og:url" content="https://lurkki.info/peli">
-    <meta property="og:type" content="website">
-    <meta content="#43B581" data-react-helmet="true" name="theme-color" />
     <title>Pöhnä Clicker™</title>
     <link rel="icon" href="mouse.ico">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
     <style>
         body {
             margin: 0;
@@ -146,9 +143,40 @@
             85% { box-shadow: 0 0 10px rgba(148, 0, 211, 1), 0 0 20px rgba(148, 0, 211, 1); }
             100% { box-shadow: 0 0 10px rgba(255, 0, 0, 1), 0 0 20px rgba(255, 0, 0, 1); }
         }
+
+        /* Styling for the left arrow button */
+        #leftArrowButton {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: transparent;
+            border: 0px solid rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            outline: none;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            z-index: 20; /* Ensure it stays on top */
+        }
+
+        #leftArrowButton:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.6), 0 0 20px rgba(209, 55, 214, 0.6), 0 0 30px rgba(104, 20, 69, 0.6), 0 0 40px rgba(255, 0, 255, 0.6);
+            border-color: rgba(255, 0, 255, 0.6);
+        }
+
+        #leftArrowIcon {
+            font-size: 20px;
+            color: white;
+        }
     </style>
 </head>
 <body>
+    <!-- Arrow button -->
+    <button id="leftArrowButton" onclick="window.location.href='pelit'">
+        <i class="fas fa-arrow-left" id="leftArrowIcon"></i>
+    </button>
+
     <div id="gameArea">
         <img id="pohna" class="pohna" src="pohna.png" alt="Pöhnä">
     </div>
@@ -228,6 +256,5 @@
             startGame();
         }
     </script>
-    <script async data-id="101469063" src="//static.getclicky.com/js"></script>
 </body>
 </html>
