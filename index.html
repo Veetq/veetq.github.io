@@ -247,6 +247,11 @@
         }
     }
 
+    @media (max-width: 768px) {
+        #popupImage {
+            display: none; /* Hide popup on phones */
+        }
+    }
 </style>
 
     
@@ -317,11 +322,21 @@ document.addEventListener('DOMContentLoaded', function() {
         let isMutedByPopup = false; // Track if audio was muted by popup click
 
         function showContent() {
-    // 60% chance to show the popup image
-    if (Math.random() < 0.06) {
+    // Check if the screen width is greater than 768px (not a phone)
+    if (window.innerWidth > 768) {
+        // 6% chance to show the popup image
+        if (Math.random() < 0.96) {
+            const popupImage = document.getElementById('popupImage');
+            popupImage.classList.add('show');
+        }
+    } else {
+        // Ensure the popup is hidden on small screens
         const popupImage = document.getElementById('popupImage');
-        popupImage.classList.add('show');
+        popupImage.classList.remove('show');
+        popupImage.style.display = 'none';
     }
+
+    // Show the main content and play the music
     document.querySelector('.container').style.display = 'block';
     document.getElementById('gifContainer').style.display = 'none';
     document.getElementById('videoContainer').style.display = 'block';
@@ -330,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('clickStartText').style.display = 'none'; // Hide "Click Start" text
     moveVideo();
 }
+
 
         
         function openVideo() {
