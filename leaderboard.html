@@ -17,20 +17,20 @@
             height: 100vh;
             margin: 0;
             font-family: 'Arial', sans-serif;
-            position: relative; /* Added for positioning the image */
-            overflow: hidden; /* Prevents scrollbars from appearing */
-            background-color: #2d2d2d; /* Black background */
+            position: relative;
+            overflow: hidden;
+            background-color: #2d2d2d;
         }
 
         .rainbow-text {
-            font-size: 4em; /* Adjust size as needed */
+            font-size: 4em;
             color: white;
-            animation: rainbow 3s linear infinite; /* Animation duration */
-            position: absolute; /* Positioning the text in the center */
-            top: 50%; /* Center vertically */
-            left: 50%; /* Center horizontally */
-            transform: translate(-50%, -50%); /* Adjust to truly center */
-            z-index: 2; /* Ensure text is above the image */
+            animation: rainbow 3s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
         }
 
         @keyframes rainbow {
@@ -41,39 +41,33 @@
             57% { color: #3357FF; }
             71% { color: #BD33FF; }
             85% { color: #FF33A6; }
-            100% { color: #FF5733; } /* Back to the start */
+            100% { color: #FF5733; }
         }
 
-        /* Styling for the image */
         .bottom-left-image {
             position: absolute;
-            bottom: 0; /* Distance from the bottom */
-            right: 10px; /* Distance from the left */
-            width: 300px; /* Set image width */
-            height: auto; /* Maintain aspect ratio */
-            border: none; /* Remove borders if any */
-            z-index: 1; /* Ensure image is behind the text */
-            cursor: pointer; /* Change cursor to pointer on hover */
+            bottom: 0;
+            right: 10px;
+            width: 300px;
+            height: auto;
+            border: none;
+            z-index: 1;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <a href="https://www.twitch.tv/luke_fin_" target="_blank">
-        <div class="rainbow-text">lauri(luke_fin) NUMBER 1 SPOT BY 20 POINTS</div>
-    </a>
+    <div class="rainbow-text">shoutoutti tälle vissiinki</div>
     <a href="oho.jpg" target="_blank">
-        <img src="blehh.png" alt="Blehh" class="bottom-left-image" id="cat"> <!-- Your image here -->
+        <img src="shoutout.png" alt="Shoutout" class="bottom-left-image" id="cat">
     </a>
 
-    <!-- Audio element for pool.mp3 -->
     <audio id="poolSound" src="pool.mp3"></audio>
 
     <script>
-        // Get the cat image and the audio element
         const cat = document.getElementById('cat');
         const poolSound = document.getElementById('poolSound');
 
-        // Play the sound when the cat is clicked
         cat.addEventListener('click', function() {
             poolSound.play();
         });
