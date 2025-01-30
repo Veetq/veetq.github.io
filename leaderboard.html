@@ -12,6 +12,7 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -26,10 +27,7 @@
             font-size: 4em;
             color: white;
             animation: rainbow 3s linear infinite;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            text-align: center;
             z-index: 2;
         }
 
@@ -44,23 +42,26 @@
             100% { color: #FF5733; }
         }
 
-        .bottom-left-image {
-            position: absolute;
-            bottom: 0;
-            right: 10px;
-            width: 300px;
+        .image-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .large-image {
+            width: 500px;
             height: auto;
             border: none;
-            z-index: 1;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
     <div class="rainbow-text">shoutoutti tälle vissiinki</div>
-    <a href="oho.jpg" target="_blank">
-        <img src="shoutout.png" alt="Shoutout" class="bottom-left-image" id="cat">
-    </a>
+    <div class="image-container">
+        <a href="oho.jpg" target="_blank">
+            <img src="shoutout.png" alt="Shoutout" class="large-image" id="cat">
+        </a>
+    </div>
 
     <audio id="poolSound" src="pool.mp3"></audio>
 
