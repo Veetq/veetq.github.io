@@ -12,23 +12,25 @@
     <style>
         body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             font-family: 'Arial', sans-serif;
-            position: relative;
-            overflow: hidden;
-            background-color: #2d2d2d;
+            position: relative; /* Added for positioning the image */
+            overflow: hidden; /* Prevents scrollbars from appearing */
+            background-color: #2d2d2d; /* Black background */
         }
 
         .rainbow-text {
-            font-size: 4em;
+            font-size: 4em; /* Adjust size as needed */
             color: white;
-            animation: rainbow 3s linear infinite;
-            text-align: center;
-            z-index: 2;
+            animation: rainbow 3s linear infinite; /* Animation duration */
+            position: absolute; /* Positioning the text in the center */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust to truly center */
+            z-index: 2; /* Ensure text is above the image */
         }
 
         @keyframes rainbow {
@@ -39,36 +41,39 @@
             57% { color: #3357FF; }
             71% { color: #BD33FF; }
             85% { color: #FF33A6; }
-            100% { color: #FF5733; }
+            100% { color: #FF5733; } /* Back to the start */
         }
 
-        .image-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .large-image {
-            width: 500px;
-            height: auto;
-            border: none;
-            cursor: pointer;
+        /* Styling for the image */
+        .bottom-left-image {
+            position: absolute;
+            bottom: 0; /* Distance from the bottom */
+            right: 10px; /* Distance from the left */
+            width: 300px; /* Set image width */
+            height: auto; /* Maintain aspect ratio */
+            border: none; /* Remove borders if any */
+            z-index: 1; /* Ensure image is behind the text */
+            cursor: pointer; /* Change cursor to pointer on hover */
         }
     </style>
 </head>
 <body>
-    <div class="rainbow-text">shoutoutti tälle vissiinki</div>
-    <div class="image-container">
-        <a href="oho.jpg" target="_blank">
-            <img src="shoutout.png" alt="Shoutout" class="large-image" id="cat">
-        </a>
-    </div>
+    <a href="https://www.twitch.tv/luke_fin_" target="_blank">
+        <div class="rainbow-text">lauri(luke_fin) NUMBER 1 SPOT BY 20 POINTS</div>
+    </a>
+    <a href="oho.jpg" target="_blank">
+        <img src="blehh.png" alt="Blehh" class="bottom-left-image" id="cat"> <!-- Your image here -->
+    </a>
 
+    <!-- Audio element for pool.mp3 -->
     <audio id="poolSound" src="pool.mp3"></audio>
 
     <script>
+        // Get the cat image and the audio element
         const cat = document.getElementById('cat');
         const poolSound = document.getElementById('poolSound');
 
+        // Play the sound when the cat is clicked
         cat.addEventListener('click', function() {
             poolSound.play();
         });
